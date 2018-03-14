@@ -1,0 +1,12 @@
+server:
+  port: 9005
+  context-path: /telecomsz
+
+spring:
+  application:
+    name: telecomsz-platform
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://61.160.148.41:9011/cloud/eureka/

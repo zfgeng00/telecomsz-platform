@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="en"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+    <script src="../static/js/datatables-config.js" th:src="@{/js/datatables-config.js}"></script>
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="../static/css/material-design-iconic-font.min.css"
+          th:href="@{/css/material-design-iconic-font.min.css}">
+    <link rel="stylesheet" href="../static/css/animate.min.css" th:href="@{/css/animate.min.css}">
+    <link rel="stylesheet" href="../static/css/jquery.scrollbar.css" th:href="@{/css/jquery.scrollbar.css}">
+
+    <!-- App styles -->
+    <link rel="stylesheet" href="../static/css/app.min.css" th:href="@{/css/app.min.css}">
+    <script>
+        function notify(title,message,from, align, icon, type, animIn, animOut) {
+            $.notify({
+                icon: icon,
+                title: title,
+                message: message,
+                url: ''
+            }, {
+                element: 'body',
+                type: type,
+                allow_dismiss: true,
+                placement: {
+                    from: from,
+                    align: align
+                },
+                offset: {
+                    x: 20,
+                    y: 20
+                },
+                spacing: 10,
+                z_index: 1031,
+                delay: 2500,
+                timer: 1000,
+                url_target: '_blank',
+                mouse_over: false,
+                animate: {
+                    enter: animIn,
+                    exit: animOut
+                },
+                template: '<div data-notify="container" class="alert alert-dismissible alert-{0} alert--notify" role="alert">' +
+                '<span data-notify="icon"></span> ' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span data-notify="message">{2}</span>' +
+                '<div class="progress" data-notify="progressbar">' +
+                '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+                '</div>' +
+                '<a href="{3}" target="{4}" data-notify="url"></a>' +
+                '<button type="button" aria-hidden="true" data-notify="dismiss" class="alert--notify__close">关闭</button>' +
+                '</div>'
+            });
+        }
+
+    </script>
+</head>
+
+<body data-ma-theme="blue">
+<main class="main">
+    <div class="page-loader" style="display: none;">
+        <div class="page-loader__spinner">
+            <svg viewBox="25 25 50 50">
+                <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle>
+            </svg>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="navigation-trigger hidden-xl-up" data-ma-action="aside-open" data-ma-target=".sidebar">
+            <div class="navigation-trigger__inner">
+                <i class="navigation-trigger__line"></i>
+                <i class="navigation-trigger__line"></i>
+                <i class="navigation-trigger__line"></i>
+            </div>
+        </div>
+
+        <div class="header__logo hidden-sm-down">
+            <h1><a href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/index.html">Material Admin
+                2.0</a></h1>
+        </div>
+
+        <ul class="top-nav">
+            <li class="hidden-xl-up"><a
+                    href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/data-table.html"
+                    data-ma-action="search-open"><i class="zmdi zmdi-search"></i></a></li>
+
+            <li class="dropdown hidden-xs-down">
+                <a href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/data-table.html"
+                   data-toggle="dropdown"><i class="zmdi zmdi-apps"></i></a>
+
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu--block" role="menu">
+                    <div class="row app-shortcuts">
+                        <a class="col-4 app-shortcuts__item"
+                           href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/data-table.html">
+                            <i class="zmdi zmdi-calendar"></i>
+                            <small class="">Calendar</small>
+                            <span class="app-shortcuts__helper bg-red"></span>
+                        </a>
+                        <a class="col-4 app-shortcuts__item"
+                           href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/data-table.html">
+                            <i class="zmdi zmdi-file-text"></i>
+                            <small class="">Files</small>
+                            <span class="app-shortcuts__helper bg-blue"></span>
+                        </a>
+                        <a class="col-4 app-shortcuts__item"
+                           href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/data-table.html">
+                            <i class="zmdi zmdi-email"></i>
+                            <small class="">Email</small>
+                            <span class="app-shortcuts__helper bg-teal"></span>
+                        </a>
+                        <a class="col-4 app-shortcuts__item"
+                           href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/data-table.html">
+                            <i class="zmdi zmdi-trending-up"></i>
+                            <small class="">Reports</small>
+                            <span class="app-shortcuts__helper bg-blue-grey"></span>
+                        </a>
+                        <a class="col-4 app-shortcuts__item"
+                           href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/data-table.html">
+                            <i class="zmdi zmdi-view-headline"></i>
+                            <small class="">News</small>
+                            <span class="app-shortcuts__helper bg-orange"></span>
+                        </a>
+                        <a class="col-4 app-shortcuts__item"
+                           href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/data-table.html">
+                            <i class="zmdi zmdi-image"></i>
+                            <small class="">Gallery</small>
+                            <span class="app-shortcuts__helper bg-light-green"></span>
+                        </a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="dropdown hidden-xs-down">
+                <a href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/data-table.html"
+                   data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+
+                <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-item theme-switch">
+                        Theme Switch
+
+                        <div class="btn-group btn-group-toggle btn-group--colors" data-toggle="buttons">
+                            <label class="btn bg-green active"><input type="radio" value="green" autocomplete="off"
+                                                                      checked=""></label>
+                            <label class="btn bg-blue"><input type="radio" value="blue" autocomplete="off"></label>
+                            <label class="btn bg-red"><input type="radio" value="red" autocomplete="off"></label>
+                            <label class="btn bg-orange"><input type="radio" value="orange" autocomplete="off"></label>
+                            <label class="btn bg-teal"><input type="radio" value="teal" autocomplete="off"></label>
+
+                            <div class="clearfix mt-2"></div>
+
+                            <label class="btn bg-cyan"><input type="radio" value="cyan" autocomplete="off"></label>
+                            <label class="btn bg-blue-grey"><input type="radio" value="blue-grey"
+                                                                   autocomplete="off"></label>
+                            <label class="btn bg-purple"><input type="radio" value="purple" autocomplete="off"></label>
+                            <label class="btn bg-indigo"><input type="radio" value="indigo" autocomplete="off"></label>
+                            <label class="btn bg-brown"><input type="radio" value="brown" autocomplete="off"></label>
+                        </div>
+                    </div>
+                    <a href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/data-table.html"
+                       class="dropdown-item">Fullscreen</a>
+                    <a href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/data-table.html"
+                       class="dropdown-item">Clear Local Storage</a>
+                </div>
+            </li>
+
+        </ul>
+    </header>
+
+    <aside class="sidebar">
+        <div class="scroll-wrapper scrollbar-inner" style="position: relative;">
+            <div class="scrollbar-inner scroll-content scroll-scrolly_visible"
+                 style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 585.5px;">
+
+
+                <ul class="navigation">
+                    <li><a href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/index.html"><i
+                            class="zmdi zmdi-home"></i> Home</a></li>
+
+
+                    <li class="navigation__sub navigation__sub&#45;&#45;toggled">
+                        <a href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/data-table.html"><i
+                                class="zmdi zmdi-swap-alt"></i>系统管理</a>
+
+                        <ul>
+                            <li class="navigation__active"><a
+                                    href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/colors.html">用户管理</a>
+                            </li>
+                            <li>
+                                <a href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/css-animations.html">CSS
+                                    Animations</a></li>
+                            <li><a href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/buttons.html">Buttons</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="navigation__sub navigation__sub&#45;&#45;toggled">
+                        <a href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/data-table.html"><i
+                                class="zmdi zmdi-swap-alt"></i>系统管理</a>
+
+                        <ul>
+                            <li class="navigation__active"><a
+                                    href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/colors.html">用户管理</a>
+                            </li>
+                            <li>
+                                <a href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/css-animations.html">CSS
+                                    Animations</a></li>
+                            <li><a href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/buttons.html">Buttons</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                </ul>
+            </div>
+            <div class="scroll-element scroll-x scroll-scrolly_visible">
+                <div class="scroll-element_outer">
+                    <div class="scroll-element_size"></div>
+                    <div class="scroll-element_track"></div>
+                    <div class="scroll-bar" style="width: 88px;"></div>
+                </div>
+            </div>
+            <div class="scroll-element scroll-y scroll-scrolly_visible">
+                <div class="scroll-element_outer">
+                    <div class="scroll-element_size"></div>
+                    <div class="scroll-element_track"></div>
+                    <div class="scroll-bar" style="height: 515px; top: 0px;"></div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+
+    <section class="content">
+
+        <div layout:fragment="content">page content</div>
+
+        <footer class="footer hidden-xs-down">
+            <p>© Material Admin Responsive. All rights reserved.</p>
+
+            <ul class="nav footer__nav">
+                <a class="nav-link"
+                   href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/data-table.html">Homepage</a>
+
+                <a class="nav-link"
+                   href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/data-table.html">Company</a>
+
+                <a class="nav-link"
+                   href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/data-table.html">Support</a>
+
+                <a class="nav-link"
+                   href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/data-table.html">News</a>
+
+                <a class="nav-link"
+                   href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/data-table.html">Contacts</a>
+            </ul>
+        </footer>
+    </section>
+</main>
+
+<!-- Javascript -->
+<!-- Vendors -->
+<script src="../static/js/popper.min.js" th:src="@{/js/popper.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="../static/js/jquery.scrollbar.min.js" th:src="@{/js/jquery.scrollbar.min.js}"></script>
+<script src="../static/js/jquery-scrollLock.min.js" th:src="@{/js/jquery-scrollLock.min.js}"></script>
+<script src="../static/js/bootstrap-notify.min.js" th:src="@{/js/bootstrap-notify.min.js}"></script>
+
+<!-- App functions and actions -->
+<script src="../static/js/app.min.js" th:src="@{/js/app.min.js}"></script>
+
+<div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+    <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+</div>
+</body>
+
+
+</html>

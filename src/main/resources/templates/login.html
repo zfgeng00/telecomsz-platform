@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="../static/css/material-design-iconic-font.min.css"
+          th:href="@{/css/material-design-iconic-font.min.css}">
+    <link rel="stylesheet" href="../static/css/animate.min.css" th:href="@{/css/animate.min.css}">
+
+    <!-- App styles -->
+    <link rel="stylesheet" href="../static/css/app.min.css" th:href="@{/css/app.min.css}">
+
+
+    <script th:inline="javascript">
+        function reFresh() {
+            $('#validCode').attr('src', 'images/kaptcha.jpg?t=' + Math.random());
+        }
+    </script>
+</head>
+
+<body data-ma-theme="blue">
+<form th:action="@{/login}" method="post">
+    <div class="login">
+        <!-- Login -->
+        <div class="login__block active" id="l-login">
+            <div class="login__block__header">
+                <i class="zmdi zmdi-account-circle"></i>
+                请登录
+
+                <div class="actions actions--inverse login__block__actions">
+                    <div class="dropdown">
+                        <i data-toggle="dropdown" class="zmdi zmdi-more-vert actions__item" aria-expanded="false"></i>
+
+                        <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
+                             style="position: absolute; transform: translate3d(0px, 5px, 0px); top: 0px; left: 0px; will-change: transform;"
+                             x-out-of-boundaries="">
+                            <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-register"
+                               href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/login.html">Create
+                                an
+                                account</a>
+                            <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-forget-password"
+                               href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/login.html">Forgot
+                                password?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="login__block__body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group form-group--centered">
+                            <input type="text" name="username"  class="form-control" placeholder="用户名">
+                            <i class="form-group__bar"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group form-group--centered">
+                            <input type="password" name="password" class="form-control" placeholder="密码">
+                            <i class="form-group__bar"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group form-group--centered">
+                            <input type="text" name="validCode" class="form-control" maxlength="5" minlength="5" placeholder="验证码">
+                            <i class="form-group__bar"></i>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group--centered">
+                            <img id="validCode" style="height: 35px;" th:src="@{/images/kaptcha.jpg}"
+                                 onclick="reFresh();"/>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <button type="submit" class="btn btn--icon login__block__btn"><i class="zmdi zmdi-long-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Register -->
+        <div class="login__block" id="l-register">
+            <div class="login__block__header palette-Blue bg">
+                <i class="zmdi zmdi-account-circle"></i>
+                Create an account
+
+                <div class="actions actions--inverse login__block__actions">
+                    <div class="dropdown">
+                        <i data-toggle="dropdown" class="zmdi zmdi-more-vert actions__item"></i>
+
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-login"
+                               href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/login.html">Already
+                                have
+                                an account?</a>
+                            <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-forget-password"
+                               href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/login.html">Forgot
+                                password?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="login__block__body">
+                <div class="form-group form-group--float form-group--centered">
+                    <input type="text" class="form-control">
+                    <label>Name</label>
+                    <i class="form-group__bar"></i>
+                </div>
+
+                <div class="form-group form-group--float form-group--centered">
+                    <input type="text" class="form-control">
+                    <label>Email Address</label>
+                    <i class="form-group__bar"></i>
+                </div>
+
+                <div class="form-group form-group--float form-group--centered">
+                    <input type="password" class="form-control">
+                    <label>Password</label>
+                    <i class="form-group__bar"></i>
+                </div>
+
+                <div class="form-group">
+                    <label class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Accept the license agreement</span>
+                    </label>
+                </div>
+
+                <button href="index.html" class="btn btn--icon login__block__btn"><i class="zmdi zmdi-check"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Forgot Password -->
+        <div class="login__block" id="l-forget-password">
+            <div class="login__block__header palette-Purple bg">
+                <i class="zmdi zmdi-account-circle"></i>
+                Forgot Password?
+
+                <div class="actions actions--inverse login__block__actions">
+                    <div class="dropdown">
+                        <i data-toggle="dropdown" class="zmdi zmdi-more-vert actions__item"></i>
+
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-login"
+                               href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/login.html">Already
+                                have
+                                an account?</a>
+                            <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-register"
+                               href="http://byrushan.com/projects/material-admin/app/2.1/jquery/bs4/login.html">Create
+                                an
+                                account</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="login__block__body">
+                <p class="mt-4">Lorem ipsum dolor fringilla enim feugiat commodo sed ac lacus.</p>
+
+                <div class="form-group form-group--float form-group--centered">
+                    <input type="text" class="form-control">
+                    <label>Email Address</label>
+                    <i class="form-group__bar"></i>
+                </div>
+
+                <button href="index.html" class="btn btn--icon login__block__btn"><i class="zmdi zmdi-check"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</form>
+<!-- Javascript -->
+<!-- Vendors -->
+<script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="../static/js/popper.min.js" th:src="@{/js/popper.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="../static/js/bootstrap-notify.min.js" th:src="@{/js/bootstrap-notify.min.js}"></script>
+<script src="../static/js/nofity.js" th:src="@{/js/nofity.js}"></script>
+
+<!-- App functions and actions -->
+<!--<script src="../static/js/app.min.js" th:src="@{/js/app.min.js}"></script>-->
+
+
+<script th:inline="javascript">
+    var error = [[${session.SPRING_SECURITY_LAST_EXCEPTION != null}]];
+    var message = [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]];
+
+    if (error) {
+        notify('登录失败', message, 'top', 'center', 'fa fa-comments', 'danger', 'animated fadeInDown', 'animated fadeOutUp');
+    }
+
+</script>
+</body>
+</html>
