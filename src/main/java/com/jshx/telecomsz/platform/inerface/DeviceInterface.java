@@ -36,8 +36,15 @@ public interface DeviceInterface {
      * @return 注册设备信息
      */
     @RequestMapping(value = "/telecomsz/device//register", method = RequestMethod.POST)
-    Device register(@RequestParam(value = "deviceType") String deviceType,
-                    @RequestParam(value = "deviceName") String deviceName,
+    Device register(@RequestParam(value = "manufacturerId", required = false) String manufacturerId,
+                    @RequestParam(value = "manufacturerName", required = false) String manufacturerName,
+                    @RequestParam(value = "deviceModel", required = false) String deviceModel,
+                    @RequestParam(value = "endUserId", required = false) String endUserId,
+                    @RequestParam(value = "psk", required = false) String psk,
+                    @RequestParam(value = "timeout", required = false) String timeout,
+                    @RequestParam(value = "location", required = false) String location,
+                    @RequestParam(value = "deviceType", required = false) String deviceType,
+                    @RequestParam(value = "deviceName", required = false) String deviceName,
                     @RequestParam(value = "deviceNo") String deviceNo);
 
     /**
