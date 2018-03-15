@@ -44,10 +44,17 @@ public class PlatformInerfaceController {
      * @return 注册设备信息
      */
     @RequestMapping(value = "/device/register", method = RequestMethod.POST)
-    public Device register(@RequestParam(value = "deviceType") String deviceType,
-                           @RequestParam(value = "deviceName") String deviceName,
+    public Device register(@RequestParam(value = "manufacturerId", required = false) String manufacturerId,
+                           @RequestParam(value = "manufacturerName", required = false) String manufacturerName,
+                           @RequestParam(value = "deviceModel", required = false) String deviceModel,
+                           @RequestParam(value = "endUserId", required = false) String endUserId,
+                           @RequestParam(value = "psk", required = false) String psk,
+                           @RequestParam(value = "timeout", required = false) String timeout,
+                           @RequestParam(value = "location", required = false) String location,
+                           @RequestParam(value = "deviceType", required = false) String deviceType,
+                           @RequestParam(value = "deviceName", required = false) String deviceName,
                            @RequestParam(value = "deviceNo") String deviceNo) {
-        return deviceInterface.register(deviceType, deviceName, deviceNo);
+        return deviceInterface.register(manufacturerId, manufacturerName, deviceModel, endUserId, psk, timeout, location, deviceType, deviceName, deviceNo);
     }
 
     /**
