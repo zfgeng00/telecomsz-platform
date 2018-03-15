@@ -1,0 +1,340 @@
+.surroundings {
+    margin-top: -52vmin;
+}
+
+.levels {
+    margin-top: -16vmin;
+}
+
+.level::after {
+    top: -.5em;
+    left: -1em;
+}
+
+.level.level--current {
+    -webkit-transform: translateZ(35vmin) rotateX(-69.75deg) rotateY(-45deg) rotateZ(14deg);
+    transform: translateZ(35vmin) rotateX(-69.75deg) rotateY(-45deg) rotateZ(14deg);
+}
+
+.level:not(:first-child) {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.level--2 {
+    -webkit-transform: translateZ(4vmin);
+    transform: translateZ(4vmin);
+}
+
+.level--3 {
+    -webkit-transform: translateZ(8vmin);
+    transform: translateZ(8vmin);
+}
+
+.level--4 {
+    -webkit-transform: translateZ(12vmin);
+    transform: translateZ(12vmin);
+}
+
+.level--5 {
+    -webkit-transform: translateZ(16vmin);
+    transform: translateZ(16vmin);
+}
+
+.level--6 {
+    -webkit-transform: translateZ(20vmin);
+    transform: translateZ(20vmin);
+}
+
+.level--7 {
+    -webkit-transform: translateZ(24vmin);
+    transform: translateZ(24vmin);
+}
+
+.level--8 {
+    -webkit-transform: translateZ(28vmin);
+    transform: translateZ(28vmin);
+}
+
+.level--9 {
+    -webkit-transform: translateZ(32vmin);
+    transform: translateZ(32vmin);
+}
+
+.level--10 {
+    -webkit-transform: translateZ(36vmin);
+    transform: translateZ(36vmin);
+}
+
+.level--11 {
+    -webkit-transform: translateZ(40vmin);
+    transform: translateZ(40vmin);
+}
+
+.level--12 {
+    -webkit-transform: translateZ(44vmin);
+    transform: translateZ(44vmin);
+}
+
+.level--13 {
+    -webkit-transform: translateZ(48vmin);
+    transform: translateZ(48vmin);
+}
+
+.level--14 {
+    -webkit-transform: translateZ(52vmin);
+    transform: translateZ(52vmin);
+}
+
+.level--15 {
+    -webkit-transform: translateZ(56vmin);
+    transform: translateZ(56vmin);
+}
+
+.level--16 {
+    -webkit-transform: translateZ(60vmin);
+    transform: translateZ(60vmin);
+}
+
+.level--17 {
+    -webkit-transform: translateZ(64vmin);
+    transform: translateZ(64vmin);
+}
+
+.level--18 {
+    -webkit-transform: translateZ(68vmin);
+    transform: translateZ(68vmin);
+}
+
+.level--19 {
+    -webkit-transform: translateZ(72vmin);
+    transform: translateZ(72vmin);
+}
+
+/* Selection transitions */
+
+.levels--selected-1 .level:not(.level--1),
+.levels--selected-2 .level:not(.level--2),
+.levels--selected-3 .level:not(.level--3),
+.levels--selected-4 .level:not(.level--4),
+.levels--selected-5 .level:not(.level--5),
+.levels--selected-6 .level:not(.level--6),
+.levels--selected-7 .level:not(.level--7),
+.levels--selected-8 .level:not(.level--8),
+.levels--selected-9 .level:not(.level--9),
+.levels--selected-10 .level:not(.level--10),
+.levels--selected-11 .level:not(.level--11),
+.levels--selected-12 .level:not(.level--12),
+.levels--selected-13 .level:not(.level--13),
+.levels--selected-14 .level:not(.level--14),
+.levels--selected-15 .level:not(.level--15),
+.levels--selected-16 .level:not(.level--16),
+.levels--selected-17 .level:not(.level--17),
+.levels--selected-18 .level:not(.level--18),
+.levels--selected-19 .level:not(.level--19) {
+    opacity: 0;
+    pointer-events: none;
+    /* fade out all others */
+}
+
+/* Other levels */
+
+.level--current ~ .level {
+    -webkit-transform: translateZ(90vmin);
+    transform: translateZ(90vmin);
+}
+
+.levels--selected-2 .level--1,
+.levels--selected-3 .level--1,
+.levels--selected-4 .level--1,
+.levels--selected-5 .level--1,
+.levels--selected-6 .level--1,
+.levels--selected-7 .level--1,
+.levels--selected-8 .level--1,
+.levels--selected-9 .level--1,
+.levels--selected-10 .level--1,
+.levels--selected-11 .level--1,
+.levels--selected-12 .level--1,
+.levels--selected-13 .level--1,
+.levels--selected-14 .level--1,
+.levels--selected-15 .level--1,
+.levels--selected-16 .level--1,
+.levels--selected-17 .level--1,
+.levels--selected-18 .level--1,
+.levels--selected-19 .level--1,
+.levels--selected-20 .level--1,
+.levels--selected-3 .level--2,
+.levels--selected-4 .level--2,
+.levels--selected-5 .level--2,
+.levels--selected-6 .level--2,
+.levels--selected-7 .level--2,
+.levels--selected-8 .level--2,
+.levels--selected-9 .level--2,
+.levels--selected-10 .level--2,
+.levels--selected-11 .level--2,
+.levels--selected-12 .level--2,
+.levels--selected-13 .level--2,
+.levels--selected-14 .level--2,
+.levels--selected-15 .level--2,
+.levels--selected-16 .level--2,
+.levels--selected-17 .level--2,
+.levels--selected-18 .level--2,
+.levels--selected-19 .level--2,
+.levels--selected-20 .level--2,
+.levels--selected-4 .level--3,
+.levels--selected-5 .level--3,
+.levels--selected-6 .level--3,
+.levels--selected-7 .level--3,
+.levels--selected-8 .level--3,
+.levels--selected-9 .level--3,
+.levels--selected-10 .level--3,
+.levels--selected-11 .level--3,
+.levels--selected-12 .level--3,
+.levels--selected-13 .level--3,
+.levels--selected-14 .level--3,
+.levels--selected-15 .level--3,
+.levels--selected-16 .level--3,
+.levels--selected-17 .level--3,
+.levels--selected-18 .level--3,
+.levels--selected-19 .level--3,
+.levels--selected-20 .level--3,
+.levels--selected-5 .level--4,
+.levels--selected-6 .level--4,
+.levels--selected-7 .level--4,
+.levels--selected-8 .level--4,
+.levels--selected-9 .level--4,
+.levels--selected-10 .level--4,
+.levels--selected-11 .level--4,
+.levels--selected-12 .level--4,
+.levels--selected-13 .level--4,
+.levels--selected-14 .level--4,
+.levels--selected-15 .level--4,
+.levels--selected-16 .level--4,
+.levels--selected-17 .level--4,
+.levels--selected-18 .level--4,
+.levels--selected-19 .level--4,
+.levels--selected-20 .level--4,
+.levels--selected-6 .level--5,
+.levels--selected-7 .level--5,
+.levels--selected-8 .level--5,
+.levels--selected-9 .level--5,
+.levels--selected-10 .level--5,
+.levels--selected-11 .level--5,
+.levels--selected-12 .level--5,
+.levels--selected-13 .level--5,
+.levels--selected-14 .level--5,
+.levels--selected-15 .level--5,
+.levels--selected-16 .level--5,
+.levels--selected-17 .level--5,
+.levels--selected-18 .level--5,
+.levels--selected-19 .level--5,
+.levels--selected-20 .level--5,
+.levels--selected-7 .level--6,
+.levels--selected-8 .level--6,
+.levels--selected-9 .level--6,
+.levels--selected-10 .level--6,
+.levels--selected-11 .level--6,
+.levels--selected-12 .level--6,
+.levels--selected-13 .level--6,
+.levels--selected-14 .level--6,
+.levels--selected-15 .level--6,
+.levels--selected-16 .level--6,
+.levels--selected-17 .level--6,
+.levels--selected-18 .level--6,
+.levels--selected-19 .level--6,
+.levels--selected-20 .level--6,
+.levels--selected-8 .level--7,
+.levels--selected-9 .level--7,
+.levels--selected-10 .level--7,
+.levels--selected-11 .level--7,
+.levels--selected-12 .level--7,
+.levels--selected-13 .level--7,
+.levels--selected-14 .level--7,
+.levels--selected-15 .level--7,
+.levels--selected-16 .level--7,
+.levels--selected-17 .level--7,
+.levels--selected-18 .level--7,
+.levels--selected-19 .level--7,
+.levels--selected-20 .level--7,
+.levels--selected-9 .level--8,
+.levels--selected-10 .level--8,
+.levels--selected-11 .level--8,
+.levels--selected-12 .level--8,
+.levels--selected-13 .level--8,
+.levels--selected-14 .level--8,
+.levels--selected-15 .level--8,
+.levels--selected-16 .level--8,
+.levels--selected-17 .level--8,
+.levels--selected-18 .level--8,
+.levels--selected-19 .level--8,
+.levels--selected-20 .level--8,
+.levels--selected-10 .level--9,
+.levels--selected-11 .level--9,
+.levels--selected-12 .level--9,
+.levels--selected-13 .level--9,
+.levels--selected-14 .level--9,
+.levels--selected-15 .level--9,
+.levels--selected-16 .level--9,
+.levels--selected-17 .level--9,
+.levels--selected-18 .level--9,
+.levels--selected-19 .level--9,
+.levels--selected-20 .level--9,
+.levels--selected-11 .level--10,
+.levels--selected-12 .level--10,
+.levels--selected-13 .level--10,
+.levels--selected-14 .level--10,
+.levels--selected-15 .level--10,
+.levels--selected-16 .level--10,
+.levels--selected-17 .level--10,
+.levels--selected-18 .level--10,
+.levels--selected-19 .level--10,
+.levels--selected-20 .level--10,
+.levels--selected-12 .level--11,
+.levels--selected-13 .level--11,
+.levels--selected-14 .level--11,
+.levels--selected-15 .level--11,
+.levels--selected-16 .level--11,
+.levels--selected-17 .level--11,
+.levels--selected-18 .level--11,
+.levels--selected-19 .level--11,
+.levels--selected-20 .level--11,
+.levels--selected-13 .level--12,
+.levels--selected-14 .level--12,
+.levels--selected-15 .level--12,
+.levels--selected-16 .level--12,
+.levels--selected-17 .level--12,
+.levels--selected-18 .level--12,
+.levels--selected-19 .level--12,
+.levels--selected-20 .level--12,
+.levels--selected-14 .level--13,
+.levels--selected-15 .level--13,
+.levels--selected-16 .level--13,
+.levels--selected-17 .level--13,
+.levels--selected-18 .level--13,
+.levels--selected-19 .level--13,
+.levels--selected-20 .level--13,
+.levels--selected-15 .level--14,
+.levels--selected-16 .level--14,
+.levels--selected-17 .level--14,
+.levels--selected-18 .level--14,
+.levels--selected-19 .level--14,
+.levels--selected-20 .level--14,
+.levels--selected-16 .level--15,
+.levels--selected-17 .level--15,
+.levels--selected-18 .level--15,
+.levels--selected-19 .level--15,
+.levels--selected-20 .level--15,
+.levels--selected-17 .level--16,
+.levels--selected-18 .level--16,
+.levels--selected-19 .level--16,
+.levels--selected-20 .level--16,
+.levels--selected-18 .level--17,
+.levels--selected-19 .level--17,
+.levels--selected-20 .level--17,
+.levels--selected-19 .level--18,
+.levels--selected-20 .level--18,
+.levels--selected-20 .level--19 {
+    -webkit-transform: translateZ(-60vmin);
+    transform: translateZ(-60vmin);
+}
