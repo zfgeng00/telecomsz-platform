@@ -560,7 +560,7 @@ function drag(obj, ac, oParent, cb) {
         return false;
     }
     var sent = {
-        l: oParent.offset().left,
+        l: 0, //oParent.offset().left,
         r: oParent.outerWidth() - obj.outerWidth(),
         t: oParent.offset().top,
         b: oParent.outerHeight() - obj.outerHeight(),
