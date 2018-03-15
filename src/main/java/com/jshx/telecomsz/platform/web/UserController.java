@@ -1,10 +1,9 @@
 package com.jshx.telecomsz.platform.web;
 
+import com.jshx.telecomsz.platform.inerface.LoginInterface;
 import com.jshx.telecomsz.platform.model.DataTableCriterias;
 import com.jshx.telecomsz.platform.model.PageData;
 import com.jshx.telecomsz.platform.model.User;
-import com.jshx.telecomsz.platform.inerface.LoginInterface;
-import com.jshx.telecomsz.platform.inerface.PlatformInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UserController extends BaseController {
 
     @Autowired
-    private PlatformInterface platformInterface;
-
-
-    @Autowired
     private LoginInterface loginInterface;
 
 
@@ -43,10 +38,6 @@ public class UserController extends BaseController {
 
         User login = loginInterface.login(username, msisdn);
 
-        logger.info("username=>{}", username);
-        logger.info("msisdn=>{}", msisdn);
-        logger.info("name=>{}", name);
-        logger.info("interface=>{}", platformInterface.test(username));
         return null;
     }
 
