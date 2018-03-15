@@ -268,8 +268,19 @@
         <!--<input id="sort-by-name" class="label__checkbox" type="checkbox" aria-label="Show alphabetically"/>-->
         <!--<label class="label__text">排序</label>-->
         <!--</span>-->
-        <ul id="html_seo" class="list grouped-by-category">
+        <ul id="html_seo" class="list grouped-by-category" th:each="floor,statFloor: ${floors}">
             <!-- 分类搜索导航列表加载处 -->
+            <div th:each=" point,pointStat:${floor.getPoints()}" th:remove="tag">
+                <li class="list__item" th:data-floor="${floor.name}" th:data-level="${statFloor.count}"
+                    th:data-category="${point.category}"
+                    th:data-space="${statFloor.count + '-' + pointStat.count}"><a
+                        href="#" class="list__link" th:text="${point.name}">名称</a>
+                </li>
+
+            </div>
+
+
+
         </ul>
     </aside>
 </div>
@@ -307,10 +318,10 @@
 <!--</div>-->
 
 <!--</div>-->
-<script id="tpl_floor" type="text/html">
+<!--<script id="tpl_floor" type="text/html">
     <%for(var i = 0; i < data.length; i++) {%>
     <%var lInx = i + 1; level = data[i];%>
-    <div class="level level--<%=lInx%>" data-floor="<%=level.floor%>" aria-label="">
+    <div class="level level&#45;&#45;<%=lInx%>" data-floor="<%=level.floor%>" aria-label="">
         <%if(lInx==1){%>
         <svg width="100%" height="100%" viewBox="0 0 1920 1280" preserveAspectRatio="xMidYMid meet">
             <rect x="6.581" y="48.708" opacity="0.7" fill="#A0A0A0" width="1907.912" height="1180.922"/>
@@ -928,7 +939,7 @@
             </g>
         </svg>
         <%}else{%>
-        <!--<img width="100%" height="100%" src="<%=level.src%>">-->
+        &lt;!&ndash;<img width="100%" height="100%" src="<%=level.src%>">&ndash;&gt;
         <%}%>
         <div class="level__pins">
             <%var points = level.points%>
@@ -964,7 +975,7 @@
         <div class="allDiv uf">
             <div class="uf-f uf uf-ver">
                 <div class="uf">
-                    <!--<input readonly class="content__item-title" value="<%=point.name%>">-->
+                    &lt;!&ndash;<input readonly class="content__item-title" value="<%=point.name%>">&ndash;&gt;
                     <div readonly contenteditable="false" class="content__item-title"><%=point.name%></div>
                     <div class="content__status">正常</div>
                 </div>
@@ -992,7 +1003,7 @@
     </li>
     <%}%>
     <%}%>
-</script>
+</script>-->
 <script>
     var data = [
         {
@@ -1174,7 +1185,7 @@
     ];
     if (sessionStorage.getItem("dataStr1")) { //本地暂存数据 todo renew
         data = JSON.parse(sessionStorage.getItem("dataStr1"));
-//        console.log(JSON.stringify(data));
+        //        console.log(JSON.stringify(data));
     }
     tplStart(data);
 </script>
