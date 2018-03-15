@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en" class="no-js" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,14 +12,14 @@
     <!--<link rel="shortcut icon" href="favicon.ico">-->
     <link rel="stylesheet" type="text/css" href="../static/3d/css/normalize.css" th:href="@{/3d/css/normalize.css}"/>
     <link rel="stylesheet" type="text/css" href="../static/3d/css/style.css" th:href="@{/3d/css/style.css}"/>
-    <link rel="stylesheet" type="text/css" href="../static/3d/css/levels19.css" th:href="@{/3d/css/levels19.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/3d/css/levels17.css" th:href="@{/3d/css/levels17.css}"/>
     <script src="../static/3d/js/modernizr-custom.js" th:src="@{/3d/js/modernizr-custom.js}"></script>
     <script src="../static/3d/js/classie.js" th:src="@{/3d/js/classie.js}"></script>
     <script src="../static/3d/js/list.min.js" th:src="@{/3d/js/list.min.js}"></script>
     <script src="../static/3d/js/jquery.js" th:src="@{/3d/js/jquery.js}"></script>
     <script src="../static/3d/js/jquery.mousewheel.js" th:src="@{/3d/js/jquery.mousewheel.js}"></script>
     <script src="../static/3d/js/layer/layer.js" th:src="@{/3d/js/layer/layer.js}"></script>
-    <script src="../static/3d/js/template.js" th:src="@{/3d/js/layer/layer.js}"></script>
+    <script src="../static/3d/js/template.js" th:src="@{/3d/js/template.js}"></script>
     <script src="../static/3d/js/extra.js" th:src="@{/3d/js/extra.js}"></script>
     <script src="../static/3d/js/main.js" th:src="@{/3d/js/main.js}"></script>
     <script src="../static/3d/js/common.js" th:src="@{/3d/js/common.js}"></script>
@@ -182,7 +182,7 @@
         </header>
         <div class="mall">
             <div class="surroundings">
-                <img class="surroundings__map" src="../static/3d/img/floor1/BG.svg" alt="Surroundings"/>
+                <!--<img class="surroundings__map" src="img/floor1/BG.svg" alt="Surroundings"/>-->
             </div>
             <div id="html_floor" class="levels">
                 <!-- 楼层加载处 -->
@@ -313,7 +313,7 @@
     <%var lInx = i + 1; level = data[i];%>
     <div class="level level--<%=lInx%>" data-floor="<%=level.floor%>" aria-label="">
 
-        <img width="100%" height="100%" src="<%=level.src%>">
+        <!--<img width="100%" height="100%" src="<%=level.src%>">-->
 
         <div class="level__pins">
             <%var points = level.points%>
@@ -621,20 +621,7 @@
         },
         {
             "floor": "L13",
-            "src": "../static/3d/img/floor1/L5.svg",
-            "points": [
-                {
-                    "category": "4",
-                    "name": "电量监测",
-                    "desc": "状态良好",
-                    "left": 23.30675039246468,
-                    "top": 29.457927786499212
-                }
-            ]
-        },
-        {
-            "floor": "L14",
-            "src": "../static/3d/img/floor1/L4.svg",
+            "src": "../static/3d/img/floor1/L1.svg",
             "points": [
                 {
                     "category": "4",

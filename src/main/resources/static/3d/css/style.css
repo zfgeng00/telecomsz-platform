@@ -223,6 +223,12 @@ button:focus {
     transform-style: preserve-3d;
 }
 
+.surroundings {
+    background: url("../img/floor1/BG.svg") no-repeat left top;
+    background-size: 100%;
+    opacity: 0.3;
+}
+
 .surroundings,
 .levels {
     -webkit-transform: rotateX(72deg) rotateZ(-45deg) translateZ(-15vmin);
@@ -284,26 +290,36 @@ button:focus {
 .level--2 {
     -webkit-transform: translateZ(8vmin);
     transform: translateZ(8vmin);
+    background: url("../img/floor1/L1.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--3 {
     -webkit-transform: translateZ(16vmin);
     transform: translateZ(16vmin);
+    background: url("../img/floor1/L2.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--4 {
     -webkit-transform: translateZ(24vmin);
     transform: translateZ(24vmin);
+    background: url("../img/floor1/L3.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--5 {
     -webkit-transform: translateZ(32vmin);
     transform: translateZ(32vmin);
+    background: url("../img/floor1/L4.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--6 {
     -webkit-transform: translateZ(40vmin);
     transform: translateZ(40vmin);
+    background: url("../img/floor1/L5.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 /* Selection transitions */

@@ -1,14 +1,14 @@
 .surroundings {
-    margin-top: -52vmin;
+    margin-top: -48vmin;
 }
 
 .levels {
-    margin-top: -16vmin;
+    margin-top: -12vmin;
 }
 
 .level::after {
-    top: -.5em;
-    left: -1em;
+    top: 4.5em;
+    left: -2em;
 }
 
 .level.level--current {
@@ -22,94 +22,121 @@
     left: 0;
 }
 
+.level--1 {
+    background: url("../img/floor2/L5.svg") no-repeat left top;
+    background-size: 100%;
+}
+
 .level--2 {
-    -webkit-transform: translateZ(4vmin);
-    transform: translateZ(4vmin);
+    -webkit-transform: translateZ(5vmin);
+    transform: translateZ(5vmin);
+    background: url("../img/floor2/L5.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--3 {
-    -webkit-transform: translateZ(8vmin);
-    transform: translateZ(8vmin);
+    -webkit-transform: translateZ(10vmin);
+    transform: translateZ(10vmin);
+    background: url("../img/floor2/L5.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--4 {
-    -webkit-transform: translateZ(12vmin);
-    transform: translateZ(12vmin);
+    -webkit-transform: translateZ(15vmin);
+    transform: translateZ(15vmin);
+    background: url("../img/floor2/L5.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--5 {
-    -webkit-transform: translateZ(16vmin);
-    transform: translateZ(16vmin);
+    -webkit-transform: translateZ(20vmin);
+    transform: translateZ(20vmin);
+    background: url("../img/floor2/L5.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--6 {
-    -webkit-transform: translateZ(20vmin);
-    transform: translateZ(20vmin);
+    -webkit-transform: translateZ(25vmin);
+    transform: translateZ(25vmin);
+    background: url("../img/floor2/L5.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--7 {
-    -webkit-transform: translateZ(24vmin);
-    transform: translateZ(24vmin);
+    -webkit-transform: translateZ(30vmin);
+    transform: translateZ(30vmin);
+    background: url("../img/floor2/L5.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--8 {
-    -webkit-transform: translateZ(28vmin);
-    transform: translateZ(28vmin);
+    -webkit-transform: translateZ(35vmin);
+    transform: translateZ(35vmin);
+    background: url("../img/floor2/L5.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--9 {
-    -webkit-transform: translateZ(32vmin);
-    transform: translateZ(32vmin);
+    -webkit-transform: translateZ(40vmin);
+    transform: translateZ(40vmin);
+    background: url("../img/floor2/L5.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--10 {
-    -webkit-transform: translateZ(36vmin);
-    transform: translateZ(36vmin);
+    -webkit-transform: translateZ(45vmin);
+    transform: translateZ(45vmin);
+    background: url("../img/floor2/L9.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--11 {
-    -webkit-transform: translateZ(40vmin);
-    transform: translateZ(40vmin);
+    -webkit-transform: translateZ(50vmin);
+    transform: translateZ(50vmin);
+    background: url("../img/floor2/L9.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--12 {
-    -webkit-transform: translateZ(44vmin);
-    transform: translateZ(44vmin);
+    -webkit-transform: translateZ(55vmin);
+    transform: translateZ(55vmin);
+    background: url("../img/floor2/L9.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--13 {
-    -webkit-transform: translateZ(48vmin);
-    transform: translateZ(48vmin);
+    -webkit-transform: translateZ(60vmin);
+    transform: translateZ(60vmin);
+    background: url("../img/floor2/L9.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--14 {
-    -webkit-transform: translateZ(52vmin);
-    transform: translateZ(52vmin);
+    -webkit-transform: translateZ(65vmin);
+    transform: translateZ(65vmin);
+    background: url("../img/floor2/L9.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--15 {
-    -webkit-transform: translateZ(56vmin);
-    transform: translateZ(56vmin);
+    -webkit-transform: translateZ(70vmin);
+    transform: translateZ(70vmin);
+    background: url("../img/floor2/L9.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--16 {
-    -webkit-transform: translateZ(60vmin);
-    transform: translateZ(60vmin);
+    -webkit-transform: translateZ(75vmin);
+    transform: translateZ(75vmin);
+    background: url("../img/floor2/L9.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 .level--17 {
-    -webkit-transform: translateZ(64vmin);
-    transform: translateZ(64vmin);
-}
-
-.level--18 {
-    -webkit-transform: translateZ(68vmin);
-    transform: translateZ(68vmin);
-}
-
-.level--19 {
-    -webkit-transform: translateZ(72vmin);
-    transform: translateZ(72vmin);
+    -webkit-transform: translateZ(80vmin);
+    transform: translateZ(80vmin);
+    background: url("../img/floor2/L9.svg") no-repeat left top;
+    background-size: 100%;
 }
 
 /* Selection transitions */
