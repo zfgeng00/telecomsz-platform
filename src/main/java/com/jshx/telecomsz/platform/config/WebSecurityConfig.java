@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/css/**", "/js/**", "/img/**", "/fonts/**", "/i/**",
-                        "/images/kaptcha.jpg", "/charge/charge-success/**").permitAll()
+                        "/images/kaptcha.jpg", "/interface/**").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").permitAll().authenticationDetailsSource
                 (authenticationDetailsSource).failureUrl("/login?error=true")
