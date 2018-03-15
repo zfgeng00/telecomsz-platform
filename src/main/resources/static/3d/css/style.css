@@ -893,6 +893,11 @@ button:focus {
     pointer-events: auto;
     transition: transform 300ms;
     opacity: .8;
+    display: none;
+}
+
+.level__pins.level__pins--active .pin{
+    display: block;
 }
 
 /*.pin.pin--active {*/

@@ -1,9 +1,9 @@
 .surroundings {
-    margin-top: -48vmin;
+    margin-top: -49vmin;
 }
 
 .levels {
-    margin-top: -12vmin;
+    margin-top: -13vmin;
 }
 
 .level::after {
@@ -87,56 +87,104 @@
     -webkit-transform: translateZ(45vmin);
     transform: translateZ(45vmin);
     background: url("../img/floor2/L9.svg") no-repeat left top;
-    background-size: 100%;
+    background-size: contain;
+    transition: transform 1s, opacity 1s, background 1s;
+}
+
+.level--10.level--current {
+    background: url("../img/floor2/L9.svg") no-repeat center -10vmin;
+    background-size: contain;
 }
 
 .level--11 {
     -webkit-transform: translateZ(50vmin);
     transform: translateZ(50vmin);
     background: url("../img/floor2/L9.svg") no-repeat left top;
-    background-size: 100%;
+    background-size: contain;
+    transition: transform 1s, opacity 1s, background 1s;
+}
+
+.level--11.level--current {
+    background: url("../img/floor2/L9.svg") no-repeat center -10vmin;
+    background-size: contain;
 }
 
 .level--12 {
     -webkit-transform: translateZ(55vmin);
     transform: translateZ(55vmin);
     background: url("../img/floor2/L9.svg") no-repeat left top;
-    background-size: 100%;
+    background-size: contain;
+    transition: transform 1s, opacity 1s, background 1s;
+}
+
+.level--12.level--current {
+    background: url("../img/floor2/L9.svg") no-repeat center -10vmin;
+    background-size: contain;
 }
 
 .level--13 {
     -webkit-transform: translateZ(60vmin);
     transform: translateZ(60vmin);
     background: url("../img/floor2/L9.svg") no-repeat left top;
-    background-size: 100%;
+    background-size: contain;
+    transition: transform 1s, opacity 1s, background 1s;
+}
+
+.level--13.level--current {
+    background: url("../img/floor2/L9.svg") no-repeat center -10vmin;
+    background-size: contain;
 }
 
 .level--14 {
     -webkit-transform: translateZ(65vmin);
     transform: translateZ(65vmin);
     background: url("../img/floor2/L9.svg") no-repeat left top;
-    background-size: 100%;
+    background-size: contain;
+    transition: transform 1s, opacity 1s, background 1s;
+}
+
+.level--14.level--current {
+    background: url("../img/floor2/L9.svg") no-repeat center -10vmin;
+    background-size: contain;
 }
 
 .level--15 {
     -webkit-transform: translateZ(70vmin);
     transform: translateZ(70vmin);
     background: url("../img/floor2/L9.svg") no-repeat left top;
-    background-size: 100%;
+    background-size: contain;
+    transition: transform 1s, opacity 1s, background 1s;
+}
+
+.level--15.level--current {
+    background: url("../img/floor2/L9.svg") no-repeat center -10vmin;
+    background-size: contain;
 }
 
 .level--16 {
     -webkit-transform: translateZ(75vmin);
     transform: translateZ(75vmin);
     background: url("../img/floor2/L9.svg") no-repeat left top;
-    background-size: 100%;
+    background-size: contain;
+    transition: transform 1s, opacity 1s, background 1s;
+}
+
+.level--16.level--current {
+    background: url("../img/floor2/L9.svg") no-repeat center -10vmin;
+    background-size: contain;
 }
 
 .level--17 {
     -webkit-transform: translateZ(80vmin);
     transform: translateZ(80vmin);
     background: url("../img/floor2/L9.svg") no-repeat left top;
-    background-size: 100%;
+    background-size: contain;
+    transition: transform 1s, opacity 1s, background 1s;
+}
+
+.level--17.level--current {
+    background: url("../img/floor2/L9.svg") no-repeat center -10vmin;
+    background-size: contain;
 }
 
 /* Selection transitions */
