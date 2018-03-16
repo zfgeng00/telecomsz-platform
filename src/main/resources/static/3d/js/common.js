@@ -1,14 +1,19 @@
 var bIndex; //本地数据键名
-
+var $left, $top;
 $(function () {
 
     mainInit(window); //初始化main
 
     bIndex = $("body").data("building");
 
+    $left = $(".inputGroup input[name='left']");
+    $top = $(".inputGroup input[name='top']");
+
     // 编辑
     $(document).on('click', '.desc_edit', function (e) {
-        var $this = $(e.target), $desc_item = $this.parents(".content__item"), $desc_title = $desc_item.find(".content__item-title"), $desc_type = $desc_item.find("select"), $desc_con = $desc_item.find(".content__desc");
+        var $this = $(e.target), $desc_item = $this.parents(".content__item"),
+            $desc_title = $desc_item.find(".content__item-title"), $desc_type = $desc_item.find("select"),
+            $desc_con = $desc_item.find(".content__desc");
         var obj = $(".pin.pin--active"), oParent = obj.parent();
         console.log(obj);
         var floor_index = $(".level--current").index(), point_index = obj.index();
@@ -160,61 +165,91 @@ $(function () {
 //添加新的传感器节点
 function addNew(ele, ev) {
     var $e = $(ele);
-    if ($e.hasClass('disable'))return;
+    if ($e.hasClass('disable')) return;
     $e.addClass('disable');
     $("#addNew .inputGroup").slideDown();
     $("#addNew .close_add").slideDown();
     $("#addNew .btnG .btn2").slideDown();
     $(".mallnav").addClass("mallnav--hidden");
-    $(".inputGroup input[name='name']").val('New');
-    $(".inputGroup input[name='desc']").val('');
-    $(".inputGroup input[name='x']").val(101);
-    $(".inputGroup input[name='y']").val(36);
-    var name = $(".inputGroup input[name='name']").val();
-    var x = $(".inputGroup input[name='x']").val();
-    var y = $(".inputGroup input[name='y']").val();
-    var ht = '<a title="可拖拽来移动位置" class="pin" style="left:' + x + 'vmin;top:' + y + 'vmin;" data-category="0" href="javascript:void(0)"aria-label="">' +
-        '</a>';
+    $left.val(101);
+    $top.val(36);
+    var x = $left.val();
+    var y = $top.val();
+    var ht = '<a title="可拖拽来移动位置" class="pin" style="left:' + x + 'vmin;top:' + y + 'vmin;" data-category="0" href="javascript:void(0)"></a>';
     $('.level__pins--active').append(ht);
     var obj = $(".level__pins.level__pins--active .pin:last-child"), oParent = obj.parent();
     drag(obj, true, oParent, function (x, y) {
-        $(".inputGroup input[name='x']").val(x);
-        $(".inputGroup input[name='y']").val(y);
+        $left.val(x);
+        $top.val(y);
     });
 }
 
 //确定添加
 function addSubmit() {
     var obj = $(".level__pins.level__pins--active .pin:last-child");
-    var floor_index = $(".level--current").index();
-    var name = $(".inputGroup input[name='name']").val();
-    var category = $(".inputGroup select[name='type']").val();
-    var desc = $(".inputGroup input[name='desc']").val();
-    var x = $(".inputGroup input[name='x']").val();
-    var y = $(".inputGroup input[name='y']").val();
-    if (!name) {
+    var buildingCode = $("body").data('building');
+    var floorCode = $(".level.level--current").data('floorcode');
+    var deviceName = $(".inputGroup input[name='deviceName']").val();
+    var deviceType = $(".inputGroup input[name='deviceType']").val();
+    var deviceNo = $(".inputGroup input[name='deviceNo']").val();
+    var deviceModel = $(".inputGroup input[name='deviceModel']").val();
+    var deviceDesc = $(".inputGroup input[name='deviceDesc']").val();
+    var left = $left.val();
+    var top = $top.val();
+    if (!deviceName) {
         layer.msg('未填写名称', {icon: 0});
         return;
     }
-    if (!category) {
-        layer.msg('未选择类型', {icon: 0});
+    if (!deviceNo) {
+        layer.msg('未填写编号', {icon: 0});
         return;
     }
-    if (!desc) {
-        layer.msg('未填写详细信息', {icon: 0});
+    if (!deviceType) {
+        layer.msg('未填写类型', {icon: 0});
         return;
     }
-    if (!x || !y) {
+    if (!deviceModel) {
+        layer.msg('未填写型号', {icon: 0});
+        return;
+    }
+    if (!deviceDesc) {
+        layer.msg('未填写描述', {icon: 0});
+        return;
+    }
+    if (!left || !top) {
         layer.msg('坐标不完整', {icon: 0});
         return;
     }
-
-    //todo:记录数据
-
-    layer.alert('添加成功', {icon: 1, closeBtn: 0}, function (index) {
-        drag(obj, false);
-        close_addView();
-        location.reload();
+    $.ajax({
+        url: 'interface/device/register',
+        type: 'post',
+        data: {
+            buildingCode: buildingCode,
+            floorCode: floorCode,
+            deviceName: deviceName,
+            deviceType: deviceType,
+            deviceNo: deviceNo,
+            deviceModel: deviceModel,
+            deviceDesc: deviceDesc,
+            left: left,
+            top: top
+        },
+        dataType: 'json',
+        success: function (ret) {
+            console.log(ret);
+            if (ret.status == 1) {
+                layer.alert('添加成功，点击确定刷新页面', {icon: 1, closeBtn: 0}, function (index) {
+                    drag(obj, false);
+                    close_addView();
+                    location.reload();
+                });
+            } else {
+                layer.msg("失败", {icon: 5});
+            }
+        },
+        error: function (err) {
+            layer.msg("接口出错", {icon: 5});
+        }
     });
 }
 
@@ -235,9 +270,8 @@ function close_addView() {
 
 //根据输入改变传感器位置和内容
 function changeByInput() {
-    var name = $(".inputGroup input[name='name']").val();
-    var x = $(".inputGroup input[name='x']").val();
-    var y = $(".inputGroup input[name='y']").val();
+    var x = $left.val();
+    var y = $top.val();
     $(".level__pins.level__pins--active .pin:last-child").css({
         'left': x + 'vmin',
         'top': y + 'vmin'
@@ -246,7 +280,8 @@ function changeByInput() {
 
 //内容区域选择框值的变化
 function byContentType(e) {
-    var $e = $(e), v = $e.val(), $c = $e.parents(".content__item"), $p = $(".level__pins.level__pins--active .pin.pin--active");
+    var $e = $(e), v = $e.val(), $c = $e.parents(".content__item"),
+        $p = $(".level__pins.level__pins--active .pin.pin--active");
     if (v) {
         $c.data("category", v);
         $c.attr("data-category", v);
