@@ -9,21 +9,22 @@ import java.util.List;
  * @author 王金
  * @version 1.0
  */
-public class DeviceType extends BaseDomain {
+public class DeviceCategory extends BaseDomain {
 
     /**
      * 类型名称
      */
-    private String typeName;
+    private String categoryName;
 
     private List<Manufacturer> manufacturers;
 
-    public String getTypeName() {
-        return typeName;
+
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public List<Manufacturer> getManufacturers() {

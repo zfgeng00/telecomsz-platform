@@ -21,7 +21,7 @@ public class Manufacturer extends BaseDomain {
      */
     private String manufacturerName;
 
-    private DeviceType deviceType;
+    private DeviceCategory deviceCategory;
 
     private List<ManufacturerDevice> manufacturerDevices;
 
@@ -41,12 +41,12 @@ public class Manufacturer extends BaseDomain {
         this.manufacturerName = manufacturerName;
     }
 
-    public DeviceType getDeviceType() {
-        return deviceType;
+    public DeviceCategory getDeviceCategory() {
+        return deviceCategory;
     }
 
-    public void setDeviceType(DeviceType deviceType) {
-        this.deviceType = deviceType;
+    public void setDeviceCategory(DeviceCategory deviceCategory) {
+        this.deviceCategory = deviceCategory;
     }
 
     public List<ManufacturerDevice> getManufacturerDevices() {
