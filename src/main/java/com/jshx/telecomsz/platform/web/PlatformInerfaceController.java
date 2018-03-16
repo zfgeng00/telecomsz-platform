@@ -1,6 +1,7 @@
 package com.jshx.telecomsz.platform.web;
 
 import com.jshx.telecomsz.platform.inerface.DeviceInterface;
+import com.jshx.telecomsz.platform.model.ApiResult;
 import com.jshx.telecomsz.platform.model.Device;
 import com.jshx.telecomsz.platform.model.DeviceCategory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,21 +45,21 @@ public class PlatformInerfaceController {
      * @return 注册设备信息
      */
     @RequestMapping(value = "/device/register", method = RequestMethod.POST)
-    public Device register(@RequestParam(value = "manufacturerId", required = false) String manufacturerId,
-                           @RequestParam(value = "manufacturerName", required = false) String manufacturerName,
-                           @RequestParam(value = "deviceModel") String deviceModel,
-                           @RequestParam(value = "endUserId", required = false) String endUserId,
-                           @RequestParam(value = "psk", required = false) String psk,
-                           @RequestParam(value = "timeout", required = false) String timeout,
-                           @RequestParam(value = "location", required = false) String location,
-                           @RequestParam(value = "deviceType") String deviceType,
-                           @RequestParam(value = "deviceName", required = false) String deviceName,
-                           @RequestParam(value = "deviceNo") String deviceNo,
-                           @RequestParam(value = "buildingCode") String buildingCode,
-                           @RequestParam(value = "floorCode") String floorCode,
-                           @RequestParam(value = "left") Double left,
-                           @RequestParam(value = "deviceDesc") String deviceDesc,
-                           @RequestParam(value = "top") Double top) {
+    public ApiResult register(@RequestParam(value = "manufacturerId", required = false) String manufacturerId,
+                              @RequestParam(value = "manufacturerName", required = false) String manufacturerName,
+                              @RequestParam(value = "deviceModel") String deviceModel,
+                              @RequestParam(value = "endUserId", required = false) String endUserId,
+                              @RequestParam(value = "psk", required = false) String psk,
+                              @RequestParam(value = "timeout", required = false) String timeout,
+                              @RequestParam(value = "location", required = false) String location,
+                              @RequestParam(value = "deviceType") String deviceType,
+                              @RequestParam(value = "deviceName", required = false) String deviceName,
+                              @RequestParam(value = "deviceNo") String deviceNo,
+                              @RequestParam(value = "buildingCode") String buildingCode,
+                              @RequestParam(value = "floorCode") String floorCode,
+                              @RequestParam(value = "left") Double left,
+                              @RequestParam(value = "deviceDesc") String deviceDesc,
+                              @RequestParam(value = "top") Double top) {
         return deviceInterface.register(manufacturerId, manufacturerName, deviceModel, endUserId, psk, timeout, location, deviceType, deviceName, deviceNo, buildingCode, floorCode, left, deviceDesc, top);
     }
 
@@ -66,13 +67,13 @@ public class PlatformInerfaceController {
      * 操作锁
      *
      * @param operType 操作类型
-     * @param deviceNo 设备号
+     * @param deviceId 设备ID
      * @return 操作结果
      */
     @RequestMapping(value = "/device/lockoper", method = RequestMethod.POST)
-    public boolean lockOper(@RequestParam(value = "operType") String operType,
-                            @RequestParam(value = "deviceNo") String deviceNo) {
-        return deviceInterface.lockOper(operType, deviceNo);
+    public ApiResult lockOper(@RequestParam(value = "operType") String operType,
+                              @RequestParam(value = "deviceId") String deviceId) {
+        return deviceInterface.lockOper(operType, deviceId);
     }
 
     /**
