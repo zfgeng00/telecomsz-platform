@@ -3,33 +3,60 @@ package com.jshx.telecomsz.platform.model;
 import java.util.List;
 
 /**
- * Created with Intellij IDEA by 王金 on 2018/3/15 19:25.
+ * Created with Intellij IDEA by 王金 on 2018/3/16 15:04.
  *
  * @author 王金
  * @version 1.0
  */
-public class Floor {
+public class Floor extends BaseDomain {
 
     /**
-     *
+     * 楼层名称
      */
-    private String name;
+    private String floorName;
 
-    private List<Point> points;
+    /**
+     * 楼层编号
+     */
+    private Integer floorCode;
 
-    public String getName() {
-        return name;
+    /**
+     * 所属楼宇
+     */
+    private Building building;
+
+    private List<Device> devices;
+
+
+    public List<Device> getDevices() {
+        return devices;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDevices(List<Device> devices) {
+        this.devices = devices;
     }
 
-    public List<Point> getPoints() {
-        return points;
+    public String getFloorName() {
+        return floorName;
     }
 
-    public void setPoints(List<Point> points) {
-        this.points = points;
+    public void setFloorName(String floorName) {
+        this.floorName = floorName;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
+
+    public Integer getFloorCode() {
+        return floorCode;
+    }
+
+    public void setFloorCode(Integer floorCode) {
+        this.floorCode = floorCode;
     }
 }

@@ -2,7 +2,7 @@ package com.jshx.telecomsz.platform.web;
 
 import com.jshx.telecomsz.platform.inerface.DeviceInterface;
 import com.jshx.telecomsz.platform.model.Device;
-import com.jshx.telecomsz.platform.model.DeviceType;
+import com.jshx.telecomsz.platform.model.DeviceCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,9 +30,9 @@ public class PlatformInerfaceController {
      *
      * @return
      */
-    @RequestMapping(value = "/device/getdevicetype", method = RequestMethod.POST)
-    public List<DeviceType> getDeviceType() {
-        return deviceInterface.getDeviceType();
+    @RequestMapping(value = "/device/getdevicecategory", method = RequestMethod.POST)
+    public List<DeviceCategory> getDeviceCategory() {
+        return deviceInterface.getDeviceCategory();
     }
 
     /**
@@ -46,15 +46,20 @@ public class PlatformInerfaceController {
     @RequestMapping(value = "/device/register", method = RequestMethod.POST)
     public Device register(@RequestParam(value = "manufacturerId", required = false) String manufacturerId,
                            @RequestParam(value = "manufacturerName", required = false) String manufacturerName,
-                           @RequestParam(value = "deviceModel", required = false) String deviceModel,
+                           @RequestParam(value = "deviceModel") String deviceModel,
                            @RequestParam(value = "endUserId", required = false) String endUserId,
                            @RequestParam(value = "psk", required = false) String psk,
                            @RequestParam(value = "timeout", required = false) String timeout,
                            @RequestParam(value = "location", required = false) String location,
-                           @RequestParam(value = "deviceType", required = false) String deviceType,
+                           @RequestParam(value = "deviceType") String deviceType,
                            @RequestParam(value = "deviceName", required = false) String deviceName,
-                           @RequestParam(value = "deviceNo") String deviceNo) {
-        return deviceInterface.register(manufacturerId, manufacturerName, deviceModel, endUserId, psk, timeout, location, deviceType, deviceName, deviceNo);
+                           @RequestParam(value = "deviceNo") String deviceNo,
+                           @RequestParam(value = "buildingCode") String buildingCode,
+                           @RequestParam(value = "floorCode") String floorCode,
+                           @RequestParam(value = "left") Double left,
+                           @RequestParam(value = "deviceDesc") String deviceDesc,
+                           @RequestParam(value = "top") Double top) {
+        return deviceInterface.register(manufacturerId, manufacturerName, deviceModel, endUserId, psk, timeout, location, deviceType, deviceName, deviceNo, buildingCode, floorCode, left, deviceDesc, top);
     }
 
     /**

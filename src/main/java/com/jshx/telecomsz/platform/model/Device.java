@@ -25,12 +25,7 @@ public class Device extends BaseDomain {
      */
     private String deviceId;
 
-    private Manufacturer manufacturer;
-
-    /**
-     * 设备型号
-     */
-    private String deviceModel;
+    private ManufacturerDevice manufacturerDevice;
 
     /**
      * 终端用户
@@ -57,6 +52,24 @@ public class Device extends BaseDomain {
      */
     private String verifyCode;
 
+    private Floor floor;
+
+    /**
+     * 左
+     */
+    private Double leftPoint;
+
+    /**
+     * 上
+     */
+    private Double topPoint;
+
+    /**
+     * 设备描述
+     */
+    private String deviceDesc;
+
+
     public Device() {
     }
 
@@ -65,20 +78,13 @@ public class Device extends BaseDomain {
         this.delFlag = delFlag;
     }
 
-    public Manufacturer getManufacturer() {
-        return manufacturer;
+
+    public ManufacturerDevice getManufacturerDevice() {
+        return manufacturerDevice;
     }
 
-    public void setManufacturer(Manufacturer manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public String getDeviceModel() {
-        return deviceModel;
-    }
-
-    public void setDeviceModel(String deviceModel) {
-        this.deviceModel = deviceModel;
+    public void setManufacturerDevice(ManufacturerDevice manufacturerDevice) {
+        this.manufacturerDevice = manufacturerDevice;
     }
 
     public String getEndUserId() {
@@ -113,6 +119,30 @@ public class Device extends BaseDomain {
         this.location = location;
     }
 
+    public Double getLeftPoint() {
+        return leftPoint;
+    }
+
+    public void setLeftPoint(Double leftPoint) {
+        this.leftPoint = leftPoint;
+    }
+
+    public Double getTopPoint() {
+        return topPoint;
+    }
+
+    public void setTopPoint(Double topPoint) {
+        this.topPoint = topPoint;
+    }
+
+    public String getDeviceDesc() {
+        return deviceDesc;
+    }
+
+    public void setDeviceDesc(String deviceDesc) {
+        this.deviceDesc = deviceDesc;
+    }
+
     public String getVerifyCode() {
         return verifyCode;
     }
@@ -144,5 +174,13 @@ public class Device extends BaseDomain {
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
+    }
+
+    public Floor getFloor() {
+        return floor;
+    }
+
+    public void setFloor(Floor floor) {
+        this.floor = floor;
     }
 }

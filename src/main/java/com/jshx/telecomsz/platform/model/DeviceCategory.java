@@ -16,6 +16,11 @@ public class DeviceCategory extends BaseDomain {
      */
     private String categoryName;
 
+    /**
+     * 类型值
+     */
+    private Integer categoryCode;
+
     private List<Manufacturer> manufacturers;
 
 
@@ -33,5 +38,13 @@ public class DeviceCategory extends BaseDomain {
 
     public void setManufacturers(List<Manufacturer> manufacturers) {
         this.manufacturers = manufacturers;
+    }
+
+    public Integer getCategoryCode() {
+        return categoryCode;
+    }
+
+    public void setCategoryCode(Integer categoryCode) {
+        this.categoryCode = categoryCode;
     }
 }
