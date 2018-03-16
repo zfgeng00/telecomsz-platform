@@ -1,6 +1,9 @@
 var bIndex, locName = ""; //本地数据键名
 
 $(function () {
+
+    mainInit(window); //初始化main
+
     bIndex = $("body").data("building");
     locName = "dataStr" + bIndex;
     // 编辑

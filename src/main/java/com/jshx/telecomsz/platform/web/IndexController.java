@@ -34,16 +34,16 @@ public class IndexController {
         Point point = new Point();
         point.setName("名称1");
         point.setCategory("1");
-        point.setLeft("43.18744113029827");
-        point.setTop("24.68241758241758");
+        point.setLeft("44");
+        point.setTop("26");
         point.setDesc("描述1");
         points.add(point);
 
         point = new Point();
         point.setName("名称2");
         point.setCategory("2");
-        point.setLeft("43.18744113029827");
-        point.setTop("24.68241758241758");
+        point.setLeft("15");
+        point.setTop("24");
         point.setDesc("描述2");
         points.add(point);
 
@@ -55,27 +55,20 @@ public class IndexController {
         floor.setPoints(points);
         floor.setName("L2");
 
-        point = new Point();
-        point.setName("名称21");
-        point.setCategory("1");
-        point.setLeft("43.18744113029827");
-        point.setTop("24.68241758241758");
-        point.setDesc("描述21");
-        points.add(point);
 
         point = new Point();
         point.setName("名称222");
         point.setCategory("1");
-        point.setLeft("43.18744113029827");
-        point.setTop("24.68241758241758");
+        point.setLeft("43");
+        point.setTop("25");
         point.setDesc("描述222");
         points.add(point);
 
         point = new Point();
         point.setName("名称22");
         point.setCategory("3");
-        point.setLeft("43.18744113029827");
-        point.setTop("24.68241758241758");
+        point.setLeft("17");
+        point.setTop("25");
         point.setDesc("描述22");
         points.add(point);
 
