@@ -1,11 +1,11 @@
-var bIndex, locName = ""; //本地数据键名
+var bIndex; //本地数据键名
 
 $(function () {
 
     mainInit(window); //初始化main
 
     bIndex = $("body").data("building");
-    locName = "dataStr" + bIndex;
+
     // 编辑
     $(document).on('click', '.desc_edit', function (e) {
         var $this = $(e.target), $desc_item = $this.parents(".content__item"), $desc_title = $desc_item.find(".content__item-title"), $desc_type = $desc_item.find("select"), $desc_con = $desc_item.find(".content__desc");
@@ -61,13 +61,9 @@ $(function () {
                         $desc_con.attr("readonly", '');
                         $desc_type.css("display", "none");
                         drag(obj, false);
-                        data[floor_index].points[point_index].name = thisTitle;
-                        data[floor_index].points[point_index].desc = thisDesc;
-                        data[floor_index].points[point_index].category = thisType;
-                        data[floor_index].points[point_index].left = thisX;
-                        data[floor_index].points[point_index].top = thisY;
+
                         //todo:记录数据
-                        sessionStorage.setItem(locName, JSON.stringify(data));
+
                         layer.close(index);
                         layer.msg('保存成功', {icon: 1});
                     },
@@ -101,8 +97,9 @@ $(function () {
             var $this = $(e.target), $desc_item = $this.parents(".content__item");
             var $obj = $(".pin.pin--active");
             var floor_index = $(".level--current").index(), point_index = $obj.index();
-            data[floor_index].points.splice(point_index, 1);
-            sessionStorage.setItem(locName, JSON.stringify(data));
+
+            //todo 删除操作
+
             layer.alert('删除成功', {icon: 1, closeBtn: 0}, function (index) {
                 location.reload();
             });
@@ -126,8 +123,8 @@ $(function () {
                     scaleRatio = scaleRatio - 0.1;
                     break;
             }
-            var zTrans = bIndex == 1 ? 15 : 35;
-            $(".level--current").css({'transform': 'translateZ(' + zTrans + 'vmin) rotateX(-69.75deg) rotateY(-45deg) rotateZ(14deg) scale(' + scaleRatio + ')'});
+            var trans = bIndex == 1 ? 'translateZ(15vmin) rotateX(-69.75deg) rotateY(-45deg) rotateZ(14deg)' : 'translateZ(38vmin) rotateX(-69.75deg) rotateY(-32deg) rotateZ(9deg)';
+            $(".level--current").css({'transform': trans + ' scale(' + scaleRatio + ')'});
         } else {
             $(".level").attr('style', '');
             scaleRatio = 1;
@@ -142,8 +139,8 @@ $(function () {
         } else {
             scaleRatio = scaleRatio - 0.1;
         }
-        var zTrans = bIndex == 1 ? 15 : 35;
-        $oc.css({'transform': 'translateZ(' + zTrans + 'vmin) rotateX(-69.75deg) rotateY(-45deg) rotateZ(14deg) scale(' + scaleRatio + ')'});
+        var trans = bIndex == 1 ? 'translateZ(15vmin) rotateX(-69.75deg) rotateY(-45deg) rotateZ(14deg)' : 'translateZ(38vmin) rotateX(-69.75deg) rotateY(-32deg) rotateZ(9deg)';
+        $oc.css({'transform': trans + ' scale(' + scaleRatio + ')'});
     });
 
 //保持右边侧边栏收/展一致
@@ -159,51 +156,6 @@ $(function () {
     });
 
 });
-
-////动态加载js
-//function loadScript(url, callback) {
-//    var script = document.createElement("script");
-//    script.type = "text/javascript";
-//    if (typeof(callback) != "undefined") {
-//        if (script.readyState) {
-//            script.onreadystatechange = function () {
-//                if (script.readyState == "loaded" || script.readyState == "complete") {
-//                    script.onreadystatechange = null;
-//                    callback();
-//                }
-//            };
-//        } else {
-//            script.onload = function () {
-//                callback();
-//            };
-//        }
-//    }
-//    script.src = url;
-//    document.body.appendChild(script);
-//}
-
-//向模板中注册方法isSelect()
-template.registerFunction('isSelect', function (value, type) {
-    if (value == type) {
-        return 'selected';
-    }
-});
-
-//开始加载模板
-function tplStart(data) {
-    var json = {
-        data: data
-    };
-    var htmlFloor = template(document.getElementById('tpl_floor').innerHTML, json);
-    var htmlDesc = template(document.getElementById('tpl_desc').innerHTML, json);
-    var htmlSeo = template(document.getElementById('tpl_seo').innerHTML, json);
-    document.getElementById('html_floor').innerHTML = htmlFloor;
-    document.getElementById('html_desc').innerHTML = htmlDesc;
-    document.getElementById('html_seo').innerHTML = htmlSeo;
-    setTimeout(function () { //为确保dom加载完毕，延迟初始化
-        mainInit(window);
-    }, 300);
-}
 
 //添加新的传感器节点
 function addNew(ele, ev) {
@@ -256,15 +208,9 @@ function addSubmit() {
         layer.msg('坐标不完整', {icon: 0});
         return;
     }
-    data[floor_index].points.push({
-        "category": category,
-        "name": name,
-        "desc": desc,
-        "left": x,
-        "top": y,
-    });
+
     //todo:记录数据
-    sessionStorage.setItem(locName, JSON.stringify(data));
+
     layer.alert('添加成功', {icon: 1, closeBtn: 0}, function (index) {
         drag(obj, false);
         close_addView();

@@ -271,9 +271,9 @@ button:focus {
     color: yellow;
 }
 
-.level--current::after {
-    -webkit-transform: rotateZ(0deg) rotateX(30deg) translateZ(-22vmin) translateX(5vmin) translateY(-10vmin);
-    transform: rotateZ(0deg) rotateX(30deg) translateZ(-22vmin) translateX(5vmin) translateY(-10vmin);
+.level.level--current::after {
+    -webkit-transform: rotateZ(0deg) rotateX(0deg) translateZ(0vmin) translateX(0vmin) translateY(0vmin);
+    transform: rotateZ(0deg) rotateX(0deg) translateZ(0vmin) translateX(0vmin) translateY(0vmin);/*rotateZ(0deg) rotateX(30deg) translateZ(-22vmin) translateX(5vmin) translateY(-10vmin)*/
 }
 
 .level::after {
@@ -789,25 +789,25 @@ button:focus {
 
 .grouped-by-category [data-category='1']:first-child::before,
 .grouped-by-category :not([data-category='1']) + [data-category='1']::before {
-    content: '门锁';
+    content: attr(data-categoryname);
     color: #7cbf7f;
 }
 
 .grouped-by-category [data-category='2']:first-child::before,
 .grouped-by-category :not([data-category='2']) + [data-category='2']::before {
-    content: '地磁';
+    content: attr(data-categoryname);
     color: #6584c7;
 }
 
 .grouped-by-category [data-category='3']:first-child::before,
 .grouped-by-category :not([data-category='3']) + [data-category='3']::before {
-    content: '烟感';
+    content: attr(data-categoryname);
     color: #dc4b7c;
 }
 
 .grouped-by-category [data-category='4']:first-child::before,
 .grouped-by-category :not([data-category='4']) + [data-category='4']::before {
-    content: '能耗';
+    content: attr(data-categoryname);
     color: #8d65e0;
 }
 
