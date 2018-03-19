@@ -6,6 +6,9 @@ spring:
   application:
     name: telecomsz-platform
 
+ribbon:
+  ReadTimeout: 10000
+
 eureka:
   client:
     service-url:
