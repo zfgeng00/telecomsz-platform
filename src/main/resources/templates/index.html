@@ -781,17 +781,13 @@
                 <form>
                     <div class="close_add" onclick="addCancel(this,event)">X</div>
                     <div class="inputGroup">
-                        名称：<input name="name" onkeyup="changeByInput()" type="text" placeholder="请输入"><br>
-                        分类：<select name="type">
-                        <option value="">请选择</option>
-                        <option value="1">门锁</option>
-                        <option value="2">地磁</option>
-                        <option value="3">烟感</option>
-                        <option value="4">能耗</option>
-                    </select><br>
-                        描述：<input name="desc" type="text" placeholder="请输入"><br>
-                        x：<input name="x" onchange="changeByInput()" type="number" value="0"><br>
-                        y：<input name="y" onchange="changeByInput()" type="number" value="0">
+                        名称：<input name="deviceName" onkeyup="changeByInput()" type="text" placeholder="设备名称"><br>
+                        编号：<input name="deviceNo" type="text" placeholder="设备号，MAC或SIM卡号或设备esn号等"><br>
+                        类型：<input name="deviceType" type="text" placeholder="设备类型"><br>
+                        型号：<input name="deviceModel" type="text" placeholder="设备型号"><br>
+                        描述：<input name="deviceDesc" type="text" placeholder="设备描述"><br>
+                        x：<input name="left" onchange="changeByInput()" type="number" value="0">
+                        y：<input name="top" onchange="changeByInput()" type="number" value="0"><br>
                     </div>
                     <div class="btnG clearfix">
                         <div class="btn1" onclick="addNew(this,event)">添加传感器</div>
