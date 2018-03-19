@@ -12,23 +12,21 @@ $(function () {
     // 编辑
     $(document).on('click', '.desc_edit', function (e) {
         var $this = $(e.target), $desc_item = $this.parents(".content__item"),
-            $desc_title = $desc_item.find(".content__item-title"), $desc_type = $desc_item.find("select"),
+            $desc_title = $desc_item.find(".content__item-title"),
             $desc_con = $desc_item.find(".content__desc");
         var obj = $(".pin.pin--active"), oParent = obj.parent();
-        console.log(obj);
-        var floor_index = $(".level--current").index(), point_index = obj.index();
+        var deviceId = $desc_item.data("deviceid");
         var thisTitle = $desc_title.html(),
-            thisType = $desc_type.val(),
             thisDesc = $desc_con.val();
         var vw = $(window).width() / 100
             , vh = $(window).height() / 100
             , vm = vw < vh ? vw : vh;
         var thisX = parseFloat(obj.css("left")) / vm;
         var thisY = parseFloat(obj.css("top")) / vm;
+        var $li = $(".list__item.list__item--active[data-space='" + $desc_item.data('space') + "']")
         switch ($this.html()) {
             case "编辑":
                 sessionStorage.setItem("editor.thisTitle", thisTitle);
-                sessionStorage.setItem("editor.thisType", thisType);
                 sessionStorage.setItem("editor.thisDesc", thisDesc);
                 sessionStorage.setItem("editor.thisX", thisX);
                 sessionStorage.setItem("editor.thisY", thisY);
@@ -36,16 +34,11 @@ $(function () {
                 $desc_title.removeAttr("readonly");
                 $desc_title.attr("contenteditable", 'true');
                 $desc_con.removeAttr("readonly");
-                $desc_type.css("display", "inline-block");
                 drag(obj, true, oParent);
                 break;
             case "完成":
                 if (!thisTitle) {
                     layer.msg('未填写名称', {icon: 0});
-                    break;
-                }
-                if (!thisType) {
-                    layer.msg('未选择类型', {icon: 0});
                     break;
                 }
                 if (!thisDesc) {
@@ -60,17 +53,34 @@ $(function () {
                     shadeClose: true,
                     yes: function (index, layero) {
                         //按钮【按钮一】的回调
-                        $this.html("编辑");
-                        $desc_title.attr("readonly", '');
-                        $desc_title.attr("contenteditable", 'false');
-                        $desc_con.attr("readonly", '');
-                        $desc_type.css("display", "none");
-                        drag(obj, false);
-
-                        //todo:记录数据
-
-                        layer.close(index);
-                        layer.msg('保存成功', {icon: 1});
+                        iAjax({
+                            url: 'interface/device/modify',
+                            type: 'put',
+                            data: JSON.stringify({
+                                "deviceId": deviceId,
+                                "deviceName": thisTitle,
+                                "deviceDesc": thisDesc,
+                                "leftPoint": thisX,
+                                "topPoint": thisY
+                            }),
+                            contentType: 'application/json',
+                            success: function (ret) {
+                                if (ret.status == 0) { //成功
+                                    layer.msg(ret.desc, {icon: 1});
+                                    $this.html("编辑");
+                                    $desc_title.attr("readonly", '');
+                                    $desc_title.attr("contenteditable", 'false');
+                                    $desc_con.attr("readonly", '');
+                                    drag(obj, false);
+                                    obj.attr("title", thisTitle);
+                                    $li.find("a").text(thisTitle);
+                                } else { //失败
+                                    layer.alert(ret.desc, {icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                                        layer.close(index);
+                                    });
+                                }
+                            }
+                        });
                     },
                     btn2: function (index, layero) {
                         //按钮【按钮二】的回调
@@ -78,15 +88,12 @@ $(function () {
                         $desc_title.attr("readonly", '');
                         $desc_title.attr("contenteditable", 'false');
                         $desc_con.attr("readonly", '');
-                        $desc_type.css("display", "none");
                         $desc_title.html(sessionStorage.getItem("editor.thisTitle"));
-                        $desc_type.val(sessionStorage.getItem("editor.thisType"));
                         $desc_con.val(sessionStorage.getItem("editor.thisDesc"));
                         obj.css({
                             'left': sessionStorage.getItem("editor.thisX") + 'vmin',
                             'top': sessionStorage.getItem("editor.thisY") + 'vmin'
                         });
-                        $desc_type.change();
                         drag(obj, false);
                         //return false 开启该代码可禁止点击该按钮关闭
                     }
@@ -99,14 +106,24 @@ $(function () {
         //询问框
         layer.confirm('确认删除吗？', {title: '删除', shadeClose: true}, function (index, layero) {
             //按钮【按钮一】的回调
-            var $this = $(e.target), $desc_item = $this.parents(".content__item");
-            var $obj = $(".pin.pin--active");
-            var floor_index = $(".level--current").index(), point_index = $obj.index();
-
-            //todo 删除操作
-
-            layer.alert('删除成功', {icon: 1, closeBtn: 0}, function (index) {
-                location.reload();
+            var $this = $(e.target),
+                $desc_item = $this.parents(".content__item");
+            var deviceId = $desc_item.data("deviceid");
+            iAjax({
+                url: 'interface/device/delete/' + deviceId,
+                type: 'delete',
+                success: function (ret) {
+                    if (ret.status == 0) { //成功
+                        layer.alert(ret.desc, {btn: '点击刷新', icon: 1, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                            layer.close(index);
+                            location.reload();
+                        });
+                    } else { //失败
+                        layer.alert(ret.desc, {icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                            layer.close(index);
+                        });
+                    }
+                }
             });
         });
     });
@@ -220,7 +237,7 @@ function addSubmit() {
         layer.msg('坐标不完整', {icon: 0});
         return;
     }
-    $.ajax({
+    iAjax({
         url: 'interface/device/register',
         type: 'post',
         data: {
@@ -234,21 +251,19 @@ function addSubmit() {
             left: left,
             top: top
         },
-        dataType: 'json',
         success: function (ret) {
-            console.log(ret);
-            if (ret.status == 1) {
-                layer.alert('添加成功，点击确定刷新页面', {icon: 1, closeBtn: 0}, function (index) {
+            if (ret.status == 0) { //成功
+                layer.alert(ret.desc, {btn: '点击刷新', icon: 1, closeBtn: 0, btnAlign: 'c'}, function (index) {
                     drag(obj, false);
                     close_addView();
+                    layer.close(index);
                     location.reload();
                 });
-            } else {
-                layer.msg("失败", {icon: 5});
+            } else { //失败
+                layer.alert(ret.desc, {icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                    layer.close(index);
+                });
             }
-        },
-        error: function (err) {
-            layer.msg("接口出错", {icon: 5});
         }
     });
 }
@@ -278,14 +293,26 @@ function changeByInput() {
     });
 }
 
-//内容区域选择框值的变化
-function byContentType(e) {
-    var $e = $(e), v = $e.val(), $c = $e.parents(".content__item"),
-        $p = $(".level__pins.level__pins--active .pin.pin--active");
-    if (v) {
-        $c.data("category", v);
-        $c.attr("data-category", v);
-        $p.data("category", v);
-        $p.attr("data-category", v);
-    }
+//门锁操作
+function doorOperate(id, l) {
+    l = l == 0 ? 'LOCK' : 'OPEN';
+    iAjax({
+        url: 'interface/device/lockoper',
+        type: 'post',
+        data: {
+            deviceId: id,
+            operType: l
+        },
+        success: function (ret) {
+            if (ret.status == 0) { //成功
+                layer.alert(ret.desc, {icon: 1, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                    layer.close(index);
+                });
+            } else { //失败
+                layer.alert(ret.desc, {icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                    layer.close(index);
+                });
+            }
+        }
+    });
 }

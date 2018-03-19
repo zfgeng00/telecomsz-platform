@@ -15,7 +15,7 @@
     <script src="../static/3d/js/jquery.js" th:src="@{/3d/js/jquery.js}"></script>
     <script src="../static/3d/js/jquery.mousewheel.js" th:src="@{/3d/js/jquery.mousewheel.js}"></script>
     <script src="../static/3d/js/layer/layer.js" th:src="@{/3d/js/layer/layer.js}"></script>
-    <script src="../static/3d/js/template.js" th:src="@{/3d/js/template.js}"></script>
+    <script src="../static/3d/js/tool.js" th:src="@{/3d/js/tool.js}"></script>
     <script src="../static/3d/js/extra.js" th:src="@{/3d/js/extra.js}"></script>
     <script src="../static/3d/js/main.js" th:src="@{/3d/js/main.js}"></script>
     <script src="../static/3d/js/common.js" th:src="@{/3d/js/common.js}"></script>
@@ -768,13 +768,9 @@
                 </div>
 
             </div>
-            <div id="multi_switch" th:if="${building.buildingCode == 1}">
-                <a class="active" href="index.html" th:href="@{/(buildingCode=1)}" title="电信老楼" th:text="${building.buildingName}" th:title="${building.buildingName}">电信老楼</a>
-                <a href="index2.html" th:href="@{/(buildingCode=2)}" title="办公座楼">办公座楼</a>
-            </div>
-            <div id="multi_switch" th:if="${building.buildingCode == 2}">
-                <a href="index.html" th:href="@{/(buildingCode=1)}" title="电信老楼" th:text="${building.buildingName}" th:title="${building.buildingName}">电信老楼</a>
-                <a class="active" href="index2.html" th:href="@{/(buildingCode=2)}" title="办公座楼">办公座楼</a>
+            <div id="multi_switch">
+                <a th:class="${building.buildingCode == 1}? 'active' : ''" href="index.html" th:href="@{/(buildingCode=1)}" title="电信老楼" th:text="${building.buildingName}" th:title="${building.buildingName}">电信老楼</a>
+                <a th:class="${building.buildingCode == 2}? 'active' : ''" href="index2.html" th:href="@{/(buildingCode=2)}" title="办公座楼">办公座楼</a>
             </div>
             <!-- 添加新的传感器-->
             <div id="addNew">
@@ -830,14 +826,13 @@
                     <!-- 描述加载处 -->
                     <div th:each="point,pointStat:${floor.devices}" th:remove="tag">
                         <div class="content__item" th:data-space="${statFloor.count + '-' + pointStat.count}"
+                             th:data-deviceid="${point.deviceId}"
+                             th:data-deviceno="${point.deviceNo}"
                              th:data-category="${point.manufacturerDevice.manufacturer.deviceCategory.categoryCode}">
-                            <select onchange="byContentType(this);" class="content__select">
-                                <option value="">请选择分类</option>
-                                <option value="1" th:selected="${point.manufacturerDevice.manufacturer.deviceCategory.categoryCode == 1}">门锁</option>
-                                <option value="2" th:selected="${point.manufacturerDevice.manufacturer.deviceCategory.categoryCode == 2}">地磁</option>
-                                <option value="3" th:selected="${point.manufacturerDevice.manufacturer.deviceCategory.categoryCode == 3}">烟感</option>
-                                <option value="4" th:selected="${point.manufacturerDevice.manufacturer.deviceCategory.categoryCode == 4}">能耗</option>
-                            </select>
+                            <div th:if="${point.manufacturerDevice.manufacturer.deviceCategory.categoryCode == 1}" class="doorOperate">
+                                <div th:onclick="|doorOperate('${point.deviceId}', 1)|" class="operateBtn">打开</div>
+                                <div th:onclick="|doorOperate('${point.deviceId}', 0)|" class="operateBtn">关闭</div>
+                            </div>
                             <div class="allDiv uf">
                                 <div class="uf-f uf uf-ver">
                                     <div class="uf">

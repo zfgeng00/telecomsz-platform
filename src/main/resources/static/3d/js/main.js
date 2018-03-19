@@ -170,10 +170,8 @@ var mainInit = function (window) {
             pin.addEventListener('click', function (ev) {
                 ev.preventDefault();
 
-                pinClick(this, ev); //回调
-
                 // open content for this pin
-                openContent(pin.getAttribute('data-space'));
+                openContent(pin.getAttribute('data-space'), pin.getAttribute('data-category'));
                 // remove hover class (showing the title)
                 classie.remove(contentItem, 'content__item--hover');
             });
@@ -188,6 +186,7 @@ var mainInit = function (window) {
         spaces.forEach(function (space) {
             var spaceItem = space.parentNode,
                 level = spaceItem.getAttribute('data-level'),
+                spacecategory = spaceItem.getAttribute('data-category'),
                 spacerefval = spaceItem.getAttribute('data-space');
 
             space.addEventListener('click', function (ev) {
@@ -197,7 +196,7 @@ var mainInit = function (window) {
                 // open level
                 showLevel(level);
                 // open content for this space
-                openContent(spacerefval);
+                openContent(spacerefval, spacecategory);
             });
         });
 
@@ -419,7 +418,10 @@ var mainInit = function (window) {
     /**
      * Opens/Reveals a content item.
      */
-    function openContent(spacerefval) {
+    function openContent(spacerefval, spacecategory) {
+
+        beforeOpenContent(spacerefval, spacecategory); //回调
+
         // if one already shown:
         if (isOpenContentArea) {
             hideSpace();
