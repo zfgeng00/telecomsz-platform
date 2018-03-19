@@ -5,10 +5,7 @@ import com.jshx.telecomsz.platform.model.ApiResult;
 import com.jshx.telecomsz.platform.model.Device;
 import com.jshx.telecomsz.platform.model.DeviceCategory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -85,5 +82,21 @@ public class PlatformInerfaceController {
     @RequestMapping(value = "/device/getdeviceinfo", method = RequestMethod.POST)
     public Device getDeviceInfo(@RequestParam(value = "deviceNo") String deviceNo) {
         return deviceInterface.getDeviceInfo(deviceNo);
+    }
+
+    /**
+     * 修改设备信息
+     *
+     * @param device
+     * @return
+     */
+    @RequestMapping(value = "/device/modify", method = RequestMethod.PUT)
+    public ApiResult modify(@RequestBody Device device) {
+        return deviceInterface.modify(device);
+    }
+
+    @RequestMapping(value = "/device/delete/{deviceno}", method = RequestMethod.DELETE)
+    public ApiResult delete(@PathVariable(value = "deviceno") String deviceNo){
+        return deviceInterface.delete(deviceNo);
     }
 }

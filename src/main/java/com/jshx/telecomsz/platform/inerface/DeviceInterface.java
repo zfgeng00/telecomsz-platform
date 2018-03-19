@@ -4,9 +4,7 @@ import com.jshx.telecomsz.platform.model.ApiResult;
 import com.jshx.telecomsz.platform.model.Device;
 import com.jshx.telecomsz.platform.model.DeviceCategory;
 import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -73,4 +71,10 @@ public interface DeviceInterface {
      */
     @RequestMapping(value = "/telecomsz/device/getdeviceinfo", method = RequestMethod.POST)
     Device getDeviceInfo(@RequestParam(value = "deviceNo") String deviceNo);
+
+    @RequestMapping(value = "/telecomsz/device/modify", method = RequestMethod.PUT)
+    ApiResult modify(@RequestBody Device device);
+
+    @RequestMapping(value = "/telecomsz/device/delete/{deviceno}", method = RequestMethod.DELETE)
+    ApiResult delete(@PathVariable(value = "deviceno") String deviceNo);
 }
