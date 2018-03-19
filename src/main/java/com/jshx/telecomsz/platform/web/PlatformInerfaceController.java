@@ -95,8 +95,8 @@ public class PlatformInerfaceController {
         return deviceInterface.modify(device);
     }
 
-    @RequestMapping(value = "/device/delete/{deviceno}", method = RequestMethod.DELETE)
-    public ApiResult delete(@PathVariable(value = "deviceno") String deviceNo){
-        return deviceInterface.delete(deviceNo);
+    @RequestMapping(value = "/device/delete/{deviceId}", method = RequestMethod.DELETE)
+    public ApiResult delete(@PathVariable(value = "deviceId") String deviceId){
+        return deviceInterface.delete(deviceId);
     }
 }

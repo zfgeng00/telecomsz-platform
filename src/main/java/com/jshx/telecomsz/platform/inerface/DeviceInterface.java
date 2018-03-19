@@ -75,6 +75,6 @@ public interface DeviceInterface {
     @RequestMapping(value = "/telecomsz/device/modify", method = RequestMethod.PUT)
     ApiResult modify(@RequestBody Device device);
 
-    @RequestMapping(value = "/telecomsz/device/delete/{deviceno}", method = RequestMethod.DELETE)
-    ApiResult delete(@PathVariable(value = "deviceno") String deviceNo);
+    @RequestMapping(value = "/telecomsz/device/delete/{deviceId}", method = RequestMethod.DELETE)
+    ApiResult delete(@PathVariable(value = "deviceId") String deviceId);
 }
