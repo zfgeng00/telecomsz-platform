@@ -48,8 +48,8 @@ public interface DeviceInterface {
                        @RequestParam(value = "deviceType") String deviceType,
                        @RequestParam(value = "deviceName", required = false) String deviceName,
                        @RequestParam(value = "deviceNo") String deviceNo,
-                       @RequestParam(value = "buildingCode") String buildingCode,
-                       @RequestParam(value = "floorCode") String floorCode,
+                       @RequestParam(value = "buildingCode") Integer buildingCode,
+                       @RequestParam(value = "floorCode") Integer floorCode,
                        @RequestParam(value = "left") Double left,
                        @RequestParam(value = "deviceDesc") String deviceDesc,
                        @RequestParam(value = "top") Double top);
