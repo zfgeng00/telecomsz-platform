@@ -35,6 +35,7 @@ public class IndexController {
 
         ModelAndView modelAndView = new ModelAndView("index");
         List<Building> buildingData = dataInterface.getBuildingData();
+        modelAndView.addObject("buildings", buildingData);
         for (Building building : buildingData) {
             if (building.getBuildingCode().equals(buildingCode)) {
                 modelAndView.addObject("building", building);
