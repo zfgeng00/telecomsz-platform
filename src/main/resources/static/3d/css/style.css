@@ -1119,14 +1119,16 @@ button:focus {
     background-position: center;
     background-size: contain;
     cursor: pointer;
-    pointer-events: auto;
-    transition: transform 300ms;
-    opacity: .8;
-    display: none;
+    pointer-events: none;
+    transition: transform 300ms, opacity 300ms;
+    opacity: 0;
+    /*display: none;*/
 }
 
 .level__pins.level__pins--active .pin {
-    display: block;
+    /*display: block;*/
+    opacity: 0.8;
+    pointer-events: auto;
 }
 
 /*.pin.pin--active {*/

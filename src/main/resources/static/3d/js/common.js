@@ -198,8 +198,8 @@ function addNew(ele, ev) {
     $("#addNew .close_add").slideDown();
     $("#addNew .btnG .btn2").slideDown();
     $(".mallnav").addClass("mallnav--hidden");
-    $left.val(101);
-    $top.val(36);
+    $left.val(98);
+    $top.val(30);
     var x = $left.val();
     var y = $top.val();
     var ht = '<a title="可拖拽来移动位置" class="pin" style="left:' + x + 'vmin;top:' + y + 'vmin;" data-category="0" href="javascript:void(0)"></a>';

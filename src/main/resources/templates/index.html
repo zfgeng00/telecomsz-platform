@@ -759,6 +759,7 @@
 
                     <!-- 点-->
                     <div class="level__pins">
+                        <!--遍历-->
                         <a class="pin" href="javascript:void(0)"
                            th:each="point,pointStat:${floor.devices}"
                            th:style="${'left:'+point.leftPoint+'vmin;top:'+point.topPoint+'vmin;'}"
@@ -824,6 +825,7 @@
             <div id="html_desc">
                 <div th:each="floor,statFloor: ${building.floors}" th:remove="tag">
                     <!-- 描述加载处 -->
+                    <!--遍历-->
                     <div th:each="point,pointStat:${floor.devices}" th:remove="tag">
                         <div class="content__item" th:data-space="${statFloor.count + '-' + pointStat.count}"
                              th:data-deviceid="${point.deviceId}"
@@ -877,6 +879,9 @@
         <!--</span>-->
         <ul id="html_seo" class="list grouped-by-category">
             <!-- 分类搜索导航列表加载处 -->
+            <!--为了保证list.min.js不报错，此处不可为空，至少有一个隐藏元素占位-->
+            <li class="list__item" data-space="000-000" style="display: none"></li>
+            <!--遍历-->
             <div th:each="floor,statFloor: ${building.floors}" th:remove="tag">
                 <li th:each="point,pointStat:${floor.devices}" class="list__item"
                     th:data-floor="${floor.floorName}"
