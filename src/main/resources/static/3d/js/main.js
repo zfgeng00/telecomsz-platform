@@ -559,8 +559,10 @@ function drag(obj, ac, oParent, cb) {
             document.onmousemove = null;
             document.onmouseup = null;
         });
+        layer.tips('现在不可以拖拽了', obj);
         return false;
     }
+    layer.tips('选中拖拽可以移动位置', obj);
     var sent = {
         l: 0, //oParent.offset().left,
         r: oParent.outerWidth() - obj.outerWidth(),

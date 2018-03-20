@@ -770,9 +770,7 @@
 
             </div>
             <div id="multi_switch">
-                <a th:class="${building.buildingCode == 1}? 'active' : ''" th:href="@{/(buildingCode=1)}" th:text="${building.buildingName}" th:title="${building.buildingName}">某某楼</a>
-                <a th:class="${building.buildingCode == 2}? 'active' : ''" th:href="@{/(buildingCode=2)}" th:text="${building.buildingName}" th:title="${building.buildingName}">某某楼</a>
-                <a th:class="${building.buildingCode == 3}? 'active' : ''" th:href="@{/(buildingCode=3)}" th:text="${building.buildingName}" th:title="${building.buildingName}">某某楼</a>
+                <a  th:each="_building,_buildStat: ${buildings}" th:class="${building.buildingCode == _buildStat.count}? 'active' : ''" th:href="@{/(buildingCode=${_buildStat.count})}" th:text="${_building.buildingName}" th:title="${_building.buildingName}">某某楼</a>
             </div>
             <!-- 添加新的传感器-->
             <div id="addNew">
@@ -880,7 +878,7 @@
         <ul id="html_seo" class="list grouped-by-category">
             <!-- 分类搜索导航列表加载处 -->
             <div th:each="floor,statFloor: ${building.floors}" th:remove="tag">
-                <li th:each=" point,pointStat:${floor.devices}" class="list__item"
+                <li th:each="point,pointStat:${floor.devices}" class="list__item"
                     th:data-floor="${floor.floorName}"
                     th:data-floorcode="${floor.floorCode}"
                     th:data-level="${statFloor.count}"
