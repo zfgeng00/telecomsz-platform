@@ -101,6 +101,28 @@ button:focus {
     font-weight: bold;
 }
 
+.logout {
+    display: block;
+    position: absolute;
+    left: 0em;
+    bottom: 0;
+    color: #00B5FF;
+    padding: 1em 0 1em 1.8em;
+    line-height: 1.2em;
+    font-size: .8em;
+    cursor: pointer;
+    font-weight: bold;
+    background: url("../img/icon/logout.png") no-repeat .5em center;
+    background-size: 1em;
+    /*transition: all 300ms;*/
+}
+
+.logout:hover {
+    -webkit-filter: grayscale(100%); /* Chrome, Safari, Opera */
+    filter: grayscale(100%);
+    color: #CCCCCC;
+}
+
 /* Top Navigation Style */
 
 .codrops-links {
@@ -1733,6 +1755,11 @@ body.asideDown .asideCtrl:after {
 
 #multi_switch a:nth-child(2) {
     background: url("../img/building/B_1.png") no-repeat .35em 0em;
+    background-size: 5em;
+}
+
+#multi_switch a:nth-child(3) {
+    background: url("../img/building/C_1.png") no-repeat .35em 0em;
     background-size: 5em;
 }
 
