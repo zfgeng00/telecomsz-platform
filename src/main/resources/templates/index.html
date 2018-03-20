@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="../static/3d/css/normalize.css" th:href="@{/3d/css/normalize.css}"/>
     <link rel="stylesheet" type="text/css" href="../static/3d/css/style.css" th:href="@{/3d/css/style.css}"/>
     <link th:if="${building.buildingCode == 2}" rel="stylesheet" type="text/css" href="../static/3d/css/levels17.css" th:href="@{/3d/css/levels17.css}"/>
+    <link th:if="${building.buildingCode == 3}" rel="stylesheet" type="text/css" href="../static/3d/css/levels3.css" th:href="@{/3d/css/levels3.css}"/>
     <script src="../static/3d/js/modernizr-custom.js" th:src="@{/3d/js/modernizr-custom.js}"></script>
     <script src="../static/3d/js/classie.js" th:src="@{/3d/js/classie.js}"></script>
     <script src="../static/3d/js/list.min.js" th:src="@{/3d/js/list.min.js}"></script>
@@ -769,8 +770,9 @@
 
             </div>
             <div id="multi_switch">
-                <a th:class="${building.buildingCode == 1}? 'active' : ''" href="index.html" th:href="@{/(buildingCode=1)}" title="电信老楼" th:text="${building.buildingName}" th:title="${building.buildingName}">电信老楼</a>
-                <a th:class="${building.buildingCode == 2}? 'active' : ''" href="index2.html" th:href="@{/(buildingCode=2)}" title="办公座楼">办公座楼</a>
+                <a th:class="${building.buildingCode == 1}? 'active' : ''" th:href="@{/(buildingCode=1)}" th:text="${building.buildingName}" th:title="${building.buildingName}">某某楼</a>
+                <a th:class="${building.buildingCode == 2}? 'active' : ''" th:href="@{/(buildingCode=2)}" th:text="${building.buildingName}" th:title="${building.buildingName}">某某楼</a>
+                <a th:class="${building.buildingCode == 3}? 'active' : ''" th:href="@{/(buildingCode=3)}" th:text="${building.buildingName}" th:title="${building.buildingName}">某某楼</a>
             </div>
             <!-- 添加新的传感器-->
             <div id="addNew">
@@ -838,11 +840,11 @@
                                     <div class="uf">
                                         <!--<input readonly class="content__item-title" value="<%=point.name%>">-->
                                         <div readonly contenteditable="false" class="content__item-title"
-                                             th:text="${point.deviceName}">标题
+                                             th:text="${point.deviceName}" placeholder="名称">名称
                                         </div>
                                         <div class="content__status">正常</div>
                                     </div>
-                                    <textarea readonly class="uf-f content__desc" th:text="${point.deviceDesc}">描述</textarea>
+                                    <textarea readonly class="uf-f content__desc" placeholder="描述" th:text="${point.deviceDesc}">描述</textarea>
                                 </div>
                                 <div class="content__operate uf uf-ver uf-pja">
                                     <div class="desc_edit">编辑</div>

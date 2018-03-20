@@ -1,10 +1,22 @@
-var bIndex; //本地数据键名
+var bIndex; //建筑code
 var $left, $top;
 $(function () {
 
     mainInit(window); //初始化main
 
     bIndex = $("body").data("building");
+    var trans = '';
+    switch (bIndex){
+        case 1:
+            trans = 'translateZ(15vmin) rotateX(-69.75deg) rotateY(-45deg) rotateZ(14deg)';
+            break;
+        case 2:
+            trans = 'translateZ(38vmin) rotateX(-69.75deg) rotateY(-32deg) rotateZ(9deg)';
+            break;
+        case 3:
+            trans = 'translateZ(16vmin) rotateX(-69.75deg) rotateY(-32deg) rotateZ(9deg)';
+            break;
+    }
 
     $left = $(".inputGroup input[name='left']");
     $top = $(".inputGroup input[name='top']");
@@ -145,7 +157,6 @@ $(function () {
                     scaleRatio = scaleRatio - 0.1;
                     break;
             }
-            var trans = bIndex == 1 ? 'translateZ(15vmin) rotateX(-69.75deg) rotateY(-45deg) rotateZ(14deg)' : 'translateZ(38vmin) rotateX(-69.75deg) rotateY(-32deg) rotateZ(9deg)';
             $(".level--current").css({'transform': trans + ' scale(' + scaleRatio + ')'});
         } else {
             $(".level").attr('style', '');
@@ -161,7 +172,6 @@ $(function () {
         } else {
             scaleRatio = scaleRatio - 0.1;
         }
-        var trans = bIndex == 1 ? 'translateZ(15vmin) rotateX(-69.75deg) rotateY(-45deg) rotateZ(14deg)' : 'translateZ(38vmin) rotateX(-69.75deg) rotateY(-32deg) rotateZ(9deg)';
         $oc.css({'transform': trans + ' scale(' + scaleRatio + ')'});
     });
 

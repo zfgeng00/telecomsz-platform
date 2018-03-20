@@ -1,0 +1,61 @@
+/*.surroundings {*/
+    /*margin-top: -48vmin;*/
+/*}*/
+
+/*.levels {*/
+    /*margin-top: -11vmin;*/
+/*}*/
+
+.surroundings,
+.levels {
+    -webkit-transform: rotateX(73deg) rotateZ(-26deg) translateZ(-15vmin);
+    transform: rotateX(73deg) rotateZ(-26deg) translateZ(-15vmin);
+}
+
+.level::after {
+    top: 4.5em;
+    left: 2vmin;
+    -webkit-transform: rotateZ(25deg) rotateX(-76deg) translateZ(30vmin);
+    -moz-transform: rotateZ(25deg) rotateX(-76deg) translateZ(30vmin);
+    -ms-transform: rotateZ(25deg) rotateX(-76deg) translateZ(30vmin);
+    -o-transform: rotateZ(25deg) rotateX(-76deg) translateZ(30vmin);
+    transform: rotateZ(25deg) rotateX(-76deg) translateZ(30vmin);
+}
+
+.level.level--current::after {
+    -webkit-transform: rotateZ(0deg) rotateX(0deg) translateZ(0vmin) translateX(0vmin) translateY(0vmin);
+    -moz-transform: rotateZ(0deg) rotateX(0deg) translateZ(0vmin) translateX(0vmin) translateY(0vmin);
+    -ms-transform: rotateZ(0deg) rotateX(0deg) translateZ(0vmin) translateX(0vmin) translateY(0vmin);
+    -o-transform: rotateZ(0deg) rotateX(0deg) translateZ(0vmin) translateX(0vmin) translateY(0vmin);
+    transform: rotateZ(0deg) rotateX(0deg) translateZ(0vmin) translateX(0vmin) translateY(0vmin);
+}
+
+.level.level--current {
+    -webkit-transform: translateZ(16vmin) rotateX(-69.75deg) rotateY(-32deg) rotateZ(9deg);
+    transform: translateZ(16vmin) rotateX(-69.75deg) rotateY(-32deg) rotateZ(9deg);
+}
+
+.level:not(:first-child) {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.level--1 {
+    background: url("../img/floor3/L1.svg") no-repeat left top;
+    background-size: contain;
+}
+
+.level--2 {
+    -webkit-transform: translateZ(9vmin);
+    transform: translateZ(9vmin);
+    background: url("../img/floor3/L2.svg") no-repeat left top;
+    background-size: contain;
+}
+
+.level--3 {
+    -webkit-transform: translateZ(18vmin);
+    transform: translateZ(18vmin);
+    background: url("../img/floor3/L3.svg") no-repeat left top;
+    background-size: contain;
+}
