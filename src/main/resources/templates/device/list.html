@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      lang="en"
+      layout:decorate="~{decorate-layout}">
+<head>
+    <title>设备管理</title>
+
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">搜索</h4>
+            <form name="searchForm">
+                <div class="row">
+
+                    <div class="col-sm-4">
+                        <div class="form-group form-group--float">
+                            <input type="text" class="form-control" id="name">
+                            <label>姓名</label>
+                            <i class="form-group__bar"></i>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group form-group--float">
+                            <input type="text" class="form-control" id="msisdn">
+                            <label>手机号码</label>
+                            <i class="form-group__bar"></i>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group form-group--float">
+                            <input type="text" class="form-control" id="name">
+                            <label>登录账号</label>
+                            <i class="form-group__bar"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-primary" id="search">搜索</button>
+                    <button type="button" class="btn btn-secondary" id="clear">清空</button>
+                </div>
+                <div class="col-sm-5"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="modal fade" id="modal-default" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title pull-left">添加设备</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Input Default">
+                        <i class="form-group__bar"></i>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Input Default">
+                        <i class="form-group__bar"></i>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Input Default">
+                        <i class="form-group__bar"></i>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link">保存</button>
+                    <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">设备列表</h4>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <button class="btn btn-primary btn--icon-text" data-toggle="modal" data-target="#modal-default"><i
+                            class="zmdi zmdi-plus"></i> 添加
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <div id="data-table_wrapper" class="dataTables_wrapper">
+                    <table id="data-table" class="table table-bordered dataTable" role="grid"
+                           aria-describedby="data-table_info">
+                        <thead class="thead-default">
+                        <tr role="row">
+                            <th>设备名称</th>
+                            <th>设备标识码</th>
+                            <th>设备ID</th>
+                            <th>设备类型</th>
+                            <th>设备型号</th>
+                            <th>厂商</th>
+                            <th>添加时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Vendors: Data tables -->
+    <script src="../../static/js/jquery.dataTables.min.js" th:src="@{/js/jquery.dataTables.min.js}"></script>
+    <script src="../../static/js/dataTables.buttons.min.js" th:src="@{/js/dataTables.buttons.min.js}"></script>
+    <script src="../../static/js/buttons.print.min.js" th:src="@{/js/buttons.print.min.js}"></script>
+    <script src="../../static/js/jszip.min.js" th:src="@{/js/jszip.min.js}"></script>
+    <script src="../../static/js/buttons.html5.min.js" th:src="@{/js/buttons.html5.min.js}"></script>
+    <script src="../../static/js/jsog.js" th:src="@{/js/jsog.js}"></script>
+
+    <script>
+        var dataTable;
+
+        $(function () {
+
+            /*<![CDATA[*/
+            dataTable = $("#data-table").DataTable({
+
+                ajax: {
+                    url: 'data',
+                    type: 'post',
+                    /*dataSrc: function (data) {
+                        console.log(CircularJSON.stringify(JSOG.stringify(data)));
+                        return CircularJSON.stringify(JSOG.stringify(data));
+                    },*/
+                    data: function (d) {
+                        return $.extend({}, d, {
+                            name: $('#name').val(),
+                            msisdn: $('#msisdn').val()
+                        });
+
+                    }
+                },
+                columns: [
+                    {data: "deviceName"},
+                    {data: "deviceNo"},
+                    {data: "deviceId"},
+                    {
+                        data: "manufacturerDevice",
+                        render: function (data) {
+                            if (data !== null) {
+                                return data.deviceType;
+                            } else {
+                                return '';
+                            }
+                        }
+                    },
+                    {
+                        data: "manufacturerDevice",
+                        render: function (data) {
+                            if (data !== null) {
+                                return data.deviceModel;
+                            } else {
+                                return '';
+                            }
+                        }
+                    },
+                    {
+                        data: "manufacturerDevice",
+                        render: function (data) {
+                            if (data !== null && data.manufacturer !== null) {
+                                return data.manufacturer.manufacturerName;
+                            } else {
+                                return '';
+                            }
+                        }
+                    },
+                    {
+                        data: "createTime"
+                    },
+                    {
+                        orderable: false,
+                        render: function (data, type, row, meta) {
+                            return '<button type="button" class="btn btn-link">查看</button>';
+                        }
+                    }
+                ]
+            });
+            /*]]>*/
+        });
+
+
+        $(function () {
+            $('#search').on('click', function () {
+                dataTable.ajax.reload();
+            });
+            $('#clear').on('click', function () {
+
+                document.searchForm.reset();
+                notify('标题', '搜索表单已清空', 'top', 'right', 'fa fa-check', 'success', 'animated fadeInUp', 'animated fadeOutUp');
+            });
+        });
+
+    </script>
+</div>
+
+</body>
+</html>

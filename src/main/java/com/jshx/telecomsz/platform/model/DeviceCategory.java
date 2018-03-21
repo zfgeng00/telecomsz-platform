@@ -1,5 +1,8 @@
 package com.jshx.telecomsz.platform.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.voodoodyne.jackson.jsog.JSOGGenerator;
+
 import java.util.List;
 
 /**
@@ -9,6 +12,7 @@ import java.util.List;
  * @author 王金
  * @version 1.0
  */
+@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class DeviceCategory extends BaseDomain {
 
     /**

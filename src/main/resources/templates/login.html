@@ -199,7 +199,6 @@
 <script th:inline="javascript">
     var error = [[${session.SPRING_SECURITY_LAST_EXCEPTION != null}]];
 
-
     if (error) {
         notify('登录失败', [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]], 'top', 'center', 'fa fa-comments', 'danger', 'animated fadeInDown', 'animated fadeOutUp');
     }

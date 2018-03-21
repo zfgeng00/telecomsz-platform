@@ -1,12 +1,18 @@
 package com.jshx.telecomsz.platform.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.voodoodyne.jackson.jsog.JSOGGenerator;
+
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created with Intellij IDEA by 王金 on 2017/2/23 下午5:20.
  */
-public class PageData implements Serializable {
+@JsonIdentityInfo(generator = JSOGGenerator.class)
+public class PageData<T> implements Serializable {
 
     private Integer draw;
 
@@ -14,7 +20,7 @@ public class PageData implements Serializable {
 
     private Integer recordsFiltered;
 
-    private Object data;
+    private List<T> data;
 
     private String error;
 
@@ -49,11 +55,11 @@ public class PageData implements Serializable {
         this.recordsFiltered = recordsFiltered;
     }
 
-    public Object getData() {
+    public List<T> getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(List<T> data) {
         this.data = data;
     }
 

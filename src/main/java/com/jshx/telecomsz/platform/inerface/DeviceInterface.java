@@ -1,8 +1,6 @@
 package com.jshx.telecomsz.platform.inerface;
 
-import com.jshx.telecomsz.platform.model.ApiResult;
-import com.jshx.telecomsz.platform.model.Device;
-import com.jshx.telecomsz.platform.model.DeviceCategory;
+import com.jshx.telecomsz.platform.model.*;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,4 +75,8 @@ public interface DeviceInterface {
 
     @RequestMapping(value = "/telecomsz/device/delete/{deviceId}", method = RequestMethod.DELETE)
     ApiResult delete(@PathVariable(value = "deviceId") String deviceId);
+
+
+    @RequestMapping(value = "/telecomsz/device/pagedata",method = RequestMethod.POST)
+    PageData<Device> pageData(@RequestBody DataTableCriterias dataTableCriterias);
 }
