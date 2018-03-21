@@ -198,8 +198,9 @@
 
 
 <script>
+    var error = $("#error").val();
 
-    if ($("#error").val()) {
+    if (error) {
         notify('登录失败', error, 'top', 'center', 'fa fa-comments', 'danger', 'animated fadeInDown', 'animated fadeOutUp');
     }
 
