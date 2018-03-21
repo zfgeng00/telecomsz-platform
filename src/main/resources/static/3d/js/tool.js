@@ -24,7 +24,7 @@ function iAjax(options) {
             if (options.error) {
                 options.error(err);
             } else {
-                layer.alert("接口出错", {icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                layer.alert("未知的错误发生了", {icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
                     layer.close(index);
                 });
             }
