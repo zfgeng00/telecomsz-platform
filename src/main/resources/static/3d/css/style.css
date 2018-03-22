@@ -2092,10 +2092,10 @@ body.asideDown .asideCtrl:after {
     /*border: 1px dashed #CCCCCC;*/
 }
 
-.level:not(.level--current):hover ~ .level {
-    opacity: 0;
-    transition: opacity 300ms;
-}
+/*.level:not(.level--current):hover ~ .level {*/
+    /*opacity: 0;*/
+    /*transition: opacity 300ms;*/
+/*}*/
 
 @-o-keyframes ani-big {
     from {

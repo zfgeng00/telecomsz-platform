@@ -227,8 +227,8 @@ function open_addForm(e) {
         '<div class="uf"><div class="inputName">名称：</div><input class="uf-f" name="deviceName" type="text" placeholder="设备名称"></div>' +
         '<div class="uf"><div class="inputName">标识码：</div><input class="uf-f" name="deviceNo" type="text" placeholder="MAC或SIM卡号或设备esn号等"></div>' +
         '<div class="uf"><div class="inputName">类型：</div><select onchange="linkage(1, this.value);" class="dType uf-f"></select></div>' +
-        '<div class="uf"><div class="inputName">厂商：</div><select onchange="linkage(2, this.value);" onclick="checkBy(1, this, event);" class="dManufacturer uf-f"></select></div>' +
-        '<div class="uf"><div class="inputName">型号：</div><select onclick="checkBy(2, this, event);" class="dModel uf-f"></select></div>' +
+        '<div class="uf"><div class="inputName">厂商：</div><select onchange="linkage(2, this.value);" onclick="checkBy(1);" class="dManufacturer uf-f"></select></div>' +
+        '<div class="uf"><div class="inputName">型号：</div><select onclick="checkBy(2);" class="dModel uf-f"></select></div>' +
         '<div class="uf"><div class="inputName">描述：</div><textarea class="uf-f" rows="5" name="deviceDesc" type="text" placeholder="设备描述"></textarea></div>' +
         '<div class="uf"><div class="inputName">x：</div><input class="uf-f infoX" name="left" onchange="changeByInput(this)" type="number" value="' + newPointX + '"></div>' +
         '<div class="uf"><div class="inputName">y：</div><input class="uf-f infoY" name="top" onchange="changeByInput(this)" type="number" value="' + newPointY + '"></div>' +
@@ -376,9 +376,8 @@ function doorOperate(id, l) {
     });
 }
 
-var typeObj, typeObj2 = {}, typeObj3 = {};
-
-//获取类型
+//获取设备类型对象
+var typeObj, typeObj2 = {}, typeObj3 = {}; //定义设备类型全局对象
 function getTypeObj() {
     iAjax({
         url: 'interface/device/getdevicecategory',
@@ -390,6 +389,7 @@ function getTypeObj() {
     });
 }
 
+//类型选择联动
 function linkage(l, v) {
     var $l1 = $(".inputGroup .dType"),
         $l2 = $(".inputGroup .dManufacturer"),
@@ -404,6 +404,8 @@ function linkage(l, v) {
                     htm1 += '<option value="' + item.categoryCode + '">' + item.categoryName + '</option>';
                     typeObj2[item.categoryCode] = item.manufacturers;
                 });
+            } else {
+                layer.msg("缺少类型");
             }
             $l1.html(htm1);
             $l2.html(htm2);
@@ -416,6 +418,8 @@ function linkage(l, v) {
                     htm2 += '<option value="' + item.manufacturerId + '">' + item.manufacturerName + '</option>';
                     typeObj3[item.manufacturerId] = item.manufacturerDevices;
                 });
+            } else {
+                layer.msg("缺少厂商");
             }
             $l2.html(htm2);
             $l3.html(htm3);
@@ -426,13 +430,15 @@ function linkage(l, v) {
                 $.each(list, function (index, item) {
                     htm3 += '<option value="' + item.deviceType + '$&$' + item.deviceModel + '">' + item.deviceType + '-' + item.deviceModel + '</option>';
                 });
+            } else {
+                layer.msg("缺少型号");
             }
             $l3.html(htm3);
             break;
     }
 }
 
-function checkBy(l, e, ev) {
+function checkBy(l) {
     var value, msg, $o;
     switch (l) {
         case 1:
