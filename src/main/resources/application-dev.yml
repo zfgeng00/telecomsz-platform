@@ -10,7 +10,18 @@ ribbon:
   ReadTimeout: 10000
   ConnectTimeout: 10000
 
+
 eureka:
   client:
     service-url:
       defaultZone: http://61.160.148.41:9011/cloud/eureka/
+
+feign:
+  client:
+    config:
+      feignName:
+        connectTimeout: 10000
+        readTimeout: 10000
+      TELECOMSZ-PLATFORM-INTERFACE:
+        connectTimeout: 10000
+        readTimeout: 10000
