@@ -38,7 +38,7 @@ public class PlatformInerfaceController {
      *
      * @param deviceType 设备类型
      * @param deviceName 设备名称
-     * @param deviceNo   设备号
+     * @param deviceNo   设备识别码
      * @return 注册设备信息
      */
     @RequestMapping(value = "/device/register", method = RequestMethod.POST)
