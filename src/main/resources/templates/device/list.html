@@ -105,12 +105,6 @@
             dataTable = $("#data-table").DataTable({
 
                 ajax: {
-                    url: 'data',
-                    type: 'post',
-                    /*dataSrc: function (data) {
-                        console.log(CircularJSON.stringify(JSOG.stringify(data)));
-                        return CircularJSON.stringify(JSOG.stringify(data));
-                    },*/
                     data: function (d) {
                         return $.extend({}, d, {
                             name: $('#name').val(),

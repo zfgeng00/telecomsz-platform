@@ -31,7 +31,7 @@ public class DeviceController {
 
     @ResponseBody
     @PostMapping(value = "/data")
-    public PageData<Device> data(DataTableCriterias dataTableCriterias) {
+    public PageData<Device> data(DataTableCriterias<Device> dataTableCriterias) {
         return deviceInterface.pageData(dataTableCriterias);
     }
 }
