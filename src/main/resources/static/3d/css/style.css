@@ -1840,7 +1840,7 @@ body.asideDown .asideCtrl:after {
     min-width: 50vmin;
 }
 
-.inputGroup .uf {
+.inputGroup > .uf {
     padding-bottom: 1em;
     min-height: 3em;
 }
@@ -1852,6 +1852,7 @@ body.asideDown .asideCtrl:after {
 }
 
 .inputGroup input,
+.inputGroup select,
 .inputGroup textarea {
     border-radius: .2em;
     margin: 0;

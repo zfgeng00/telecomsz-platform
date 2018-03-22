@@ -7,7 +7,7 @@
  * @param options
  */
 function iAjax(options) {
-    console.log(options);
+    // console.log(options);
     var layerLoading;
     $.ajax({
         url: options.url,
@@ -20,7 +20,7 @@ function iAjax(options) {
             options.success(ret);
         },
         error: function (err) {
-            console.log(err);
+            // console.log(err);
             if (options.error) {
                 options.error(err);
             } else {

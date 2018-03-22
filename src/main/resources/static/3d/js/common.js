@@ -226,8 +226,9 @@ function open_addForm(e) {
     var html = '<div class="inputGroup">' +
         '<div class="uf"><div class="inputName">名称：</div><input class="uf-f" name="deviceName" type="text" placeholder="设备名称"></div>' +
         '<div class="uf"><div class="inputName">标识码：</div><input class="uf-f" name="deviceNo" type="text" placeholder="MAC或SIM卡号或设备esn号等"></div>' +
-        '<div class="uf"><div class="inputName">类型：</div><input class="uf-f" name="deviceType" type="text" placeholder="设备类型"></div>' +
-        '<div class="uf"><div class="inputName">型号：</div><input class="uf-f" name="deviceModel" type="text" placeholder="设备型号"></div>' +
+        '<div class="uf"><div class="inputName">类型：</div><select onchange="linkage(1, this.value);" class="dType uf-f"></select></div>' +
+        '<div class="uf"><div class="inputName">厂商：</div><select onchange="linkage(2, this.value);" onclick="checkBy(1, this, event);" class="dManufacturer uf-f"></select></div>' +
+        '<div class="uf"><div class="inputName">型号：</div><select onclick="checkBy(2, this, event);" class="dModel uf-f"></select></div>' +
         '<div class="uf"><div class="inputName">描述：</div><textarea class="uf-f" rows="5" name="deviceDesc" type="text" placeholder="设备描述"></textarea></div>' +
         '<div class="uf"><div class="inputName">x：</div><input class="uf-f infoX" name="left" onchange="changeByInput(this)" type="number" value="' + newPointX + '"></div>' +
         '<div class="uf"><div class="inputName">y：</div><input class="uf-f infoY" name="top" onchange="changeByInput(this)" type="number" value="' + newPointY + '"></div>' +
@@ -243,7 +244,10 @@ function open_addForm(e) {
         // shadeClose: true, //遮罩显示情况下，控制点击遮罩区域是否关闭层
         // scrollbar: false, //屏蔽浏览器滚动条
         anim: 0, //动画类型0~6 默认0 设置false为不使用动画
-        content: html //页面地址
+        content: html, //页面地址
+        success: function (layero, index) { //弹出成功后的回调
+            getTypeObj(); //获取设备类型
+        }
     });
 }
 
@@ -253,9 +257,10 @@ function addSubmit() {
     var buildingCode = $("body").data('building');
     var floorCode = $(".level.level--current").data('floorcode');
     var deviceName = $(".inputGroup input[name='deviceName']").val();
-    var deviceType = $(".inputGroup input[name='deviceType']").val();
     var deviceNo = $(".inputGroup input[name='deviceNo']").val();
-    var deviceModel = $(".inputGroup input[name='deviceModel']").val();
+    var typeModel = $(".inputGroup .dModel").val();
+    var deviceType = typeModel.split('$&$')[0];
+    var deviceModel = typeModel.split('$&$')[1];
     var deviceDesc = $(".inputGroup textarea[name='deviceDesc']").val();
     var left = $(".inputGroup input[name='left']").val();
     var top = $(".inputGroup input[name='top']").val();
@@ -369,4 +374,81 @@ function doorOperate(id, l) {
             }
         }
     });
+}
+
+var typeObj, typeObj2 = {}, typeObj3 = {};
+
+//获取类型
+function getTypeObj() {
+    iAjax({
+        url: 'interface/device/getdevicecategory',
+        type: 'post',
+        success: function (ret) {
+            typeObj = JSOG.decode(ret);
+            linkage(0);
+        }
+    });
+}
+
+function linkage(l, v) {
+    var $l1 = $(".inputGroup .dType"),
+        $l2 = $(".inputGroup .dManufacturer"),
+        $l3 = $(".inputGroup .dModel");
+    var htm = '<option value="">请选择</option>',
+        htm1 = htm, htm2 = htm, htm3 = htm;
+    switch (l) {
+        case 0:
+            var list = typeObj;
+            if (list && list.length) {
+                $.each(list, function (index, item) {
+                    htm1 += '<option value="' + item.categoryCode + '">' + item.categoryName + '</option>';
+                    typeObj2[item.categoryCode] = item.manufacturers;
+                });
+            }
+            $l1.html(htm1);
+            $l2.html(htm2);
+            $l3.html(htm3);
+            break;
+        case 1:
+            var list = typeObj2[v];
+            if (list && list.length) {
+                $.each(list, function (index, item) {
+                    htm2 += '<option value="' + item.manufacturerId + '">' + item.manufacturerName + '</option>';
+                    typeObj3[item.manufacturerId] = item.manufacturerDevices;
+                });
+            }
+            $l2.html(htm2);
+            $l3.html(htm3);
+            break;
+        case 2:
+            var list = typeObj3[v];
+            if (list && list.length) {
+                $.each(list, function (index, item) {
+                    htm3 += '<option value="' + item.deviceType + '$&$' + item.deviceModel + '">' + item.deviceType + '-' + item.deviceModel + '</option>';
+                });
+            }
+            $l3.html(htm3);
+            break;
+    }
+}
+
+function checkBy(l, e, ev) {
+    var value, msg, $o;
+    switch (l) {
+        case 1:
+            $o = $(".inputGroup .dType");
+            value = $o.val();
+            msg = "请先选择类型";
+            break;
+        case 2:
+            $o = $(".inputGroup .dManufacturer");
+            value = $o.val();
+            msg = "请先选择厂商";
+            break;
+    }
+    if (!value) {
+        layer.tips(msg, $o, {
+            tips: 1
+        });
+    }
 }
