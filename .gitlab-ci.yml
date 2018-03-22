@@ -1,0 +1,85 @@
+cache:
+  paths:
+    - .m2/telecomsz-platform/
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/telecomsz-platform-interface"
+
+stages:
+#  - package-dev
+#  - stop-contailer-dev
+#  - build-image-dev
+#  - run-app-dev
+  - package
+  - stop-contailer
+  - build-image
+  - run-app
+
+#打包(dev):
+#  stage: package-dev
+#  script:
+#    - mvn $MAVEN_OPTS package -DskipTests
+#  artifacts:
+#    paths:
+#      - target/telecomsz-platform-latest.jar
+#  only:
+#    - dev
+#
+#停止已有docker容器(dev):
+#  stage: stop-contailer-dev
+#  script:
+#    - docker stop telecomsz-platform-dev
+#    - docker rm -f telecomsz-platform-dev
+#  allow_failure: true
+#  only:
+#    - dev
+#
+#打包docker镜像(dev):
+#  stage: build-image-dev
+#  script:
+#    - docker build -t telecomsz-platform:latest .
+#  only:
+#    - dev
+#
+#启动应用(dev):
+#  stage: run-app-dev
+#  script:
+#    - docker run --name telecomsz-platform-dev -d -p 9001:9001 telecomsz-platform:latest java -jar /usr/local/bin/telecomsz-platform-latest.jar --spring.profiles.active=dev
+#  only:
+#    - dev
+
+
+#生产配置
+
+打包:
+  stage: package
+  script:
+    - mvn $MAVEN_OPTS package -DskipTests
+  artifacts:
+    paths:
+      - target/telecomsz-platform-latest.jar
+  only:
+    - master
+
+停止已有docker容器:
+  stage: stop-contailer
+  script:
+    - docker stop telecomsz-platform
+    - docker rm -f telecomsz-platform
+  allow_failure: true
+  only:
+    - master
+
+打包docker镜像:
+  stage: build-image
+  script:
+    - docker build -t telecomsz-platform:latest .
+  only:
+    - master
+
+启动应用:
+  stage: run-app
+  script:
+    - docker run --name telecomsz-platform -d -p 9000:9000  --link eureka-server:eureka-server telecomsz-platform:latest
+  only:
+    - master
