@@ -83,7 +83,7 @@ $(function () {
                                     $obj.attr("title", thisTitle);
                                     $li.find("a").text(thisTitle);
                                 } else { //失败
-                                    layer.alert(ret.desc, {icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                                    layer.alert(ret.desc, {title:'失败', icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
                                         layer.close(index);
                                     });
                                 }
@@ -122,12 +122,12 @@ $(function () {
                 type: 'delete',
                 success: function (ret) {
                     if (ret.status == 0) { //成功
-                        layer.alert(ret.desc, {btn: '点击刷新', icon: 1, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                        layer.alert(ret.desc, {btn: '点击刷新', title:'成功', icon: 1, closeBtn: 0, btnAlign: 'c'}, function (index) {
                             layer.close(index);
                             location.reload();
                         });
                     } else { //失败
-                        layer.alert(ret.desc, {icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                        layer.alert(ret.desc, {title:'失败', icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
                             layer.close(index);
                         });
                     }
@@ -224,7 +224,7 @@ function open_addForm(e) {
         return;
     }
     var html = '<div class="inputGroup">' +
-        '<div class="uf"><div class="inputName">名称：</div><input class="uf-f" name="deviceName" type="text" placeholder="设备名称"></div>' +
+        '<div class="uf"><div class="inputName">名称：</div><input class="uf-f" name="deviceName" type="text" placeholder="名称：房间名-设备名"></div>' +
         '<div class="uf"><div class="inputName">标识码：</div><input class="uf-f" name="deviceNo" type="text" placeholder="MAC或SIM卡号或设备esn号等"></div>' +
         '<div class="uf"><div class="inputName">类型：</div><select onchange="linkage(1, this.value);" class="dType uf-f"></select></div>' +
         '<div class="uf"><div class="inputName">厂商：</div><select onchange="linkage(2, this.value);" onclick="checkBy(1);" class="dManufacturer uf-f"></select></div>' +
@@ -306,7 +306,7 @@ function addSubmit() {
         success: function (ret) {
             if (ret.status == 0) { //成功
                 layer.alert(ret.desc, {
-                    btn: ['点击刷新', '继续添加'], icon: 1, closeBtn: 0, btnAlign: 'c', end: function () {
+                    btn: ['点击刷新', '继续添加'], title:'成功', icon: 1, closeBtn: 0, btnAlign: 'c', end: function () {
                         drag($obj, false);
                         close_addView(deviceName);
                     }
@@ -315,7 +315,7 @@ function addSubmit() {
                     location.reload(); //刷新页面
                 });
             } else { //失败
-                layer.alert(ret.desc, {icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                layer.alert(ret.desc, {title:'失败', icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
                     layer.close(index);
                 });
             }
@@ -364,11 +364,11 @@ function doorOperate(id, l) {
         },
         success: function (ret) {
             if (ret.status == 0) { //成功
-                layer.alert("设备指令【" + str + "】下发成功", {icon: 1, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                layer.alert("设备指令【" + str + "】下发成功", {title:'成功', icon: 1, closeBtn: 0, btnAlign: 'c'}, function (index) {
                     layer.close(index);
                 });
             } else { //失败
-                layer.alert(ret.desc, {icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                layer.alert(ret.desc, {title:'失败', icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
                     layer.close(index);
                 });
             }
