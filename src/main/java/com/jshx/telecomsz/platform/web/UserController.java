@@ -1,15 +1,12 @@
 package com.jshx.telecomsz.platform.web;
 
-import com.jshx.telecomsz.platform.inerface.LoginInterface;
+import com.jshx.telecomsz.platform.inerface.UserInterface;
 import com.jshx.telecomsz.platform.model.DataTableCriterias;
 import com.jshx.telecomsz.platform.model.PageData;
 import com.jshx.telecomsz.platform.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created with Intellij IDEA by 王金 on 2018/3/9 16:48.
@@ -22,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UserController extends BaseController {
 
     @Autowired
-    private LoginInterface loginInterface;
+    private UserInterface userInterface;
 
 
     @GetMapping(value = "/list")
@@ -34,11 +31,8 @@ public class UserController extends BaseController {
 
     @ResponseBody
     @PostMapping(value = "/data")
-    public PageData data(DataTableCriterias dataTableCriterias, String username, String msisdn, String name) {
-
-        User login = loginInterface.login(username, msisdn);
-
-        return null;
+    public PageData<User> data(@ModelAttribute DataTableCriterias<User> dataTableCriterias, @ModelAttribute User user) {
+        return userInterface.pageData(dataTableCriterias);
     }
 
 }
