@@ -3,7 +3,7 @@ cache:
     - .m2/telecomsz-platform/
 
 variables:
-  MAVEN_OPTS: "-Dmaven.repo.local=.m2/telecomsz-platform-interface"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/telecomsz-platform"
 
 stages:
 #  - package-dev
@@ -80,6 +80,6 @@ stages:
 启动应用:
   stage: run-app
   script:
-    - docker run --name telecomsz-platform -d -p 9000:9000  --link eureka-server:eureka-server --link telecomsz-platform-interface:telecomsz-platform-interface telecomsz-platform:latest
+    - docker run --name telecomsz-platform -d -p 9000:9000  --link eureka-server:eureka-server --link telecomsz-platform-interface:telecomsz-platform-interface -h telecomsz-platform telecomsz-platform:latest
   only:
     - master
