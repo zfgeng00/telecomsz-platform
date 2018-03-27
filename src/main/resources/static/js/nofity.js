@@ -1,4 +1,4 @@
-function notify(title,message,from, align, icon, type, animIn, animOut) {
+function notify(title, message, from, align, icon, type, animIn, animOut) {
     $.notify({
         icon: icon,
         title: title,
@@ -37,4 +37,12 @@ function notify(title,message,from, align, icon, type, animIn, animOut) {
         '<button type="button" aria-hidden="true" data-notify="dismiss" class="alert--notify__close">关闭</button>' +
         '</div>'
     });
+}
+
+function notifyRight(title, message, type) {
+    notify(title, message, 'top', 'right', 'fa fa-comments', type, 'animated fadeInDown', 'animated fadeOutUp');
+}
+
+function notifyCenter(title, message, type) {
+    notify(title, message, 'top', 'center', 'fa fa-comments', type, 'animated fadeInDown', 'animated fadeOutUp');
 }
