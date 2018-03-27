@@ -21,4 +21,7 @@ public interface UserInterface {
 
     @RequestMapping(value = "/telecomsz/user/pagedata", method = RequestMethod.POST)
     PageData<User> pageData(@RequestBody DataTableCriterias<User> dataTableCriterias);
+
+    @RequestMapping(value = "/telecomsz/user/add", method = RequestMethod.POST)
+    User add(@RequestBody User user);
 }
