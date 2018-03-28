@@ -53,6 +53,12 @@ public class IndexController {
     }
 
 
+    @GetMapping(value = "/test")
+    public String test() {
+        return "test";
+    }
+
+
     @GetMapping(value = "/send")
     public String send() {
         simpMessagingTemplate.convertAndSend("/device/test", "test");
