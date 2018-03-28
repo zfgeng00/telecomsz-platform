@@ -29,13 +29,20 @@ public class IndexController {
 
 
     @GetMapping(value = "/")
-    public ModelAndView index(@RequestParam(value = "buildingCode", required = false) Integer buildingCode) {
+    public String index() {
+
+        return "index";
+    }
+
+
+    @GetMapping(value = "/3d-index")
+    public ModelAndView index3d(@RequestParam(value = "buildingCode", required = false) Integer buildingCode) {
 
         if (buildingCode == null || buildingCode == 0 || buildingCode.equals(0)) {
             buildingCode = 1;
         }
 
-        ModelAndView modelAndView = new ModelAndView("index");
+        ModelAndView modelAndView = new ModelAndView("3d-index");
         List<Building> buildingData = dataInterface.getBuildingData();
         modelAndView.addObject("buildings", buildingData);
         for (Building building : buildingData) {
