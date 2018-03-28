@@ -21,6 +21,10 @@
     <script src="../static/3d/js/main.js" th:src="@{/3d/js/main.js}"></script>
     <script src="../static/js/jsog.js" th:src="@{/js/jsog.js}"></script>
     <script src="../static/3d/js/common.js" th:src="@{/3d/js/common.js}"></script>
+    <script src="../static/js/notify/notification.js" th:src="@{/js/notify/notification.js}"></script>
+    <script src="../static/js/sockjs.min.js" th:src="@{/js/sockjs.min.js}"></script>
+    <script src="../static/js/stomp.min.js" th:src="@{/js/stomp.min.js}"></script>
+    <script src="../static/js/socketApp.js" th:src="@{/js/socketApp.js}"></script>
 </head>
 <body th:data-building="${building.buildingCode}">
 <svg class="hidden">
@@ -57,6 +61,7 @@
         <header class="codrops-header">
             <h1>智慧物联网</h1>
         </header>
+        <a th:href="@{/map}" class="backToIndex">返回地图</a>
         <a th:href="@{/logout}" class="logout">退出登录</a>
         <div class="mall">
             <div class="surroundings">

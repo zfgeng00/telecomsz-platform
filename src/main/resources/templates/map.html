@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head lang="en" xmlns:th="http://www.thymeleaf.org/">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width"/>
+    <title>苏州电信智慧物联网</title>
+    <link rel="stylesheet" type="text/css" href="../static/3d/css/map.css" th:href="@{/3d/css/map.css}"/>
+    <script src="../static/js/notify/notification.js" th:src="@{/js/notify/notification.js}"></script>
+    <script src="../static/js/sockjs.min.js" th:src="@{/js/sockjs.min.js}"></script>
+    <script src="../static/js/stomp.min.js" th:src="@{/js/stomp.min.js}"></script>
+    <script src="../static/js/socketApp.js" th:src="@{/js/socketApp.js}"></script>
+</head>
+<body>
+
+<!--地图区域-->
+<div id="container">地图加载中...</div>
+<a href="https://www.amap.com/place/B020006GWP" target="_blank" class="toGaode">Go</a>
+<div class="back" onclick="backToCenter();"><span>复位<br>地图</span></div>
+<a th:href="@{/logout}" class="logout">退出登录</a>
+
+<script type="text/javascript"
+        src="http://webapi.amap.com/maps?v=1.4.4&key=f15f46965262ec2284ab80b8cd91b3db&plugin=AMap.ControlBar&callback=mapInit"></script>
+<script type="text/javascript">
+    var map,
+        pitch = 30,
+        rotation = 0,
+        zoomNumber = 18.8,
+        centerPoint = [120.5838, 31.29759];
+    window.mapInit = function () {
+        map = new AMap.Map('container', {
+            resizeEnable: true, //是否监控地图容器尺寸变化，默认值为false
+            rotateEnable: true, //是否允许设置地图顺时针旋转角度
+            pitchEnable: true, //是否允许设置俯仰角度，3D视图下为true，2D视图下无效。（自V1.4.0开始支持）
+            viewMode: '3D', //开启3D视图,默认为关闭
+            buildingAnimation: true, //楼块出现是否带动画
+            expandZoomRange: true, //是否支持可以扩展最大缩放级别,和zooms属性配合使用，设置为true的时候，zooms的最大级别在PC上可以扩大到20级，移动端还是高清19/非高清20
+            zooms: [3, 20], //地图显示的缩放级别范围，在PC上，默认为[3,18]，取值范围[3-18]；在移动设备上，默认为[3,19],取值范围[3-19]
+            pitch: pitch, //俯仰角度，默认0，[0,83]，2D地图下无效 。（自V1.4.0开始支持）
+            rotation: rotation, //地图顺时针旋转角度，取值范围 [0-360]，默认值：0
+            zoom: zoomNumber, //地图显示的缩放级别，若center与level未赋值，地图初始化默认显示用户所在城市范围，3D地图下，zoom值，可以设置为浮点数。
+            center: centerPoint //地图中心点
+        });
+
+        map.addControl(new AMap.ControlBar({
+            showZoomBar: false,
+            showControlButton: true,
+            position: {
+                right: '10px',
+                top: '10px'
+            }
+        }));
+
+        var A = new AMap.Marker({
+            animation: "AMAP_ANIMATION_DROP",
+            position: [120.58328, 31.2980],
+            title: "点击查看更多",
+            label: { //label默认蓝框白底左上角显示，样式className为：amap-marker-label
+                offset: new AMap.Pixel(15, 15),//修改label相对于maker的位置
+                content: "电信新楼"
+            },
+            map: map
+        });
+        var B = new AMap.Marker({
+            animation: "AMAP_ANIMATION_DROP",
+            position: [120.58395, 31.29755],
+            title: "点击查看更多",
+            label: { //label默认蓝框白底左上角显示，样式className为：amap-marker-label
+                offset: new AMap.Pixel(15, 15),//修改label相对于maker的位置
+                content: "电信老楼"
+            },
+            map: map
+        });
+        var C = new AMap.Marker({
+            animation: "AMAP_ANIMATION_DROP",
+            position: [120.5836, 31.2973],
+            title: "点击查看更多",
+            label: { //label默认蓝框白底左上角显示，样式className为：amap-marker-label
+                offset: new AMap.Pixel(15, 15),//修改label相对于maker的位置
+                content: "营业厅"
+            },
+            map: map
+        });
+
+        A.on('click', function (e) {
+            // location.href = "http://61.160.148.41:9000/telecomsz/";
+        });
+        B.on('click', function (e) {
+            // location.href = "http://61.160.148.41:9000/telecomsz/?buildingCode=2";
+        });
+        C.on('click', function (e) {
+            // location.href = "http://61.160.148.41:9000/telecomsz/?buildingCode=3";
+
+        });
+
+    };
+
+    function backToCenter() { //复位地图
+        map.setPitch(pitch);
+        map.setRotation(rotation);
+        map.setZoomAndCenter(zoomNumber, centerPoint);
+    }
+</script>
+</body>
+</html>

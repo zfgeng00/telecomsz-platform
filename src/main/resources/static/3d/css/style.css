@@ -123,6 +123,28 @@ button:focus {
     color: #CCCCCC;
 }
 
+.backToIndex {
+    display: block;
+    position: absolute;
+    left: 8.5em;
+    top: 0;
+    color: #00B5FF;
+    padding: 1em 0 1em 1.8em;
+    line-height: 1.2em;
+    font-size: .8em;
+    cursor: pointer;
+    font-weight: bold;
+    background: url("../img/icon/back.png") no-repeat .5em center;
+    background-size: 1em;
+    /*transition: all 300ms;*/
+}
+
+.backToIndex:hover {
+    -webkit-filter: grayscale(100%); /* Chrome, Safari, Opera */
+    filter: grayscale(100%);
+    color: #CCCCCC;
+}
+
 /* Top Navigation Style */
 
 .codrops-links {
@@ -2093,8 +2115,8 @@ body.asideDown .asideCtrl:after {
 }
 
 /*.level:not(.level--current):hover ~ .level {*/
-    /*opacity: 0;*/
-    /*transition: opacity 300ms;*/
+/*opacity: 0;*/
+/*transition: opacity 300ms;*/
 /*}*/
 
 @-o-keyframes ani-big {
