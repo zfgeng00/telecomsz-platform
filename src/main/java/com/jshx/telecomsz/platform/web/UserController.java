@@ -50,4 +50,22 @@ public class UserController extends BaseController {
         return userInterface.add(user);
     }
 
+    @ResponseBody
+    @GetMapping(value = "/get/{id}")
+    public User get(@PathVariable(value = "id") long id) {
+        return userInterface.get(id);
+    }
+
+    @ResponseBody
+    @DeleteMapping(value = "/delete/{id}")
+    public User delete(@PathVariable(value = "id") long id) {
+        return userInterface.delete(id);
+    }
+
+    @ResponseBody
+    @PutMapping(value = "/modify")
+    public User modify(@RequestBody User user) {
+        return userInterface.modify(user);
+    }
+
 }

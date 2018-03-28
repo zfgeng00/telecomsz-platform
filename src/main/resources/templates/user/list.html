@@ -92,9 +92,111 @@
     <script src="../../static/js/jszip.min.js" th:src="@{/js/jszip.min.js}"></script>
     <script src="../../static/js/buttons.html5.min.js" th:src="@{/js/buttons.html5.min.js}"></script>
     <script src="../../static/js/jsog.js" th:src="@{/js/jsog.js}"></script>
+    <script src="../../static/js/validator.js" th:src="@{/js/validator.js}"></script>
 
     <script>
+
         var dataTable;
+
+        function del(id) {
+            var index = layer.confirm('确定删除吗？', {
+                btn: ['确定', '取消']
+            }, function () {
+                $.ajax({
+                    url: 'delete/' + id,
+                    type: 'delete',
+                    success: function (data) {
+                        layer.close(index);
+                        dataTable.ajax.reload();
+                        notifyRight('删除成功', '', 'success');
+                    },
+                    error: function (error) {
+                        notifyRight('删除成功', error.responseJSON.message, 'danger');
+                    }
+                });
+            });
+        }
+
+        function modify(id) {
+
+            $.ajax({
+                url: 'get/' + id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    var index = layer.open({
+                        type: 1,
+                        title: '编辑用户',
+                        area: '600px',
+                        shadeClose: true, //点击遮罩关闭
+                        content:
+                        '<div class="card-body">' +
+                        '<form id="modify-form">' +
+                        '<input type="hidden" name="id" value="' + data.id + '">' +
+                        ' <div class="row">' +
+                        '<div class="col-sm-12">' +
+                        '<div class="form-group form-group--float">' +
+                        ' <input name="name" type="text" class="form-control form-control--active" id="name" value="' + data.name + '">' +
+                        '<label>姓名</label>' +
+                        '<i class="form-group__bar"></i>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        ' <div class="row">' +
+                        '<div class="col-sm-12">' +
+                        '<div class="form-group form-group--float">' +
+                        '<input name="msisdn" type="text" class="form-control form-control--active" id="msisdn" value="' + data.msisdn + '">' +
+                        '<label>手机号码</label>' +
+                        ' <i class="form-group__bar"></i>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        ' <div class="row">' +
+                        '<div class="col-sm-12">' +
+                        '<div class="form-group form-group--float">' +
+                        '<input name="loginAccount" type="text" class="form-control form-control--active" id="login-account" value="' + data.loginAccount + '">' +
+                        '<label>登录账号</label>' +
+                        '<i class="form-group__bar"></i>' +
+                        '</div>' +
+                        '</div>' +
+
+                        '</div>' +
+                        '<div class="row">' +
+                        '<div class="col-sm-12 text-center">' +
+                        '<button type="submit" class="btn btn-primary" id="submit" >确定</button>' +
+                        '</div>' +
+                        '</div>' +
+                        '</form>' +
+                        '</div>',
+                        success: function () {
+                            $('#modify-form').on('submit', function (e) {
+                                e.preventDefault();
+
+                                var serializeObject = $(this).serializeObject();
+
+                                if (validate('modify-form', serializeObject)) {
+                                    $.ajax({
+                                        url: 'modify',
+                                        type: 'PUT',
+                                        contentType: 'application/json;charset=utf-8',
+                                        dataType: 'json',
+                                        data: JSON.stringify($(this).serializeObject()),
+                                        success: function (data) {
+                                            dataTable.ajax.reload();
+                                            layer.close(index);
+                                        }
+                                    });
+                                }
+
+
+                            })
+                        }
+                    });
+                }
+
+            });
+
+        }
 
         $(function () {
 
@@ -114,10 +216,18 @@
                 columns: [
                     {data: "name"},
                     {data: "loginAccount"},
-                    {data: "createTime"},
+                    {data: "createTime",
+                        render:function(data) {
+                            return new Date(data).toLocaleString();
+                        }
+                    },
                     {
                         render: function (data, type, row, meta) {
-                            return '<button type="button" class="btn btn-link">查看</button>';
+
+                            var html = '<button type="button" class="btn btn-link" onclick="modify(' + row.id + ')">编辑</button>';
+                            html += '<button type="button" class="btn btn-link" onclick="del(' + row.id + ')">删除</button>';
+
+                            return html;
                         }
                     }
                 ]
@@ -150,7 +260,7 @@
                     ' <div class="row">' +
                     '<div class="col-sm-12">' +
                     '<div class="form-group form-group--float">' +
-                    ' <input name="name" type="text" class="form-control" id="name">' +
+                    ' <input name="name" type="text" class="form-control" id="name" validate="true" msg="姓名不能为空">' +
                     '<label>姓名</label>' +
                     '<i class="form-group__bar"></i>' +
                     '</div>' +
@@ -159,7 +269,7 @@
                     ' <div class="row">' +
                     '<div class="col-sm-12">' +
                     '<div class="form-group form-group--float">' +
-                    '<input name="msisdn" type="text" class="form-control" id="msisdn">' +
+                    '<input name="msisdn" type="text" class="form-control" id="msisdn" minlength="11" maxlength="11" validate="true" msg="手机号码不能为空">' +
                     '<label>手机号码</label>' +
                     ' <i class="form-group__bar"></i>' +
                     '</div>' +
@@ -168,7 +278,7 @@
                     ' <div class="row">' +
                     '<div class="col-sm-12">' +
                     '<div class="form-group form-group--float">' +
-                    '<input name="loginAccount" type="text" class="form-control" id="login-account">' +
+                    '<input name="loginAccount" type="text" class="form-control" id="login-account" validate="true" remote="checkloginaccount" msg="登录账号不能为空">' +
                     '<label>登录账号</label>' +
                     '<i class="form-group__bar"></i>' +
                     '</div>' +
@@ -183,23 +293,27 @@
                     '</form>' +
                     '</div>',
                     success: function () {
-                        $('#add-form').submit(function (e) {
+
+                        $('#add-form').on('submit', function (e) {
                             e.preventDefault();
 
-                            $.ajax({
-                                url: 'add',
-                                type: 'POST',
-                                contentType: 'application/json;charset=utf-8',
-                                dataType: 'json',
-                                data: JSON.stringify($(this).serializeObject()),
-                                success: function (data) {
-                                    dataTable.ajax.reload();
-                                    layer.close(index);
-                                }
-                            });
+                            var serializeObject = $(this).serializeObject();
 
+                            if (validate('add-form', serializeObject)) {
+                                $.ajax({
+                                    url: 'add',
+                                    type: 'POST',
+                                    contentType: 'application/json;charset=utf-8',
+                                    dataType: 'json',
+                                    data: JSON.stringify(serializeObject),
+                                    success: function (data) {
+                                        dataTable.ajax.reload();
+                                        layer.close(index);
+                                    }
+                                });
+                            }
 
-                        })
+                        });
                     }
                 });
             });

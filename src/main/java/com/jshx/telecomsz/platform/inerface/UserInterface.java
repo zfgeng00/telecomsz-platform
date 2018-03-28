@@ -4,6 +4,7 @@ import com.jshx.telecomsz.platform.model.DataTableCriterias;
 import com.jshx.telecomsz.platform.model.PageData;
 import com.jshx.telecomsz.platform.model.User;
 import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,4 +25,13 @@ public interface UserInterface {
 
     @RequestMapping(value = "/telecomsz/user/add", method = RequestMethod.POST)
     User add(@RequestBody User user);
+
+    @RequestMapping(value = "/telecomsz/user/get/{id}", method = RequestMethod.GET)
+    User get(@PathVariable(value = "id") long id);
+
+    @RequestMapping(value = "/telecomsz/user/delete/{id}", method = RequestMethod.DELETE)
+    User delete(@PathVariable(value = "id") long id);
+
+    @RequestMapping(value = "/telecomsz/user/modify", method = RequestMethod.PUT)
+    User modify(@RequestBody User user);
 }
