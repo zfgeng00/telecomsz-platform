@@ -1,5 +1,6 @@
 var a = document.scripts, b = a[a.length - 1], c = b.src;
 var NotificationPath = c.substring(0, c.lastIndexOf("/") + 1);
+
 /**
  * 桌面通知
  * @param title
@@ -7,6 +8,7 @@ var NotificationPath = c.substring(0, c.lastIndexOf("/") + 1);
  */
 function showNotification(title, msg) {
     var path = NotificationPath;
+    // console.log("路径", path);
     try {
 
         //if (document.hasFocus())return;//如果页面处于活动窗口则不进行通知
@@ -15,7 +17,6 @@ function showNotification(title, msg) {
             //写入声音
             var audioDom = document.createElement('div');
             document.body.appendChild(audioDom);
-            //todo：注意文件路径修改
             audioDom.innerHTML = '<audio id="NotificationAudio"><source src="' + path + 'notify.ogg" type="audio/ogg"><source src="' + path + 'notify.mp3" type="audio/mpeg"><source src="' + path + 'notify.wav" type="audio/wav"></audio>';
         }
         ////播放声音
@@ -24,9 +25,12 @@ function showNotification(title, msg) {
         var Notification = window.Notification;
         if (Notification) {
             Notification.requestPermission(function (status) {
-                console.log('桌面通知状态：' + status);
+                // console.log('桌面通知状态：' + status);
                 //status默认值'default'等同于拒绝 'denied' 意味着用户不想要通知 'granted' 意味着用户同意启用通知
-                if (status != "granted")return;
+                if (status != "granted") {
+                    console.log("您的浏览器禁止了桌面提醒");
+                    return;
+                }
 
                 var notify = new Notification(
                     title,
@@ -56,7 +60,7 @@ function showNotification(title, msg) {
                 };
             });
         } else {
-            console.log("您的浏览器不支持或拒绝了桌面提醒");
+            console.log("您的浏览器不支持桌面提醒");
         }
     } catch (e) {
     }

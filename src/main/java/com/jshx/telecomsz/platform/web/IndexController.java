@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -61,12 +62,6 @@ public class IndexController {
     }
 
 
-    @PostMapping(value = "/map")
-    public String map() {
-        return "map";
-    }
-
-
     @GetMapping(value = "/test")
     public String test() {
         return "test";
@@ -74,6 +69,7 @@ public class IndexController {
 
 
     @GetMapping(value = "/send")
+    @ResponseBody
     public String send() {
         simpMessagingTemplate.convertAndSend("/device/test", "test");
         return "success";
