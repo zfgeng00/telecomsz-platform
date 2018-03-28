@@ -1,894 +1,107 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width"/>
     <title>苏州电信智慧物联网</title>
-    <!--<link rel="shortcut icon" href="favicon.ico">-->
-    <link rel="stylesheet" type="text/css" href="../static/3d/css/normalize.css" th:href="@{/3d/css/normalize.css}"/>
-    <link rel="stylesheet" type="text/css" href="../static/3d/css/style.css" th:href="@{/3d/css/style.css}"/>
-    <link th:if="${building.buildingCode == 2}" rel="stylesheet" type="text/css" href="../static/3d/css/levels17.css" th:href="@{/3d/css/levels17.css}"/>
-    <link th:if="${building.buildingCode == 3}" rel="stylesheet" type="text/css" href="../static/3d/css/levels3.css" th:href="@{/3d/css/levels3.css}"/>
-    <script src="../static/3d/js/modernizr-custom.js" th:src="@{/3d/js/modernizr-custom.js}"></script>
-    <script src="../static/3d/js/classie.js" th:src="@{/3d/js/classie.js}"></script>
-    <script src="../static/3d/js/list.min.js" th:src="@{/3d/js/list.min.js}"></script>
-    <script src="../static/3d/js/jquery.js" th:src="@{/3d/js/jquery.js}"></script>
-    <script src="../static/3d/js/jquery.mousewheel.js" th:src="@{/3d/js/jquery.mousewheel.js}"></script>
-    <script src="../static/3d/js/layer/layer.js" th:src="@{/3d/js/layer/layer.js}"></script>
-    <script src="../static/3d/js/tool.js" th:src="@{/3d/js/tool.js}"></script>
-    <script src="../static/3d/js/extra.js" th:src="@{/3d/js/extra.js}"></script>
-    <script src="../static/3d/js/main.js" th:src="@{/3d/js/main.js}"></script>
-    <script src="../static/js/jsog.js" th:src="@{/js/jsog.js}"></script>
-    <script src="../static/3d/js/common.js" th:src="@{/3d/js/common.js}"></script>
+    <link rel="stylesheet" type="text/css" href="../static/3d/css/map.css" th:href="@{/3d/css/map.css}"/>
+    <script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
     <script src="../static/js/notify/notification.js" th:src="@{/js/notify/notification.js}"></script>
     <script src="../static/js/sockjs.min.js" th:src="@{/js/sockjs.min.js}"></script>
     <script src="../static/js/stomp.min.js" th:src="@{/js/stomp.min.js}"></script>
     <script src="../static/js/socketApp.js" th:src="@{/js/socketApp.js}"></script>
 </head>
-<body th:data-building="${building.buildingCode}">
-<svg class="hidden">
-    <defs>
-        <symbol id="icon-search" viewBox="0 0 32 32">
-            <!--<title>search</title>-->
-            <path class="path1"
-                  d="M26.819 24.917c0.262 0.262 0.262 0.688 0 0.951l-0.951 0.951c-0.263 0.262-0.688 0.262-0.951 0l-6.656-6.656c-0.072-0.072-0.12-0.158-0.153-0.248-1.365 0.998-3.041 1.593-4.862 1.593-4.562 0-8.261-3.699-8.261-8.261s3.699-8.261 8.261-8.261c4.562 0 8.261 3.699 8.261 8.261 0 1.821-0.595 3.497-1.593 4.862 0.091 0.032 0.176 0.080 0.248 0.153l6.656 6.656zM13.246 7.739c-3.041 0-5.508 2.466-5.508 5.508s2.466 5.508 5.508 5.508 5.508-2.466 5.508-5.508c0-3.041-2.466-5.508-5.508-5.508z"></path>
-        </symbol>
-        <symbol id="icon-stack" viewBox="0 0 32 32">
-            <!--<title>stack</title>-->
-            <path class="path1"
-                  d="M29.143 11.071l-13.143-6.571-13.143 6.571 13.143 6.571 13.143-6.571zM16 6.681l8.781 4.39-8.781 4.39-8.781-4.39 8.781-4.39zM26.51 14.684l2.633 1.316-13.143 6.571-13.143-6.571 2.633-1.316 10.51 5.255zM26.51 19.612l2.633 1.316-13.143 6.571-13.143-6.571 2.633-1.316 10.51 5.255z"></path>
-        </symbol>
-        <symbol id="icon-cross" viewBox="0 0 24 24">
-            <!--<title>cross</title>-->
-            <path class="path1"
-                  d="M18.016 5.125q0.369 0 0.614 0.245t0.245 0.614q0 0.363-0.248 0.611l-5.411 5.405 5.411 5.405q0.248 0.248 0.248 0.611 0 0.369-0.245 0.614t-0.614 0.245q-0.363 0-0.611-0.248l-5.405-5.411-5.405 5.411q-0.248 0.248-0.611 0.248-0.369 0-0.614-0.245t-0.245-0.614q0-0.363 0.248-0.611l5.411-5.405-5.411-5.405q-0.248-0.248-0.248-0.611 0-0.369 0.245-0.614t0.614-0.245q0.363 0 0.611 0.248l5.405 5.411 5.405-5.411q0.248-0.248 0.611-0.248z"></path>
-        </symbol>
-        <symbol id="icon-angle-up" viewBox="0 0 21 32">
-            <!--<title>angle-up</title>-->
-            <path class="path1"
-                  d="M19.196 21.143q0 0.232-0.179 0.411l-0.893 0.893q-0.179 0.179-0.411 0.179t-0.411-0.179l-7.018-7.018-7.018 7.018q-0.179 0.179-0.411 0.179t-0.411-0.179l-0.893-0.893q-0.179-0.179-0.179-0.411t0.179-0.411l8.321-8.321q0.179-0.179 0.411-0.179t0.411 0.179l8.321 8.321q0.179 0.179 0.179 0.411z"></path>
-        </symbol>
-        <symbol id="icon-angle-down" viewBox="0 0 21 32">
-            <!--<title>angle-down</title>-->
-            <path class="path1"
-                  d="M19.196 13.143q0 0.232-0.179 0.411l-8.321 8.321q-0.179 0.179-0.411 0.179t-0.411-0.179l-8.321-8.321q-0.179-0.179-0.179-0.411t0.179-0.411l0.893-0.893q0.179-0.179 0.411-0.179t0.411 0.179l7.018 7.018 7.018-7.018q0.179-0.179 0.411-0.179t0.411 0.179l0.893 0.893q0.179 0.179 0.179 0.411z"></path>
-        </symbol>
-    </defs>
-</svg>
-<div class="container">
-    <div class="main">
-        <header class="codrops-header">
-            <h1>智慧物联网</h1>
-        </header>
-        <a th:href="@{/map}" class="backToIndex">返回地图</a>
-        <a th:href="@{/logout}" class="logout">退出登录</a>
-        <div class="mall">
-            <div class="surroundings">
-                <!--<img class="surroundings__map" src="img/floor1/BG.svg" alt="Surroundings"/>-->
-            </div>
-            <div id="html_floor" class="levels">
-                <!-- 楼层加载处 -->
-                <div th:each="floor,statFloor: ${building.floors}" th:class="${'level level--' + statFloor.count}"
-                     th:data-floor="${floor.floorName}" th:data-floorcode="${floor.floorCode}">
-
-                    <!--判断如果 statFloor.count == 1; 此处加载B1停车场svg-->
-                    <svg th:if="${floor.floorCode == -1 && building.buildingCode == 1}" width="100%" height="100%" viewBox="0 0 1920 1280"
-                         preserveAspectRatio="xMidYMid meet">
-                        <rect x="6.581" y="48.708" opacity="0.7" fill="#A0A0A0" width="1907.912" height="1180.922"/>
-                        <rect x="124.845" y="723.901" fill="#F4D5BF" width="187.779" height="121.599"/>
-                        <rect x="124.845" y="854.5" fill="#E2E2E2" width="187.002" height="69.168"/>
-                        <rect x="1016.694" y="437.5" fill="#90CFC8" width="46.5" height="45.5"/>
-                        <rect x="1016.694" y="342.5" fill="#FCFAD3" width="46.5" height="86.5"/>
-                        <rect x="1016.694" y="488.667" fill="#90CFC8" width="46.5" height="45.5"/>
-                        <rect x="842.027" y="437.5" fill="#FCFAD3" width="65.015" height="119.833"/>
-                        <rect x="124.845" y="854.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="69.168"/>
-                        <rect x="139.29" y="854.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="69.168"/>
-                        <rect x="153.735" y="854.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="69.168"/>
-                        <rect x="168.179" y="854.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="69.168"/>
-                        <rect x="182.624" y="854.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="69.168"/>
-                        <rect x="197.068" y="854.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="69.168"/>
-                        <rect x="211.513" y="854.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="69.168"/>
-                        <rect x="225.957" y="854.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="69.168"/>
-                        <rect x="240.402" y="854.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="69.168"/>
-                        <rect x="254.847" y="854.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="69.168"/>
-                        <rect x="269.291" y="854.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="69.168"/>
-                        <rect x="283.736" y="854.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="69.168"/>
-                        <rect x="298.18" y="854.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="69.168"/>
-                        <rect x="1600.673" y="722.415" fill="#F4D5BF" width="184.452" height="113.907"/>
-                        <rect x="1600.673" y="845.5" fill="#E2E2E2" width="181.125" height="77.738"/>
-                        <rect x="1665.963" y="845.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="77.453"/>
-                        <rect x="1680.407" y="845.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="77.453"/>
-                        <rect x="1694.852" y="845.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="77.453"/>
-                        <rect x="1709.297" y="845.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="77.453"/>
-                        <rect x="1723.741" y="845.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="77.453"/>
-                        <rect x="1738.186" y="845.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="77.453"/>
-                        <rect x="1752.63" y="845.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="77.453"/>
-                        <rect x="1767.075" y="845.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="77.453"/>
-                        <rect x="1608.508" y="845.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="77.453"/>
-                        <rect x="1622.953" y="845.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="77.453"/>
-                        <rect x="1637.397" y="845.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="77.453"/>
-                        <rect x="1651.842" y="845.5" fill="none" stroke="#99C4E9" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="14.445" height="77.453"/>
-                        <rect x="1539" y="1058" fill="#A7DAE6" width="246.125" height="106"/>
-                        <rect x="124.845" y="1058" fill="#A7DAE6" width="187.002" height="106"/>
-                        <path fill="#99CCFF"
-                              d="M1785.125,84v64.112h-65.279V84H132.068v123H22v135.5h110.068v119.75h50.556v73.917h-50.556V717H339v218  h-91.376v110H323v119h16h1186v-120h52h85.062V936H1577V714h208.125V536.167h-50.551V462.25h50.551V342.5H1881V84H1785.125z   M1071,539.833H919v22.75h-85V429h85h87.534v-94H1071v205"/>
-
-
-                        <rect fill="green" class="carRect" x="35.468" y="218.441" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="111.045" height="49.497"/>
-                        <text class="carRect" x="35.468" y="258.441" font-size="45">001</text>
-
-                        <rect fill="red" x="35.468" y="267.938" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="111.045" height="49.497"/>
-                        <text x="35.468" y="307.938" font-size="45">002</text>
-
-                        <rect fill="green" class="carRect" x="1761.955" y="227.44" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="111.045" height="49.497"/>
-                        <text x="1761.955" y="267.44" font-size="45">003</text>
-
-                        <rect fill="green" class="carRect" x="1761.955" y="276.938" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="111.045" height="49.497"/>
-                        <text x="1761.955" y="320.938" font-size="45">004</text>
-
-                        <rect fill="red" class="carRect" x="1666.955" y="560.503" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="111.045" height="49.497"/>
-                        <text x="1666.955" y="600" font-size="45">005</text>
-
-                        <rect fill="green" class="carRect" x="1666.955" y="610" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="111.045" height="49.497"/>
-                        <text x="1666.955" y="650" font-size="45">006</text>
-
-                        <rect fill="red" class="carRect" x="1666.955" y="659.497" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="111.045" height="49.497"/>
-                        <text x="1666.955" y="699.497" font-size="45">007</text>
-
-                        <rect fill="green" class="carRect" x="138.622" y="561.256" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="111.045" height="49.497"/>
-                        <text x="138.622" y="601.256" font-size="45">008</text>
-
-                        <rect fill="green" class="carRect" x="138.622" y="610.753" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="111.045" height="49.497"/>
-                        <text x="138.622" y="650.753" font-size="45">009</text>
-
-                        <rect fill="green" class="carRect" x="138.622" y="660.251" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="111.045" height="49.497"/>
-                        <text x="138.622" y="700.251" font-size="45">010</text>
-
-                        <rect fill="green" class="carRect" x="249.667" y="441.149" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="269.667" y="441.149" font-size="45" style="writing-mode: vertical-lr;">011</text>
-
-                        <rect fill="red" class="carRect" x="322.169" y="441.149" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="342.169" y="441.149" font-size="45" class="w_vlr">012</text>
-
-                        <rect fill="green" class="carRect" x="371.667" y="441.149" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="392.667" y="441.149" font-size="45" class="w_vlr">013</text>
-
-                        <rect fill="green" class="carRect" x="421.164" y="441.149" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="441.164" y="441.149" font-size="45" class="w_vlr">014</text>
-
-                        <rect fill="green" class="carRect" x="322.169" y="330.104" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="342.169" y="330.104" font-size="45" class="w_vlr">015</text>
-
-                        <rect fill="green" class="carRect" x="371.667" y="330.104" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="391.667" y="330.104" font-size="45" class="w_vlr">016</text>
-
-                        <rect fill="green" class="carRect" x="421.164" y="330.104" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="441.164" y="330.104" font-size="45" class="w_vlr">017</text>
-
-                        <rect fill="red" class="carRect" x="150.672" y="330.104" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="170.672" y="330.104" font-size="45" class="w_vlr">018</text>
-
-                        <rect fill="green" class="carRect" x="200.169" y="330.104" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="220.169" y="330.104" font-size="45" class="w_vlr">019</text>
-
-                        <rect fill="green" class="carRect" x="249.667" y="330.104" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="269.667" y="330.104" font-size="45" class="w_vlr">020</text>
-
-                        <rect fill="green" class="carRect" x="149.513" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="171.513" y="90.482" font-size="45" class="w_vlr">022</text>
-
-                        <rect fill="green" class="carRect" x="199.01" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="49.497" height="111.045"/>
-                        <text x="219.0" y="90.482" font-size="45" class="w_vlr">023</text>
-
-                        <rect fill="green" class="carRect" x="248.507" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="268.507" y="90.482" font-size="45" class="w_vlr">024</text>
-
-                        <rect fill="green" class="carRect" x="322.508" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="342.508" y="90.482" font-size="45" class="w_vlr">025</text>
-
-                        <rect fill="green" class="carRect" x="372.005" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="392.005" y="90.482" font-size="45" class="w_vlr">026</text>
-
-                        <rect fill="green" class="carRect" x="421.503" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="441.503" y="90.482" font-size="45" class="w_vlr">027</text>
-
-                        <rect fill="green" class="carRect" x="501.175" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="521.175" y="90.482" font-size="45" class="w_vlr">028</text>
-
-                        <rect fill="red" class="carRect" x="550.672" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="570.672" y="90.482" font-size="45" class="w_vlr">029</text>
-
-                        <rect fill="red" class="carRect" x="600.169" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="620.169" y="90.482" font-size="45" class="w_vlr">030</text>
-
-                        <rect fill="green" class="carRect" x="677.508" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="697.508" y="90.482" font-size="45" class="w_vlr">031</text>
-
-                        <rect fill="green" class="carRect" x="727.005" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="747.005" y="90.482" font-size="45" class="w_vlr">032</text>
-
-                        <rect fill="green" class="carRect" x="776.503" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="796.503" y="90.482" font-size="45" class="w_vlr">033</text>
-
-                        <rect fill="green" class="carRect" x="854.508" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="874.508" y="90.482" font-size="45" class="w_vlr">034</text>
-
-                        <rect fill="green" class="carRect" x="904.005" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="924.005" y="90.482" font-size="45" class="w_vlr">035</text>
-
-                        <rect fill="green" class="carRect" x="953.503" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="973.503" y="90.482" font-size="45" class="w_vlr">036</text>
-
-                        <rect fill="green" class="carRect" x="1003" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10"
-                              width="49.497" height="111.045"/>
-                        <text x="1023" y="90.482" font-size="45" class="w_vlr">037</text>
-
-                        <rect fill="green" class="carRect" x="1082.175" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1102.175" y="90.482" font-size="45" class="w_vlr">038</text>
-
-                        <rect fill="red" class="carRect" x="1131.672" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1151.672" y="90.482" font-size="45" class="w_vlr">039</text>
-
-                        <rect fill="red" class="carRect" x="1181.169" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1201.169" y="90.482" font-size="45" class="w_vlr">040</text>
-
-                        <rect fill="green" class="carRect" x="1257.508" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1277.508" y="90.482" font-size="45" class="w_vlr">041</text>
-
-                        <rect fill="green" class="carRect" x="1307.005" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1327.005" y="90.482" font-size="45" class="w_vlr">042</text>
-
-                        <rect fill="green" class="carRect" x="1356.503" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1376.503" y="90.482" font-size="45" class="w_vlr">043</text>
-
-                        <rect fill="green" class="carRect" x="1436.841" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1456.841" y="90.482" font-size="45" class="w_vlr">044</text>
-
-                        <rect fill="green" class="carRect" x="1486.339" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1506.339" y="90.482" font-size="45" class="w_vlr">045</text>
-
-                        <rect fill="green" class="carRect" x="1535.836" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1555.836" y="90.482" font-size="45" class="w_vlr">046</text>
-
-                        <rect fill="green" class="carRect" x="1613.463" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1633.463" y="90.482" font-size="45" class="w_vlr">047</text>
-
-                        <rect fill="green" class="carRect" x="1662.961" y="90.482" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1682.961" y="90.482" font-size="45" class="w_vlr">048</text>
-
-                        <rect fill="green" class="carRect" x="677.508" y="330.104" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="697.508" y="330.104" font-size="45" class="w_vlr">049</text>
-
-                        <rect fill="green" class="carRect" x="727.005" y="330.104" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="747.005" y="330.104" font-size="45" class="w_vlr">050</text>
-
-                        <rect fill="green" class="carRect" x="776.503" y="330.104" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="796.503" y="330.104" font-size="45" class="w_vlr">051</text>
-
-                        <rect fill="red" class="carRect" x="677.508" y="441.894" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="697.508" y="441.894" font-size="45" class="w_vlr">052</text>
-
-                        <rect fill="green" class="carRect" x="727.005" y="441.894" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="747.005" y="441.894" font-size="45" class="w_vlr">053</text>
-
-                        <rect fill="green" class="carRect" x="776.503" y="441.894" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="796.503" y="441.894" font-size="45" class="w_vlr">054</text>
-
-                        <rect fill="green" class="carRect" x="1082.175" y="330.104" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1102.175" y="330.104" font-size="45" class="w_vlr">055</text>
-
-                        <rect fill="green" class="carRect" x="1131.672" y="330.104" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1151.672" y="330.104" font-size="45" class="w_vlr">056</text>
-
-                        <rect fill="green" class="carRect" x="1181.169" y="330.104" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1201.169" y="330.104" font-size="45" class="w_vlr">057</text>
-
-                        <rect fill="green" class="carRect" x="1082.175" y="441.894" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1102.175" y="441.894" font-size="45" class="w_vlr">058</text>
-
-                        <rect fill="green" class="carRect" x="1131.672" y="441.894" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1151.672" y="441.894" font-size="45" class="w_vlr">059</text>
-
-                        <rect fill="green" class="carRect" x="1181.169" y="441.894" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1201.169" y="441.894" font-size="45" class="w_vlr">060</text>
-
-                        <rect fill="red" class="carRect" x="1436.841" y="330.104" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1456.841" y="330.104" font-size="45" class="w_vlr">061</text>
-
-                        <rect fill="green" class="carRect" x="1486.339" y="330.104" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1506.339" y="330.104" font-size="45" class="w_vlr">062</text>
-
-                        <rect fill="green" class="carRect" x="1535.836" y="330.104" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1555.836" y="330.104" font-size="45" class="w_vlr">063</text>
-
-                        <rect fill="green" class="carRect" x="1436.841" y="441.894" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1456.841" y="441.894" font-size="45" class="w_vlr">064</text>
-
-                        <rect fill="green" class="carRect" x="1486.339" y="441.894" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1506.339" y="441.894" font-size="45" class="w_vlr">065</text>
-
-                        <rect fill="green" class="carRect" x="1535.836" y="441.894" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1555.836" y="441.894" font-size="45" class="w_vlr">066</text>
-
-                        <rect fill="green" class="carRect" x="1608.508" y="330.104" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1628.508" y="330.104" font-size="45" class="w_vlr">067</text>
-
-                        <rect fill="green" class="carRect" x="1658.005" y="330.104" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1678.005" y="330.104" font-size="45" class="w_vlr">068</text>
-
-                        <rect fill="green" class="carRect" x="1707.503" y="330.104" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1727.503" y="330.104" font-size="45" class="w_vlr">069</text>
-
-                        <rect fill="red" class="carRect" x="1608.508" y="441.894" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1628.508" y="441.894" font-size="45" class="w_vlr">070</text>
-
-                        <rect fill="green" class="carRect" x="1257.508" y="330.104" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1277.508" y="330.104" font-size="45" class="w_vlr">071</text>
-
-                        <rect fill="green" class="carRect" x="1257.508" y="441.894" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1277.508" y="441.894" font-size="45" class="w_vlr">072</text>
-
-                        <rect fill="green" class="carRect" x="600.169" y="330.104" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="620.169" y="330.104" font-size="45" class="w_vlr">073</text>
-
-                        <rect fill="green" class="carRect" x="600.169" y="441.894" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="620.169" y="441.894" font-size="45" class="w_vlr">074</text>
-
-                        <rect fill="green" class="carRect" x="677.508" y="700.955" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="697.508" y="700.955" font-size="45" class="w_vlr">075</text>
-
-                        <rect fill="green" class="carRect" x="727.005" y="700.955" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="747.005" y="700.955" font-size="45" class="w_vlr">076</text>
-
-                        <rect fill="green" class="carRect" x="727.005" y="812.745" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="747.005" y="812.745" font-size="45" class="w_vlr">077</text>
-
-                        <rect fill="green" class="carRect" x="776.503" y="700.955" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="796.503" y="700.955" font-size="45" class="w_vlr">078</text>
-
-                        <rect fill="green" class="carRect" x="677.508" y="812.745" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="697.508" y="812.745" font-size="45" class="w_vlr">079</text>
-
-                        <rect fill="green" class="carRect" x="776.503" y="812.745" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="796.503" y="812.745" font-size="45" class="w_vlr">080</text>
-
-                        <rect fill="red" class="carRect" x="347.257" y="700.955" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="367.257" y="700.955" font-size="45" class="w_vlr">081</text>
-
-                        <rect fill="green" class="carRect" x="396.754" y="700.955" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="416.754" y="700.955" font-size="45" class="w_vlr">082</text>
-
-                        <rect fill="green" class="carRect" x="396.754" y="812.745" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="416.754" y="812.745" font-size="45" class="w_vlr">083</text>
-
-                        <rect fill="green" class="carRect" x="446.251" y="700.955" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="466.251" y="700.955" font-size="45" class="w_vlr">084</text>
-
-                        <rect fill="green" class="carRect" x="347.257" y="812.745" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="367.257" y="812.745" font-size="45" class="w_vlr">085</text>
-
-                        <rect fill="red" class="carRect" x="446.251" y="812.745" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="466.251" y="812.745" font-size="45" class="w_vlr">086</text>
-
-                        <rect fill="red" class="carRect" x="1418.093" y="700.955" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1438.093" y="700.955" font-size="45" class="w_vlr">087</text>
-
-                        <rect fill="green" class="carRect" x="1467.59" y="700.955" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1487.59" y="700.955" font-size="45" class="w_vlr">088</text>
-
-                        <rect fill="green" class="carRect" x="1467.59" y="812.745" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1487.59" y="812.745" font-size="45" class="w_vlr">089</text>
-
-                        <rect fill="green" class="carRect" x="1517.087" y="700.955" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1537.087" y="700.955" font-size="45" class="w_vlr">090</text>
-
-                        <rect fill="green" class="carRect" x="1418.093" y="812.745" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1438.093" y="812.745" font-size="45" class="w_vlr">091</text>
-
-                        <rect fill="green" class="carRect" x="1517.087" y="812.745" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1537.087" y="812.745" font-size="45" class="w_vlr">092</text>
-
-                        <rect fill="green" class="carRect" x="1082.175" y="700.955" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1102.175" y="700.955" font-size="45" class="w_vlr">093</text>
-
-                        <rect fill="green" class="carRect" x="1131.672" y="700.955" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1151.672" y="700.955" font-size="45" class="w_vlr">094</text>
-
-                        <rect fill="green" class="carRect" x="1181.169" y="700.955" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1201.169" y="700.955" font-size="45" class="w_vlr">095</text>
-
-                        <rect fill="green" class="carRect" x="1082.175" y="812.745" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1102.175" y="812.745" font-size="45" class="w_vlr">096</text>
-
-                        <rect fill="green" class="carRect" x="1131.672" y="812.745" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1151.672" y="812.745" font-size="45" class="w_vlr">097</text>
-
-                        <rect fill="red" class="carRect" x="1181.169" y="812.745" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1201.169" y="812.745" font-size="45" class="w_vlr">098</text>
-
-                        <rect fill="green" class="carRect" x="854.175" y="700.955" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="874.175" y="700.955" font-size="45" class="w_vlr">098</text>
-
-                        <rect fill="green" class="carRect" x="903.672" y="700.955" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="923.672" y="700.955" font-size="45" class="w_vlr">099</text>
-
-                        <rect fill="green" class="carRect" x="953.169" y="700.955" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="973.169" y="700.955" font-size="45" class="w_vlr">100</text>
-
-                        <rect fill="green" class="carRect" x="854.175" y="812.745" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="874.175" y="812.745" font-size="45" class="w_vlr">101</text>
-
-                        <rect fill="red" class="carRect" x="903.672" y="812.745" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="923.672" y="812.745" font-size="45" class="w_vlr">102</text>
-
-                        <rect fill="green" class="carRect" x="953.169" y="812.745" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="973.169" y="812.745" font-size="45" class="w_vlr">103</text>
-
-                        <rect fill="green" class="carRect" x="1002.667" y="700.955" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1022.667" y="700.955" font-size="45" class="w_vlr">104</text>
-
-                        <rect fill="green" class="carRect" x="1002.667" y="812.745" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1022.667" y="812.745" font-size="45" class="w_vlr">105</text>
-
-                        <rect fill="green" class="carRect" x="1257.508" y="700.955" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1277.508" y="700.955" font-size="45" class="w_vlr">106</text>
-
-                        <rect fill="red" class="carRect" x="1257.508" y="812.745" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1277.508" y="812.745" font-size="45" class="w_vlr">107</text>
-
-                        <rect fill="green" class="carRect" x="600.169" y="700.955" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="620.169" y="700.955" font-size="45" class="w_vlr">108</text>
-
-                        <rect fill="green" class="carRect" x="600.169" y="812.745" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="620.169" y="812.745" font-size="45" class="w_vlr">109</text>
-
-                        <rect fill="green" class="carRect" x="849.786" y="317.955" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="869.786" y="317.955" font-size="45" class="w_vlr">110</text>
-
-                        <rect fill="green" class="carRect" x="899.283" y="317.955" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="919.283" y="317.955" font-size="45" class="w_vlr">111</text>
-
-                        <rect fill="green" class="carRect" x="396.415" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="416.415" y="1041.849" font-size="45" class="w_vlr">112</text>
-
-                        <rect fill="green" class="carRect" x="346.918" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="366.918" y="1041.849" font-size="45" class="w_vlr">113</text>
-
-                        <rect fill="green" class="carRect" x="445.913" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="465.913" y="1041.849" font-size="45" class="w_vlr">114</text>
-
-                        <rect fill="green" class="carRect" x="544.907" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="564.907" y="1041.849" font-size="45" class="w_vlr">115</text>
-
-                        <rect fill="green" class="carRect" x="495.41" y="1041.849" stroke="#FFFFFF" stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="515.41" y="1041.849" font-size="45" class="w_vlr">116</text>
-
-                        <rect fill="green" class="carRect" x="594.405" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="614.405" y="1041.849" font-size="45" class="w_vlr">117</text>
-
-                        <rect fill="green" class="carRect" x="693.399" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="713.399" y="1041.849" font-size="45" class="w_vlr">118</text>
-
-                        <rect fill="green" class="carRect" x="643.902" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="663.902" y="1041.849" font-size="45" class="w_vlr">119</text>
-
-                        <rect fill="green" class="carRect" x="742.897" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="762.897" y="1041.849" font-size="45" class="w_vlr">120</text>
-
-                        <rect fill="green" class="carRect" x="792.394" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="812.394" y="1041.849" font-size="45" class="w_vlr">121</text>
-
-                        <rect fill="green" class="carRect" x="1403.169" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1423.169" y="1041.849" font-size="45" class="w_vlr">122</text>
-
-                        <rect fill="green" class="carRect" x="1353.672" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1373.672" y="1041.849" font-size="45" class="w_vlr">123</text>
-
-                        <rect fill="green" class="carRect" x="1452.667" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1472.667" y="1041.849" font-size="45" class="w_vlr">124</text>
-
-                        <rect fill="green" class="carRect" x="1254.677" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1274.677" y="1041.849" font-size="45" class="w_vlr">125</text>
-
-                        <rect fill="green" class="carRect" x="1205.18" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1225.18" y="1041.849" font-size="45" class="w_vlr">126</text>
-
-                        <rect fill="green" class="carRect" x="1304.175" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1324.175" y="1041.849" font-size="45" class="w_vlr">127</text>
-
-                        <rect fill="green" class="carRect" x="1106.185" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1126.185" y="1041.849" font-size="45" class="w_vlr">128</text>
-
-                        <rect fill="green" class="carRect" x="1056.688" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1076.688" y="1041.849" font-size="45" class="w_vlr">129</text>
-
-                        <rect fill="green" class="carRect" x="1155.683" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1175.683" y="1041.849" font-size="45" class="w_vlr">130</text>
-
-                        <rect fill="green" class="carRect" x="957.694" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="977.694" y="1041.849" font-size="45" class="w_vlr">131</text>
-
-                        <rect fill="green" class="carRect" x="1007.191" y="1041.849" stroke="#FFFFFF"
-                              stroke-width="2"
-                              stroke-miterlimit="10" width="49.497" height="111.045"/>
-                        <text x="1027.191" y="1041.849" font-size="45" class="w_vlr">132</text>
-
-                        <g>
-                            <path d="M1001.276,483.35c-0.182,19.772-16.633,35.659-36.75,35.468c-20.116-0.191-36.279-16.383-36.104-36.168   c0.182-19.777,16.633-35.659,36.749-35.468C985.287,447.368,1001.458,463.565,1001.276,483.35z"/>
-                            <path fill="#FFFFFF"
-                                  d="M968.51,506.639l-3.907,3.767l-3.835-4.611l0.038-3.042l3.067,3.071l0.034-3.797l2.321,0.021l-0.038,3.801   l2.346-2.261L968.51,506.639z M961.184,460.12l3.911-4.53l3.826,4.607l-0.025,3.046l-2.291-3.067l-0.03,3.801l-3.101-0.021   l0.034-3.809l-2.341,2.257L961.184,460.12z M958.638,485.225c0,0-0.784,0.751-1.557,0.742l-0.768-0.772l0.085-9.134   c0,0,0.793-1.514,2.346-2.261l5.421,0.055c0,0,0.768,0.009,1.531,1.54l1.523,2.291c0,0,0.759,0.776,0.776,0.013l1.557-1.506   c0.772,0.004,1.549,0.013,1.549,0.013c0.764,0.772,0.764,0.772-0.017,1.519l-2.346,3.024c0,0-0.776,0.751-2.32-0.021l-2.282-3.831   l-0.179,19.035c-0.004,0.763-0.789,1.514-0.789,1.514c-0.772-0.004-1.544-0.776-1.531-1.536l0.097-10.66   c0,0-0.768-0.764-0.776-0.004l-0.093,10.656c-0.013,0.764-0.013,1.532-0.789,1.515c-0.776-0.009-1.544-0.772-1.536-1.536   l0.178-19.03c0,0,0,0-0.013,0.755L958.638,485.225z M974.13,483.086c-0.004,0.764-0.013,1.519-0.784,1.515   c0,0-0.764-0.768-0.755-1.532l0.776-0.755C974.143,482.323,974.13,483.086,974.13,483.086L974.13,483.086z M974.16,480.041   c0,0-0.004,0.763-0.785,0.751l-0.759-0.768c0.004-0.76,0.785-1.515,0.785-1.515C974.173,478.518,974.165,479.282,974.16,480.041   L974.16,480.041z M974.19,476.999c-0.013,0.755-0.013,0.755-0.781,0.746c0,0-0.772,0-0.764-0.768   c0.009-0.759,0.777-0.759,0.777-0.759C974.194,476.231,974.194,476.231,974.19,476.999L974.19,476.999z M974.224,473.19   c0,0.764,0,0.764-0.785,0.755c0,0-0.768-0.013-0.764-0.772s0.781-0.751,0.781-0.751   C974.232,472.435,974.232,472.435,974.224,473.19L974.224,473.19z M963.398,471.561c0,0.764-0.784,1.519-2.329,1.506   c-0.772-0.009-1.544-0.781-1.535-1.54c0.013-1.523,0.797-2.278,1.574-2.27C962.652,469.27,963.424,470.042,963.398,471.561   L963.398,471.561z M978.156,466.373l-27.086-0.259l-0.306,34.268l28.626,0.258l0.31-34.255L978.156,466.373z M977.367,467.887   c-0.013,2.287-0.259,28.935-0.276,30.454c-2.325-0.03-22.437-0.212-24.766-0.237c0.017-1.519,0.263-28.168,0.28-30.45   C954.922,467.683,975.047,467.866,977.367,467.887L977.367,467.887z M988.583,510.627l-7.734-0.072l0.492-54.808l7.738,0.068   L988.583,510.627z M948.356,510.253l-7.733-0.072l0.488-54.812l7.737,0.063L948.356,510.253z"/>
-                        </g>
-                        <g>
-                            <path fill="#1C1511"
-                                  d="M255.099,889.09c0,20.15-16.455,36.486-36.754,36.486c-20.298,0-36.753-16.336-36.753-36.486   c0-20.158,16.455-36.499,36.753-36.499C238.644,852.591,255.099,868.932,255.099,889.09z"/>
-                            <path fill="#FFFFFF"
-                                  d="M232.234,866.832L232.234,866.832c0,0-7.169,6.231-14.338,13.354v-4.454c0-1.778-1.79-2.668-3.585-2.668   c-0.895,0-2.685,0.891-2.685,2.668v9.791c-6.27,5.341-12.544,10.682-12.544,10.682c-0.895,0-2.69,0-2.69,0   c-4.475,0-8.064,3.559-8.064,8.018c0,4.446,3.589,8.005,8.064,8.005h7.169c0,0,34.047-28.482,34.946-29.372   c0.891,0,1.791,0,1.791,0c4.479,0,8.064-3.559,8.064-8.014c0-4.446-3.585-8.009-8.064-8.009L232.234,866.832L232.234,866.832z    M240.299,869.5c3.58,0,5.375,2.668,5.375,5.341c0,3.563-1.794,5.345-5.375,5.345h-2.69l-34.942,29.372c-0.895,0-6.274,0-6.274,0   c-2.689,0-5.375-2.668-5.375-5.336s2.685-5.345,5.375-5.345h3.585c0,0,32.257-28.481,33.152-29.377   C234.029,869.5,240.299,869.5,240.299,869.5L240.299,869.5z M217.896,868.61c0,1.786-1.79,3.559-3.585,3.559   c-1.786,0-2.685-1.773-2.685-3.559c0-0.891,0.899-2.668,2.685-2.668C216.106,865.941,217.896,867.719,217.896,868.61   L217.896,868.61z"/>
-                        </g>
-                        <g>
-                            <path fill="#1C1511"
-                                  d="M1729.652,884.233c0,20.15-16.455,36.486-36.754,36.486c-20.298,0-36.753-16.336-36.753-36.486   c0-20.158,16.455-36.499,36.753-36.499C1713.198,847.734,1729.652,864.075,1729.652,884.233z"/>
-                            <path fill="#FFFFFF"
-                                  d="M1706.787,861.975L1706.787,861.975c0,0-7.169,6.231-14.338,13.354v-4.454c0-1.778-1.79-2.668-3.585-2.668   c-0.895,0-2.685,0.891-2.685,2.668v9.791c-6.27,5.341-12.544,10.682-12.544,10.682c-0.895,0-2.69,0-2.69,0   c-4.475,0-8.064,3.559-8.064,8.018c0,4.446,3.589,8.005,8.064,8.005h7.169c0,0,34.047-28.482,34.946-29.372   c0.891,0,1.791,0,1.791,0c4.479,0,8.064-3.559,8.064-8.014c0-4.446-3.585-8.009-8.064-8.009L1706.787,861.975L1706.787,861.975z    M1714.853,864.643c3.58,0,5.375,2.668,5.375,5.341c0,3.563-1.794,5.345-5.375,5.345h-2.69l-34.942,29.372   c-0.895,0-6.274,0-6.274,0c-2.689,0-5.375-2.668-5.375-5.336s2.685-5.345,5.375-5.345h3.585c0,0,32.257-28.481,33.152-29.377   C1708.583,864.643,1714.853,864.643,1714.853,864.643L1714.853,864.643z M1692.449,863.753c0,1.786-1.79,3.559-3.585,3.559   c-1.786,0-2.685-1.773-2.685-3.559c0-0.891,0.899-2.668,2.685-2.668C1690.659,861.084,1692.449,862.862,1692.449,863.753   L1692.449,863.753z"/>
-                        </g>
-                    </svg>
-
-                    <!-- 点-->
-                    <div class="level__pins">
-                        <!--遍历-->
-                        <a class="pin" href="javascript:void(0)"
-                           th:each="point,pointStat:${floor.devices}"
-                           th:style="${'left:'+point.leftPoint+'vmin;top:'+point.topPoint+'vmin;'}"
-                           th:data-category="${point.manufacturerDevice.manufacturer.deviceCategory.categoryCode}"
-                           th:data-space="${statFloor.count + '-' + pointStat.count}"
-                           th:title="${point.deviceName}"></a>
-                    </div>
-                </div>
-
-            </div>
-            <div id="multi_switch">
-                <a  th:each="_building,_buildStat: ${buildings}" th:class="${building.buildingCode == _buildStat.count}? 'active' : ''" th:href="@{/(buildingCode=${_buildStat.count})}" th:text="${_building.buildingName}" th:title="${_building.buildingName}">某某楼</a>
-            </div>
-            <!-- 添加新的传感器-->
-
-            <div id="addNew" onclick="addNew(this,event)">添加传感器</div>
-
-            <!-- 放大缩小-->
-            <div id="scaleSwitch">
-                <div class="switch" title="放大">+</div>
-                <div class="switch" title="还原">o</div>
-                <div class="switch" title="缩小">-</div>
-            </div>
-        </div>
-        <button class="boxbutton boxbutton--dark open-search" aria-label="Show search">
-            <svg class="icon icon--search">
-                <use xlink:href="#icon-search"></use>
-            </svg>
-        </button>
-        <nav class="mallnav mallnav--hidden">
-            <button class="boxbutton mallnav__button--up" aria-label="Go up">
-                <svg class="icon icon--angle-down">
-                    <use xlink:href="#icon-angle-up"></use>
-                </svg>
-            </button>
-            <button class="boxbutton boxbutton--dark mallnav__button--all-levels" aria-label="Back to all levels">
-                <svg class="icon icon--stack">
-                    <use xlink:href="#icon-stack"></use>
-                </svg>
-            </button>
-            <button class="boxbutton mallnav__button--down" aria-label="Go down">
-                <svg class="icon icon--angle-down">
-                    <use xlink:href="#icon-angle-down"></use>
-                </svg>
-            </button>
-        </nav>
-        <div class="content">
-            <div id="html_desc">
-                <div th:each="floor,statFloor: ${building.floors}" th:remove="tag">
-                    <!-- 描述加载处 -->
-                    <!--遍历-->
-                    <div th:each="point,pointStat:${floor.devices}" th:remove="tag">
-                        <div class="content__item" th:data-space="${statFloor.count + '-' + pointStat.count}"
-                             th:data-deviceid="${point.deviceId}"
-                             th:data-deviceno="${point.deviceNo}"
-                             th:data-category="${point.manufacturerDevice.manufacturer.deviceCategory.categoryCode}">
-                            <div th:if="${point.manufacturerDevice.manufacturer.deviceCategory.categoryCode == 1}" class="doorOperate">
-                                <div th:onclick="|doorOperate('${point.deviceId}', 1)|" class="operateBtn">打开</div>
-                                <div th:onclick="|doorOperate('${point.deviceId}', 0)|" class="operateBtn">关闭</div>
-                            </div>
-                            <div class="allDiv uf">
-                                <div class="uf-f uf uf-ver">
-                                    <div class="uf">
-                                        <!--<input readonly class="content__item-title" value="<%=point.name%>">-->
-                                        <div readonly contenteditable="false" class="content__item-title"
-                                             th:text="${point.deviceName}" placeholder="名称">名称
-                                        </div>
-                                        <div class="content__status">正常</div>
-                                    </div>
-                                    <textarea readonly class="uf-f content__desc" placeholder="描述" th:text="${point.deviceDesc}">描述</textarea>
-                                </div>
-                                <div class="content__operate uf uf-ver uf-pja">
-                                    <div class="desc_edit">编辑</div>
-                                    <div class="desc_delete">删除</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button class="boxbutton boxbutton--dark content__button content__button--hidden"
-                    aria-label="Close details">
-                <svg class="icon icon--cross">
-                    <use xlink:href="#icon-cross"></use>
-                </svg>
-            </button>
-        </div>
-        <div class="asideCtrl" onclick="$('body').toggleClass('asideDown')"></div>
-    </div>
-    <aside class="spaces-list" id="spaces-list">
-        <div class="search">
-            <input class="search__input" placeholder="搜索设备名称"/>
-            <button class="boxbutton boxbutton--darker close-search" aria-label="Close details">
-                <svg class="icon icon--cross">
-                    <use xlink:href="#icon-cross"></use>
-                </svg>
-            </button>
-        </div>
-        <!--<span class="label">-->
-        <!--<input id="sort-by-name" class="label__checkbox" type="checkbox" aria-label="Show alphabetically"/>-->
-        <!--<label class="label__text">排序</label>-->
-        <!--</span>-->
-        <ul id="html_seo" class="list grouped-by-category">
-            <!-- 分类搜索导航列表加载处 -->
-            <!--为了保证list.min.js不报错，此处不可为空，至少有一个隐藏元素占位-->
-            <li class="list__item" data-space="000-000" style="display: none"></li>
-            <!--遍历-->
-            <div th:each="floor,statFloor: ${building.floors}" th:remove="tag">
-                <li th:each="point,pointStat:${floor.devices}" class="list__item"
-                    th:data-floor="${floor.floorName}"
-                    th:data-floorcode="${floor.floorCode}"
-                    th:data-level="${statFloor.count}"
-                    th:data-category="${point.manufacturerDevice.manufacturer.deviceCategory.categoryCode}"
-                    th:data-categoryname="${point.manufacturerDevice.manufacturer.deviceCategory.categoryName}"
-                    th:data-space="${statFloor.count + '-' + pointStat.count}">
-                    <a href="#" class="list__link" th:text="${point.deviceName}">名称</a>
-                </li>
-            </div>
-
-        </ul>
-    </aside>
-</div>
-
+<body>
+
+<!--地图区域-->
+<div id="container">地图加载中...</div>
+<a href="https://www.amap.com/place/B020006GWP" target="_blank" class="toGaode">Go</a>
+<div class="back" onclick="backToCenter();"><span>复位<br>地图</span></div>
+<a th:href="@{/logout}" th:data-domain="@{/}" class="logout">退出登录</a>
+
+<script type="text/javascript"
+        src="http://webapi.amap.com/maps?v=1.4.4&key=f15f46965262ec2284ab80b8cd91b3db&plugin=AMap.ControlBar&callback=mapInit"></script>
+<script type="text/javascript">
+    var map,
+        pitch = 30,
+        rotation = 0,
+        zoomNumber = 18.8,
+        centerPoint = [120.5838, 31.29759];
+    window.mapInit = function () {
+        map = new AMap.Map('container', {
+            resizeEnable: true, //是否监控地图容器尺寸变化，默认值为false
+            rotateEnable: true, //是否允许设置地图顺时针旋转角度
+            pitchEnable: true, //是否允许设置俯仰角度，3D视图下为true，2D视图下无效。（自V1.4.0开始支持）
+            viewMode: '3D', //开启3D视图,默认为关闭
+            buildingAnimation: true, //楼块出现是否带动画
+            expandZoomRange: true, //是否支持可以扩展最大缩放级别,和zooms属性配合使用，设置为true的时候，zooms的最大级别在PC上可以扩大到20级，移动端还是高清19/非高清20
+            zooms: [3, 20], //地图显示的缩放级别范围，在PC上，默认为[3,18]，取值范围[3-18]；在移动设备上，默认为[3,19],取值范围[3-19]
+            pitch: pitch, //俯仰角度，默认0，[0,83]，2D地图下无效 。（自V1.4.0开始支持）
+            rotation: rotation, //地图顺时针旋转角度，取值范围 [0-360]，默认值：0
+            zoom: zoomNumber, //地图显示的缩放级别，若center与level未赋值，地图初始化默认显示用户所在城市范围，3D地图下，zoom值，可以设置为浮点数。
+            center: centerPoint //地图中心点
+        });
+
+        map.addControl(new AMap.ControlBar({
+            showZoomBar: false,
+            showControlButton: true,
+            position: {
+                right: '10px',
+                top: '10px'
+            }
+        }));
+
+        var A = new AMap.Marker({
+            animation: "AMAP_ANIMATION_DROP",
+            position: [120.58328, 31.2980],
+            title: "点击查看更多",
+            label: { //label默认蓝框白底左上角显示，样式className为：amap-marker-label
+                offset: new AMap.Pixel(15, 15),//修改label相对于maker的位置
+                content: "电信新楼"
+            },
+            map: map
+        });
+        var B = new AMap.Marker({
+            animation: "AMAP_ANIMATION_DROP",
+            position: [120.58395, 31.29755],
+            title: "点击查看更多",
+            label: { //label默认蓝框白底左上角显示，样式className为：amap-marker-label
+                offset: new AMap.Pixel(15, 15),//修改label相对于maker的位置
+                content: "电信老楼"
+            },
+            map: map
+        });
+        var C = new AMap.Marker({
+            animation: "AMAP_ANIMATION_DROP",
+            position: [120.5836, 31.2973],
+            title: "点击查看更多",
+            label: { //label默认蓝框白底左上角显示，样式className为：amap-marker-label
+                offset: new AMap.Pixel(15, 15),//修改label相对于maker的位置
+                content: "营业厅"
+            },
+            map: map
+        });
+
+        var domain = $('.logout').data("domain"),
+            domain3d = domain + "3d-index/";
+        A.on('click', function (e) {
+            location.href = domain3d;
+        });
+        B.on('click', function (e) {
+            location.href = domain3d + "?buildingCode=2";
+        });
+        C.on('click', function (e) {
+            location.href = domain3d + "?buildingCode=3";
+        });
+
+    };
+
+    function backToCenter() { //复位地图
+        map.setPitch(pitch);
+        map.setRotation(rotation);
+        map.setZoomAndCenter(zoomNumber, centerPoint);
+    }
+</script>
 </body>
 </html>
