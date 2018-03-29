@@ -1,5 +1,8 @@
 var bIndex; //建筑code
+var domain_3d = '';
 $(function () {
+
+    domain_3d = document.getElementById("domain").href;//接口域
 
     mainInit(window); //初始化main
 
@@ -62,7 +65,7 @@ $(function () {
                     yes: function (index, layero) {
                         //按钮【按钮一】的回调
                         iAjax({
-                            url: 'interface/device/modify',
+                            url: domain_3d + 'interface/device/modify',
                             type: 'put',
                             data: JSON.stringify({
                                 "deviceId": deviceId,
@@ -83,7 +86,12 @@ $(function () {
                                     $obj.attr("title", thisTitle);
                                     $li.find("a").text(thisTitle);
                                 } else { //失败
-                                    layer.alert(ret.desc, {title:'失败', icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                                    layer.alert(ret.desc, {
+                                        title: '失败',
+                                        icon: 5,
+                                        closeBtn: 0,
+                                        btnAlign: 'c'
+                                    }, function (index) {
                                         layer.close(index);
                                     });
                                 }
@@ -118,16 +126,22 @@ $(function () {
                 $desc_item = $this.parents(".content__item");
             var deviceId = $desc_item.data("deviceid");
             iAjax({
-                url: 'interface/device/delete/' + deviceId,
+                url: domain_3d + 'interface/device/delete/' + deviceId,
                 type: 'delete',
                 success: function (ret) {
                     if (ret.status == 0) { //成功
-                        layer.alert(ret.desc, {btn: '点击刷新', title:'成功', icon: 1, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                        layer.alert(ret.desc, {
+                            btn: '点击刷新',
+                            title: '成功',
+                            icon: 1,
+                            closeBtn: 0,
+                            btnAlign: 'c'
+                        }, function (index) {
                             layer.close(index);
                             location.reload();
                         });
                     } else { //失败
-                        layer.alert(ret.desc, {title:'失败', icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                        layer.alert(ret.desc, {title: '失败', icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
                             layer.close(index);
                         });
                     }
@@ -290,7 +304,7 @@ function addSubmit() {
     }
 
     iAjax({
-        url: 'interface/device/register',
+        url: domain_3d + 'interface/device/register',
         type: 'post',
         data: {
             buildingCode: buildingCode,
@@ -306,7 +320,7 @@ function addSubmit() {
         success: function (ret) {
             if (ret.status == 0) { //成功
                 layer.alert(ret.desc, {
-                    btn: ['点击刷新', '继续添加'], title:'成功', icon: 1, closeBtn: 0, btnAlign: 'c', end: function () {
+                    btn: ['点击刷新', '继续添加'], title: '成功', icon: 1, closeBtn: 0, btnAlign: 'c', end: function () {
                         drag($obj, false);
                         close_addView(deviceName);
                     }
@@ -315,7 +329,7 @@ function addSubmit() {
                     location.reload(); //刷新页面
                 });
             } else { //失败
-                layer.alert(ret.desc, {title:'失败', icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                layer.alert(ret.desc, {title: '失败', icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
                     layer.close(index);
                 });
             }
@@ -356,7 +370,7 @@ function doorOperate(id, l) {
     var lt = l == 0 ? 'LOCK' : 'OPEN';
     var str = l == 0 ? '关闭' : '打开';
     iAjax({
-        url: 'interface/device/lockoper',
+        url: domain_3d + 'interface/device/lockoper',
         type: 'post',
         data: {
             deviceId: id,
@@ -364,11 +378,16 @@ function doorOperate(id, l) {
         },
         success: function (ret) {
             if (ret.status == 0) { //成功
-                layer.alert("设备指令【" + str + "】下发成功", {title:'成功', icon: 1, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                layer.alert("设备指令【" + str + "】下发成功", {
+                    title: '成功',
+                    icon: 1,
+                    closeBtn: 0,
+                    btnAlign: 'c'
+                }, function (index) {
                     layer.close(index);
                 });
             } else { //失败
-                layer.alert(ret.desc, {title:'失败', icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
+                layer.alert(ret.desc, {title: '失败', icon: 5, closeBtn: 0, btnAlign: 'c'}, function (index) {
                     layer.close(index);
                 });
             }
@@ -380,7 +399,7 @@ function doorOperate(id, l) {
 var typeObj, typeObj2 = {}, typeObj3 = {}; //定义设备类型全局对象
 function getTypeObj() {
     iAjax({
-        url: 'interface/device/getdevicecategory',
+        url: domain_3d + 'interface/device/getdevicecategory',
         type: 'post',
         success: function (ret) {
             typeObj = JSOG.decode(ret);
