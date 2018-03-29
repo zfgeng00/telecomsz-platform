@@ -14,10 +14,8 @@ public class BaseDomain {
 
     protected Long id;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     protected Date createTime;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     protected Date updateTime;
 
     protected Integer delFlag;
