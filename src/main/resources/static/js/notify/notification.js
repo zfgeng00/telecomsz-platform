@@ -3,10 +3,11 @@ var NotificationPath = c.substring(0, c.lastIndexOf("/") + 1);
 
 /**
  * 桌面通知
- * @param title
- * @param msg
+ * @param title 标题
+ * @param msg 消息内容
+ * @param cl 点击事件回调方法
  */
-function showNotification(title, msg) {
+function showNotification(title, msg, cl) {
     var path = NotificationPath;
     // console.log("路径", path);
     try {
@@ -40,7 +41,11 @@ function showNotification(title, msg) {
                     }
                 );
                 notify.onclick = function () {
-                    //如果通知消息被点击,通知窗口将被激活
+                    if (cl) { //如果有回调方法
+                        cl(notify);
+                        return;
+                    }
+                    //没有回调时，如果通知消息被点击,所在窗口将被激活，然后关闭通知
                     window.focus();
                     setTimeout(function () {
                         notify.close();//主动关闭
