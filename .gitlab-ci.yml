@@ -80,6 +80,6 @@ stages:
 启动应用:
   stage: run-app
   script:
-    - docker run --name telecomsz-platform -d -p 9000:9000  --link eureka-server:eureka-server --link telecomsz-platform-interface:telecomsz-platform-interface -h telecomsz-platform telecomsz-platform:latest
+    - docker run --name telecomsz-platform -h telecomsz-platform --network net-telecomsz -d -p 9000:9000 telecomsz-platform:latest
   only:
     - master
