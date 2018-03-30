@@ -1,5 +1,6 @@
 package com.jshx.telecomsz.platform.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jshx.telecomsz.platform.model.Alarm;
 import com.jshx.telecomsz.platform.model.DoorAlarmRecord;
 import com.jshx.telecomsz.platform.model.DoorOperRecord;
@@ -23,21 +24,28 @@ public class AlarmController extends BaseController {
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
+    private ObjectMapper objectMapper = new ObjectMapper();
+
     @RequestMapping(value = "/dooralarm", method = RequestMethod.POST)
-    public String doorAlarm(@RequestBody DoorAlarmRecord doorAlarmRecord) {
+    public boolean doorAlarm(@RequestBody DoorAlarmRecord doorAlarmRecord) throws Exception {
         Alarm<DoorAlarmRecord> alarm = new Alarm<>();
         alarm.setType("doorAlarm");
         alarm.setContent(doorAlarmRecord);
-        simpMessagingTemplate.convertAndSendToUser("", "", "");
-        return "SUCCESS";
+        String message = objectMapper.writeValueAsString(alarm);
+        logger.info("发送websocket消息{}", message);
+        simpMessagingTemplate.convertAndSend("/device/alarm", message);
+        return true;
     }
 
 
     @RequestMapping(value = "/dooroper", method = RequestMethod.POST)
-    public String doorOper(@RequestBody DoorOperRecord doorOperRecord) {
+    public boolean doorOper(@RequestBody DoorOperRecord doorOperRecord) throws Exception {
         Alarm<DoorOperRecord> alarm = new Alarm<>();
         alarm.setType("doorOper");
         alarm.setContent(doorOperRecord);
-        return "SUCCESS";
+        String message = objectMapper.writeValueAsString(alarm);
+        logger.info("发送websocket消息{}", message);
+        simpMessagingTemplate.convertAndSend("/device/alarm", message);
+        return true;
     }
 }
