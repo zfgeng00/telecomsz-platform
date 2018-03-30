@@ -68,6 +68,11 @@ stompClient.connect({}, function (frame) { //连接
                 break;
         }
 
+
+        layer.alert(notifyMsg, {title: '设备通知', icon: 1, closeBtn: 0, btnAlign: 'c'}, function (index) {
+            layer.close(index);
+        });
+
         //桌面通知 依赖notification.js @param 标题，消息内容，点击事件的回调发法
         showNotification('苏州电信智慧物联网', notifyMsg, function (notify) {
             window.focus(); //激活所在窗口
