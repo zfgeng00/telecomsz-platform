@@ -6,10 +6,9 @@ import com.jshx.telecomsz.platform.model.DoorAlarmRecord;
 import com.jshx.telecomsz.platform.model.DoorOperRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 /**
  * Created with Intellij IDEA by 王金 on 2018/3/29 15:44.
@@ -46,6 +45,14 @@ public class AlarmController extends BaseController {
         String message = objectMapper.writeValueAsString(alarm);
         logger.info("发送websocket消息{}", message);
         simpMessagingTemplate.convertAndSend("/device/alarm", message);
+        return true;
+    }
+
+    @RequestMapping(value = "/test")
+    public boolean test(@RequestParam(value = "dest", defaultValue = "/device/alarm", required = false) String dest,
+                        @RequestParam(value = "message") String message) {
+        simpMessagingTemplate.convertAndSend(dest, message);
+
         return true;
     }
 }
