@@ -30,7 +30,7 @@ function showNotification(title, msg, cl) {
                 //status默认值'default'表示用户目前还没有管 'denied' 意味着用户不想要通知 'granted' 意味着用户同意启用通知
                 if (status == "denied") {
                     console.log(status, "您的浏览器禁止了桌面提醒");
-                    return;
+                    // return;
                 }
 
                 var notify = new Notification(
