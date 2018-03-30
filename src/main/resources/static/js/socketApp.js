@@ -36,7 +36,7 @@ stompClient.connect({}, function (frame) { //连接
         // console.log('收到消息', data.body);
         var notifyMsg = '设备通知';
 
-        var dataObj = JSOG.decode(data.body);
+        var dataObj = JSOG.parse(data.body);
 
         var type = dataObj.type;
 
